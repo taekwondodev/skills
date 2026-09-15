@@ -16,6 +16,12 @@ Test whether a skill, router, or workflow change produces the intended agent beh
 4. Check source-of-truth boundaries and unwanted scope or ceremony.
 5. Report regressions, improvements, and unresolved cases. Do not silently promote a candidate based on one example.
 
+## Script idempotency
+
+Verification scripts must be resumable and idempotent. Save completed observations and reuse them by default when the scenario, policy, runner, execution configuration, and repetition match. Across invocations, execute only missing work and reconcile partial state without duplicating observations. Publish a final gate result only when all required observations are complete.
+
+Provide an explicit fresh-start option to begin a separate evaluation without reusing saved observations.
+
 ## Dev-cycle contract
 
 `references/dev-cycle-scenarios.json` is the fixed 18-scenario contract for the integrated development workflow.
