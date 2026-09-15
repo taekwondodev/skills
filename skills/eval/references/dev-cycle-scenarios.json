@@ -623,14 +623,6 @@
           ]
         },
         {
-          "file": "to-tickets/SKILL.md",
-          "contains": [
-            "`hillclimb`",
-            "one hypothesis",
-            "keep-or-revert verdict"
-          ]
-        },
-        {
           "file": "wayfinder/SKILL.md",
           "contains": [
             "`hillclimb` governs multi-session measurement work"

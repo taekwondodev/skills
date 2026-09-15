@@ -6,27 +6,17 @@ disable-model-invocation: true
 
 # To Tickets
 
-Break a complete, approved spec into a set of **tickets**: tracer-bullet vertical slices, each declaring the tickets that **block** it and the `/architect` layer(s) it touches.
+Decompose a complete, approved spec into the smallest useful set of **tickets**: implementable slices with real blocking edges and the architecture layers they touch.
 
-Use `/architect`'s selected sketch, ownership, bounded-context, and threat-model decisions as inputs.
+**Scope conservation:** completing the tickets delivers the approved spec, neither less nor more. Every ticket obligation must trace to a requirement, constraint, or testing decision in the spec or an explicitly approved input it references. Clarify acceptance without inventing product behavior, architecture, or verification requirements. Present newly discovered necessary prerequisites separately for approval; leave optional improvements outside the breakdown.
+
+Use the architecture, ownership, and security decisions referenced by the approved spec as inputs.
 
 **This step is user-invoked**: do not start it on your own; the user triggers it explicitly.
 
 The issue tracker and issue-label vocabulary should have been provided to you. Tell the user to run `/dev-cycle-setup` if not; it's user-invoked, so you can't call it yourself.
 
 Read `writing-for-agents` before drafting ticket bodies. Its general writing rules govern this document; the ticket template below adds only ticket-specific structure. Resolve the configured `ready-for-agent` state label through `docs/agents/triage-labels.md` rather than assuming the canonical name is the tracker label.
-
-## Capabilities and principles
-
-Load the canonical owner when its trigger fires:
-
-- `blast-radius` determines whether work is a narrow tracer bullet or a wide migration and identifies the consumers each ticket must account for.
-- `principle-sequence-verifiable-units` makes every ticket end in a checkable green or measured state.
-- `principle-build-the-lever` creates an enabling ticket when automation or a focused harness is cheaper and safer than repeated manual work.
-- `principle-migrate-callers-then-delete-legacy-apis` places expansion, caller batches, and contraction in dependency order without leaving two permanent APIs.
-- `hillclimb` makes each measurement ticket one hypothesis, one change, one measurement, and one keep-or-revert verdict against the frozen harness.
-
-Record the concrete ticket boundary or blocking edge each principle changed. Do not copy the specialist procedure into ticket bodies.
 
 ## Process
 
@@ -38,7 +28,7 @@ Work from the complete approved spec. If the user passes a reference (a spec pat
 
 If you have not already explored the codebase, do so to understand the current state of the code. Ticket titles and descriptions should use `docs/agents/domain.md`'s glossary vocabulary, and respect ADRs in the area you're touching.
 
-Look for opportunities to prefactor the code to make the implementation easier. "Make the change easy, then make the easy change."
+Use exploration to verify feasibility and dependencies of the approved work. Distinguish a prerequisite without which that work cannot proceed from a refactor or automation that would merely make it easier.
 
 ### 3. Draft vertical slices
 
@@ -46,31 +36,36 @@ Break the work into **tracer bullet** tickets.
 
 First decide whether the approved spec describes one independently implementable slice or multiple slices. If it is one slice, report that `to-tickets` would add no value and stop. Do not publish a redundant ticket.
 
-Budget: at most 5 tickets per spec. A spec that needs more is describing more than one unit of work; say so and propose the split before publishing anything. A ticket carries at most 5 acceptance criteria, each an observable behavior; a sixth criterion means the ticket delivers two behaviors and is two tickets.
+Start with the fewest tickets that preserve independently verifiable outcomes. Justify each additional split with a distinct deliverable, an evidenced size limit, or a necessary technical boundary. Different files, tools, or adapters alone do not justify separate tickets.
+
+Judge the breakdown by scope coverage, justified boundaries, and real dependencies, not by ticket count. Merge tickets when combining them preserves a coherent, verifiable outcome and no evidenced size or dependency constraint requires separation.
+
+Write concise acceptance criteria, each describing an observable behavior. Their count does not determine ticket boundaries; express independent checks as separate criteria within the same ticket.
 
 <vertical-slice-rules>
 
-- Each slice cuts a narrow but COMPLETE path through every layer it touches (Handler → Service → Repository, per `/architect`). It is vertical, NOT a horizontal slice of one layer
-- A completed slice is demoable or verifiable on its own, with its Service-layer/Domain-Type behaviour covered by `/testing`'s unit-test scope
-- Each slice is sized to fit in a single fresh context window
-- Any prefactoring should be done first
+- Each slice delivers a complete path through the components it needs, using the architecture already selected in the spec
+- A completed slice is demoable or verifiable on its own. Allocate the spec's Testing Decisions to the relevant slices; load `/testing` when translating them into acceptance criteria and preserve their scope.
+- Split for size only when inspected work shows that a slice cannot be completed coherently in one implementation session; a generic context-window concern is not evidence
+- Sequence approved prerequisites before the work they genuinely block
 
 </vertical-slice-rules>
 
-Give each ticket its **blocking edges**, meaning the other tickets that must complete before it can start, and its **layer(s)**: which of Handler/Service/Repository/Middleware it touches, and which bounded context. A ticket with no blockers can start immediately.
+Give each ticket its **blocking edges**, meaning the other tickets that must complete before it can start, and the affected components or layers using the project's vocabulary. Explain dependencies through the concrete output needed from the blocker. A preferred implementation order alone is not a blocking edge.
 
-**Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change, such as renaming a column or retyping a shared symbol, whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket. Green is promised only there.
+For an approved migration that cannot land as independent vertical slices, preserve its specified sequencing and verification boundaries. If those decisions are missing, return the gap for approval instead of choosing a migration strategy during decomposition.
 
 ### 4. Quiz the user
 
 Present the proposed breakdown as a numbered list. For each ticket, show:
 
 - **Title**: short descriptive name
-- **Layer(s)**: which `/architect` layer(s) and bounded context this touches
+- **Affected components**: the existing architecture areas this touches
 - **Blocked by**: which other tickets (if any) must complete first
 - **What it delivers**: the end-to-end behaviour this ticket makes work
+- **Why separate**: the concrete reason this is a ticket rather than part of another
 
-Ask the user:
+Ask the user in the available interaction channel:
 
 - Does the granularity feel right? (too coarse / too fine)
 - Are the blocking edges correct? Does each ticket only depend on tickets that genuinely gate it?
@@ -78,13 +73,15 @@ Ask the user:
 
 Iterate until the user approves the breakdown.
 
-### 5. Publish the tickets to the configured tracker
+### 5. Verify scope and publish
+
+Before publication, check both directions: every requirement and testing decision in the spec is allocated, and every ticket obligation has an approved source. Use the spec's sections or requirement descriptions to check traceability; add a source pointer where the connection is not obvious. Resolve gaps or additions before publishing. Keep shared constraints authoritative in the parent and carry the relevant ones into each ticket without copying unrelated policy.
 
 Publish the approved tickets in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the tracker's native blocking / sub-issue relationship. See `docs/agents/issue-tracker.md`'s "Tracer-bullet ticket operations" section. Apply the configured `ready-for-agent` state label unless instructed otherwise: the tickets are agent-grabbable by construction.
 
-Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
+Read back the published bodies, labels, and native relationships. Report which tickets have no open blockers, then stop; implementation is a separate step.
 
-Do NOT close or modify any parent issue.
+Preserve the parent issue's body, labels, and open/closed state. Adding the required native child relationships is permitted.
 
 <issue-template>
 
@@ -92,9 +89,9 @@ Do NOT close or modify any parent issue.
 
 A reference to the parent issue on the tracker (if the source was an existing issue or a `/wayfinder` map, otherwise omit this section).
 
-## Layer(s)
+## Affected components
 
-Handler / Service / Repository / Middleware, per `/architect`, and the bounded context.
+The components or layers named by the approved architecture that this ticket touches.
 
 ## What to build
 
