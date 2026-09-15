@@ -2,6 +2,8 @@
 
 My collection of agent skills, grouped by how I use them. Each link opens the skill’s instructions.
 
+This repository is licensed under the [MIT License](LICENSE). It includes original skills and adaptations of MIT-licensed work from [pstack](https://github.com/cursor/plugins/tree/main/pstack) (Copyright (c) 2026 Lauren Tan) and [mattpocock/skills](https://github.com/mattpocock/skills) (Copyright (c) 2026 Matt Pocock). See [NOTICE.md](NOTICE.md) for which skills come from where.
+
 ## Workflow and repository setup
 
 | Skill | Description |

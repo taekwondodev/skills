@@ -13,4 +13,4 @@ Local adaptations:
 
 Preserve the upstream phases, mandatory arena comparison, at least two structurally distinct candidates, usage-derived sketches, and opt-in checkpoint when updating. Compare changes against the pinned source before adapting further.
 
-The GitHub repository license endpoint returned 404 during import. No license grant is inferred from public availability; check applicable terms before redistribution.
+Upstream license: MIT, Copyright (c) 2026 Lauren Tan (`pstack/LICENSE`). Preserved in the repository root `LICENSE` and `NOTICE.md`.
