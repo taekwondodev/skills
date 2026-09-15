@@ -7,9 +7,9 @@ description: >
 
 ## Scope & Exclusions
 
-* **STRICTLY NO** unit tests for **Handlers** (Input/HTTP layer).
-* **STRICTLY NO** unit tests for **Repositories** (Data Access layer).
-* **Focus:** Unit tests only on **Service layer** (Business Logic) and **Domain Types** (TyDD validation).
+* Unit-test owned behavior and invariants in the functions, modules, or types that implement them, using the project's existing structure.
+* Exercise transport, persistence, and framework wiring through the relevant integration boundary. Avoid isolated tests that only reproduce forwarding or framework behavior.
+* Select tests by responsibility, not names such as Handler, Service, or Repository. Add no architectural layer solely to satisfy a testing category.
 
 ## Where expected values come from
 

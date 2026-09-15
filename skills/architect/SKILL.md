@@ -1,220 +1,88 @@
 ---
 name: architect
-description: Sketch and compare architecture before implementing cross-boundary code.
+description: "Sketch types, signatures, and module structure before code, then stay in the loop while implementation fills in. Use for /architect, 'architect this', 'design this', or non-trivial work where jumping to code would lock in the wrong shape."
+disable-model-invocation: true
 ---
 
 # Architect
 
-Design before implementing. Use this skill when a change can lock in the wrong data shape, public interface, module boundary, ownership model, dependency direction, or security boundary. The skill produces a grounded sketch, compares viable structures, and keeps implementation aligned with the chosen shape.
+Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
 
-This skill does not make hexagonal or ports-and-adapters mandatory. Choose the smallest architecture that protects the real boundaries and invariants of the system.
+## Start
 
-## When to Use
+Track one entry per phase using the available task-tracking capability before starting.
 
-Use when:
+1. Ground
+2. Sketch
+3. Agree
+4. Implement
+5. Scrap
 
-- code crosses a module, package, crate, service, or bounded-context boundary;
-- a public function, trait, API, schema, or persisted format changes;
-- a new module or responsibility needs an owner;
-- the data shape or lifecycle model is unclear;
-- multiple architecture shapes are plausible;
-- the existing structure is causing repeated implementation friction;
-- a security boundary, trust boundary, or privileged operation changes;
-- the user explicitly asks to architect, sketch, compare, or redesign a change.
+## Phase A: Ground the problem
 
-Do not use for a mechanical local edit whose ownership, data shape, and boundaries are already clear. Do not use this skill to ask the user for facts that repository inspection, tests, prototypes, or profiling can establish.
+Build a real mental model of every system the new code touches. Run the **how** skill over the relevant subsystems.
 
-## Applicable Principles
+Naming a file isn't grounding. Produce the traced model `how` prescribes. If the design redefines ownership or layering, also run the **why** skill on the existing shape so the rationale becomes a constraint, not a guess.
 
-Load and apply the canonical principle skills when their triggers fire:
+Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.
 
-- `principle-foundational-thinking` before choosing types, data structures, or scaffold sequence.
-- `principle-model-the-domain` when state, branching, or repeated shape assumptions need a structure.
-- `principle-boundary-discipline` when validation, errors, adapters, or framework boundaries are involved.
-- `principle-type-system-discipline` when designing types or signatures.
-- `principle-exhaust-the-design-space` when the architecture is novel or contested.
-- `principle-redesign-from-first-principles` when integrating a requirement into an existing design.
-- `principle-minimize-reader-load` when comparing interfaces and indirection.
-- `principle-prove-it-works` when checking the resulting implementation.
-- `principle-fix-root-causes` when implementation friction suggests the sketch is wrong.
-- `principle-separate-before-serializing-shared-state` when concurrent actors may write shared state.
-- `principle-make-operations-idempotent` when lifecycle steps can be retried or restarted.
+## Phase B: Sketch
 
-A principle must change a decision or verification step. Do not list a principle without recording the choice it influenced.
+Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt. Each candidate produces a design package shaped per `references/rationale-template.md`.
 
-## Procedure
+Use the configured architect runners through the available delegation capability. Preserve independent candidate contexts; report unavailable capabilities rather than simulating independent runs.
 
-### 1. Ground
+Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **principle-exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.
 
-Build a traced model of the existing system before proposing structure.
+Screen every candidate against [`references/design-red-flags.md`](references/design-red-flags.md) before synthesis. Reject or revise shallow modules, information leakage, temporal decomposition, and pass-through methods.
 
-- Use the available repository-search and file-reading capabilities to locate the entry point, callers, callees, types, data flow, and current boundaries. Retrieve every relevant result page before drawing the model.
-- Use `how` for a subsystem walkthrough when the flow is not already clear.
-- Use `why` when existing rationale or an ADR may constrain the choice.
-- Read the relevant domain context, ADRs, and design documents.
-- Identify current ownership, dependency direction, error conversion, validation boundary, observability, and security assumptions.
+Compare viable candidates on interface depth. Prefer the design that hides more complexity behind a smaller, simpler public surface. A rich interface can keep call chains short by concentrating capability instead of scattering it across layers.
 
-Completion criterion: the caller-to-effect path, affected types, current owner, and constraints are written down without relying on file names alone.
+Arena returns one synthesized design package. The synthesis decision populates the rationale's "Synthesis decision" section.
 
-### 2. Threat model
+## Phase C: Agree (opt-in)
 
-Run threat modeling before selecting a structure whenever the change touches authentication, authorization, secrets, personal data, network boundaries, privileged actions, persisted security state, or another trust boundary.
+Default: proceed directly to implementation with the synthesized design. No human checkpoint.
 
-Record:
+Opt in to a checkpoint when the invoker explicitly asks: "/architect with checkpoint," "stop and show me before implementing," or similar. Then surface the synthesized design and pause for sign-off.
 
-- assets that require protection;
-- actors and their capabilities;
-- trust boundaries crossed;
-- attack surfaces introduced or changed;
-- relevant STRIDE concerns: spoofing, tampering, repudiation, information disclosure, denial of service, and elevation of privilege;
-- mitigations and residual risks;
-- which layer owns each mitigation.
+The synthesis can ship as its own commit either way, as the "scaffold first" mode of the **principle-foundational-thinking** principle skill. Planned and scoped breakage during fill-in is fine, per the **principle-outcome-oriented-execution** principle skill. For adversarial pressure on the design before implementing, run the **interrogate** skill on the synthesized sketch.
 
-Do not turn threat modeling into a checklist detached from the design. Use each material finding to change a boundary, type, permission, validation rule, error policy, logging rule, or test decision.
+If the human pushes back on the shape (in a checkpoint or after the fact), treat that as Phase A evidence. Re-ground and re-run Phase B before writing more code.
 
-Completion criterion: every changed trust boundary has named assets, actors, attack surfaces, relevant threats, and an owner for each mitigation, or a recorded reason why threat modeling is not relevant.
+## Phase D: Implement against the sketch
 
-### 3. Sketch
+Replace `not implemented` bodies with code, pseudocode with logic. The synthesized sketch is the contract.
 
-Write the caller's intended usage first. Derive the design from that usage.
+Deviations from the sketch are signal worth surfacing, not friction to absorb silently. If a function needs a parameter the sketch didn't anticipate, ask whether the sketch was wrong, the requirement was missed, or the implementation is overreaching.
 
-The sketch must include the smallest useful set of:
+## Phase E: Scrap when the architecture is wrong
 
-- commands, queries, or entry points;
-- data shapes and lifecycle states;
-- domain types and invalid states they prevent;
-- public function or trait signatures;
-- module or package map;
-- ownership of behavior and invariants;
-- dependency direction;
-- error boundaries and conversion points;
-- validation and serialization boundaries;
-- observability responsibilities;
-- security controls from the threat model.
+If implementation keeps producing friction the sketch can't absorb, throw the sketch out. Don't bolt fixes onto a wrong design, per the **principle-redesign-from-first-principles** and **principle-fix-root-causes** principle skills.
 
-Use `not implemented` bodies or pseudocode where that makes the shape precise. A sketch is not a working implementation and must not hide an unresolved decision behind vague prose.
+The signal is a *pattern*, not single instances. Tells:
 
-Completion criterion: a reviewer can identify the caller-facing contract, the owning module, the important types, and every cross-boundary dependency from the sketch.
+- The same shape of workaround appearing repeatedly across unrelated code.
+- Multiple unrelated edge cases that all need special-case branches.
+- Types that need escape hatches (`any`, casts, optional fields always set in practice) to compile.
+- The "we need a lock" reflex when the sketch said the state wasn't shared.
+- Callers having to know the abstraction's internal rules to use it.
+- Two or more independent Phase D deviations of the same shape across the implementation.
 
-### 4. Arena
+Use judgment. A few edge cases don't condemn an architecture. Some problems are legitimately complex. Complexity in the data is not complexity in the design.
 
-Load `arena` when the design is novel, contested, or likely to affect several boundaries. Pass it the grounded model, requirements, threat model, caller usage, requested output shape, and explicit write fences. `arena` owns candidate dispatch, isolation, and synthesis; this skill owns the decision to invoke it and consumes its comparison.
+When you scrap:
 
-Completion criterion: the candidates, their assumptions, and their tradeoffs are available for comparison, or the sketch records why a second candidate would add no information for a genuinely local and settled structure.
+1. Re-run the **how** skill over what's been built.
+2. Redesign as if the new constraints had been day-one assumptions, per principle-redesign-from-first-principles.
+3. Subtract before adding, per the **principle-subtract-before-you-add** principle skill. The new sketch should be smaller than the old one before it grows.
+4. Return to Phase B and re-run arena.
 
-### 5. Compare
+## Outputs
 
-Compare viable candidates against:
+The caller's usage is written first and the type sketch derived from it. One file with new types and signatures for small changes. Module map plus type definitions for larger work. The rationale ships alongside, shaped per `references/rationale-template.md`, including the usage sketch and the synthesis decision.
 
-- domain fit and invalid-state prevention;
-- public surface and interface depth;
-- ownership and dependency direction;
-- reader load and hidden state;
-- error and validation boundaries;
-- security and threat mitigations;
-- observability;
-- operational and migration risk;
-- implementation complexity;
-- reversibility and idempotence.
 
-Prefer the smallest structure that protects the real boundaries. Do not select an abstraction because it is fashionable or because it creates more layers.
+## Optional architecture references
 
-Record:
-
-- the selected candidate;
-- rejected candidates;
-- the decisive tradeoffs;
-- the principles that changed the decision;
-- open risks that implementation must verify.
-
-Completion criterion: one candidate is selected with a concrete rationale, and rejected candidates have a specific reason rather than an aesthetic dismissal.
-
-### 6. Implement against the sketch
-
-When this skill is invoked as part of implementation, use the selected sketch as the contract.
-
-- Start from the caller-facing shape.
-- Keep the implementation inside the selected ownership and dependency boundaries.
-- Surface a deviation instead of silently bolting on a new parameter, wrapper, optional field, or compatibility path.
-- Apply `principle-migrate-callers-then-delete-legacy-apis` when an internal API changes.
-- Give every delegated subagent self-contained context, including its task, relevant evidence, constraints, and completion criteria.
-- Inspect delegated artifacts directly with the available file-reading and repository-search capabilities, the actual git diff, and an executed verification command.
-
-Completion criterion: every implementation deviation is either resolved by revising the sketch or recorded as an accepted requirement or constraint.
-
-### 7. Scrap and redesign
-
-If implementation produces repeated friction, do not stack workarounds on the sketch.
-
-Signals include:
-
-- repeated special-case branches;
-- multiple callers learning internal abstraction rules;
-- types requiring casts or escape hatches;
-- the same workaround appearing in unrelated modules;
-- a lock or serializer added because ownership was never separated;
-- repeated deviations from the same part of the sketch.
-
-When the signal is structural:
-
-1. Re-run `how` over what was built.
-2. Update the constraints with the implementation evidence.
-3. Apply `principle-redesign-from-first-principles`.
-4. Subtract dead weight before adding the new shape.
-5. Return to Sketch and Arena.
-
-Completion criterion: the replacement sketch accounts for the repeated friction and is smaller or clearer in the affected area before implementation resumes.
-
-## Checkpoint
-
-No automatic checkpoint is part of this skill. The normal behavior is to complete the synthesis and continue unless the user explicitly asks to stop.
-
-Recognized requests include:
-
-- `architect with checkpoint`;
-- `stop after the sketch`;
-- `show me the candidates before implementing`.
-
-When explicitly requested, present the sketch, candidates, comparison, threat model, and selected design, then wait for the user's decision.
-
-## Architecture Options
-
-Evaluate architecture from the problem rather than assuming one pattern.
-
-Possible references include:
-
-- `references/hexagonal.md` for ports-and-adapters;
-- `references/layered.md` for layered structures;
-- `references/modular-monolith.md` for module boundaries without unnecessary deployment boundaries;
-- `references/rust-structure.md` for repository-specific Rust workspace structure;
-- `references/rust-string-types.md` for Rust domain-string modeling;
-- `references/rust-sql-queries.md` for SQL query boundaries in Rust;
-- `references/rust-rs-repository-utils.md` for repository utilities in Rust.
-
-A reference informs a decision. It does not override the grounded system model or force a pattern that protects no real boundary.
-
-## Execution
-
-Use the runtime's available capabilities:
-
-- repository search and file reading for grounding;
-- subagents launched in separate contexts for candidates and independent exploration;
-- visible task tracking for the current phases;
-- structured user questions only for explicit user-owned decisions or an explicitly requested checkpoint;
-- explicit git worktrees when parallel workers write to the repository;
-- command execution for builds, tests, profiling, and git verification.
-
-Execute required commands and inspect their real exit status and output. If a required capability is unavailable, record the unmet requirement rather than claiming completion.
-
-## Verification
-
-Before declaring the architecture useful:
-
-- the caller-facing sketch exists;
-- the selected candidate and rejected alternatives are recorded;
-- threat modeling is complete when relevant;
-- every cross-boundary dependency has an owner;
-- the implementation or prototype follows the selected shape;
-- deviations are explained or the sketch is redesigned;
-- the relevant build, tests, profiling, or runtime check has been run;
-- the final report names the principles that changed decisions.
+When evaluating ports and adapters, read `references/hexagonal.md` for its applicability and costs. For a layered candidate, read `references/layered.md`; for module boundaries within one deployment, read `references/modular-monolith.md`. Use these references to compare the relevant candidate against concrete usage, not to select a pattern in advance.

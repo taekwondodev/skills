@@ -37,7 +37,7 @@ Record a principle only where the spec can name the decision it changed. Evidenc
 
 1. Explore the repo to understand the current state of the codebase, if you haven't already. Use `docs/agents/domain.md`'s glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
 
-2. For code-shaped work, use `/architect` to ground the caller, data shape, ownership, boundaries, and threat model before placing the feature against its layers and bounded contexts. Prefer extending an existing bounded context to creating a new one; a new context is a real decision, not a default. Check with the user that the layer/context split matches their expectations before writing it into the spec.
+2. For code-shaped work with an unsettled structure, use `/architect` to derive types and responsibilities from concrete caller usage and compare viable shapes. Carry its selected sketch and rationale into the spec. Describe the project's actual components; a function or module may be sufficient. Confirm unresolved user-owned architecture decisions before recording them as settled.
 
 3. Sketch out where this will be tested, per `/testing`'s scope. Use the highest existing seam possible; new seams are a real decision, not a default.
 
@@ -63,14 +63,14 @@ Budget: at most 6 stories. One story per distinct user-visible outcome; stories 
 
 ## Architecture
 
-Which layer(s) this touches (Handler/Service/Repository/Middleware, per `/architect`), and which bounded context(s). State explicitly:
+Describe the selected structure using its actual components and responsibilities:
 
-- Whether this is a new bounded context or an extension of an existing one, and why
-- Any port a service needs, and which layer implements it
-- Shared-kernel implications, if this reaches across contexts
-- Any domain error type this introduces, and which layer owns it
+- The caller-facing operations, inputs, and results
+- Which existing components change and which new responsibilities are justified
+- The important dependencies, ownership, and error or security boundaries
+- The concrete reason for the selected shape over viable alternatives, when a choice was needed
 
-Budget: at most 6 bullets. When nothing changes at a layer, omit it.
+Budget: at most 6 bullets. Include only decisions relevant to this change. Ports, layers, and bounded contexts belong here only when they are part of the selected architecture.
 
 ## Implementation Decisions
 
@@ -94,7 +94,7 @@ Exception: if a prototype produced a snippet that encodes a decision more precis
 
 A list of testing decisions that were made, scoped by `/testing`'s rules. Include:
 
-- Which Service-layer and Domain-Type units get test coverage, and the expected behavior/values each asserts. `/implement` writes tests against this, not values invented during implementation
+- Which behavior-owning functions, modules, or types get test coverage, and the expected behavior/values each asserts. `/implement` writes tests against this, not values invented during implementation
 - Prior art for the tests (i.e. similar types of tests in the codebase)
 - Any OWASP-relevant security test called for by `/testing`'s coverage rule
 

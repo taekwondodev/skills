@@ -422,8 +422,8 @@
         {
           "file": "architect/SKILL.md",
           "contains": [
-            "public function, trait, API",
-            "caller-facing contract"
+            "Sketch types, function signatures, class shapes, and module boundaries",
+            "The synthesized sketch is the contract."
           ]
         }
       ]
@@ -497,9 +497,9 @@
         {
           "file": "architect/SKILL.md",
           "contains": [
-            "## Applicable Principles",
-            "Threat model",
-            "selected sketch"
+            "Design it twice.",
+            "Build a real mental model of every system the new code touches.",
+            "fill in code against the chosen sketch"
           ]
         },
         {
@@ -712,8 +712,8 @@
         {
           "file": "architect/SKILL.md",
           "contains": [
-            "Load `arena`",
-            "does not make hexagonal"
+            "Run the **arena** skill",
+            "Use these references to compare the relevant candidate against concrete usage, not to select a pattern in advance."
           ]
         },
         {
@@ -785,7 +785,7 @@
         {
           "file": "architect/SKILL.md",
           "contains": [
-            "Use `how` for a subsystem walkthrough"
+            "Run the **how** skill over the relevant subsystems."
           ]
         }
       ]
@@ -816,7 +816,7 @@
         {
           "file": "architect/SKILL.md",
           "contains": [
-            "Use `why` when existing rationale"
+            "also run the **why** skill on the existing shape"
           ]
         }
       ]
@@ -914,8 +914,8 @@
         {
           "file": "architect/SKILL.md",
           "contains": [
-            "does not make hexagonal",
-            "smallest architecture that protects the real boundaries"
+            "Use these references to compare the relevant candidate against concrete usage, not to select a pattern in advance.",
+            "Prefer the design that hides more complexity behind a smaller, simpler public surface."
           ]
         }
       ]
@@ -958,7 +958,7 @@
       "glob": "*/SKILL.md",
       "not_contains": [
         "`design`",
-        "/design"
+        "`/design`"
       ]
     },
     {
