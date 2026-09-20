@@ -43,7 +43,6 @@ The following skills are copies or adaptations of pstack skills:
 - principle-sequence-verifiable-units
 - principle-subtract-before-you-add
 - principle-type-system-discipline
-- reflect
 - runtime-forensics
 - session-pickup
 - show-me-your-work
@@ -60,7 +59,6 @@ The following skills are copies or adaptations of Matt Pocock skills:
 
 - code-review
 - domain-modeling
-- grill-with-docs
 - grilling
 - handoff
 - implement

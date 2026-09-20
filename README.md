@@ -18,7 +18,6 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | --- | --- |
 | [capture-issue](skills/capture-issue/SKILL.md) | Record an idea as an issue without expanding its scope. |
 | [grilling](skills/grilling/SKILL.md) | Resolve open decisions through evidence and focused questions. |
-| [grill-with-docs](skills/grill-with-docs/SKILL.md) | Clarify a design while recording its glossary and architectural decisions. |
 | [to-spec](skills/to-spec/SKILL.md) | Turn an agreed discussion into a specification in the issue tracker. |
 | [to-tickets](skills/to-tickets/SKILL.md) | Split an approved specification into implementation tickets with dependencies. |
 | [wayfinder](skills/wayfinder/SKILL.md) | Map large, uncertain projects into decisions that can be resolved incrementally. |
@@ -76,7 +75,6 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | Skill | Description |
 | --- | --- |
 | [writing-for-agents](skills/writing-for-agents/SKILL.md) | Write clear skills, project instructions, specifications, and agent briefs. |
-| [reflect](skills/reflect/SKILL.md) | Turn lessons from completed work into proposed skill improvements. |
 
 ## Engineering principles
 
