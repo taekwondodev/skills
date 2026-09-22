@@ -1,15 +1,14 @@
 ---
 name: coding-standards
 description: >
-  Coding standards, TyDD philosophy, dependency management, and version lookup protocol.
-  Invoke when writing, reviewing, or refactoring code, adding a dependency, or when user
-  mentions coding style, types, security defaults, library choices, or API versions.
+  Review coding standards, or decide dependency and API changes.
+  Use for conformity reviews, explicit coding-policy questions, library choices, and version lookup.
 ---
 
 ## Research & Knowledge Retrieval
 
-* Documentation first: verify the latest official docs + community best practices before solving.
-* No hallucinations: if unsure about a lib version or API, say so and ask the user to check.
+* When a dependency or API decision needs current information, verify official docs and relevant practices before choosing.
+* Retrieve uncertain library versions or API behavior; report unavailable evidence rather than guessing or asking the user to perform an available lookup.
 * Prefer verified sources over memory. The research flow below makes this cheap and context-safe:
 
 ### Research flow

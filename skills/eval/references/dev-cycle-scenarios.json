@@ -1,114 +1,37 @@
 {
-  "version": 1,
+  "version": 2,
   "expected_scenario_count": 18,
   "forbidden_capabilities": [
     "test-driven-development"
   ],
   "optional_capabilities": {
-    "read-only-code-question": [
-      "dev-cycle",
-      "investigation"
-    ],
-    "factual-bug-investigation": [
-      "dev-cycle"
-    ],
-    "local-bug-fix": [
-      "blast-radius",
-      "dev-cycle",
-      "interrogate"
+    "sync-vs-async-comparison": [
+      "how"
     ],
     "bug-fix-public-api-change": [
-      "blast-radius",
-      "dev-cycle",
-      "interrogate",
-      "investigation",
-      "to-tickets",
-      "writing-for-agents"
+      "how"
     ],
     "simple-feature": [
-      "blast-radius",
-      "dev-cycle",
-      "interrogate",
-      "writing-for-agents"
+      "how"
     ],
     "multi-layer-feature": [
-      "arena",
-      "blast-radius",
-      "dev-cycle",
       "how",
-      "interrogate",
-      "to-tickets",
-      "writing-for-agents"
+      "architect"
     ],
     "behavior-preserving-refactoring": [
-      "dev-cycle",
-      "interrogate"
+      "how",
+      "architect"
     ],
     "one-off-performance-issue": [
-      "blast-radius",
-      "dev-cycle",
+      "architect"
+    ],
+    "large-uncertain-effort": [
       "grilling",
-      "interrogate"
-    ],
-    "iterative-hillclimb": [
-      "blast-radius",
-      "dev-cycle",
-      "grilling",
-      "interrogate",
-      "pause-safely",
-      "session-pickup",
-      "writing-for-agents"
-    ],
-    "live-runtime-symptom": [
-      "dev-cycle",
-      "investigation"
-    ],
-    "existing-trace-artifact": [
-      "dev-cycle",
-      "investigation"
+      "domain-modeling"
     ],
     "novel-architecture-decision": [
       "how",
       "why"
-    ],
-    "large-uncertain-effort": [
-      "architect",
-      "code-review",
-      "coding-standards",
-      "dev-cycle",
-      "domain-modeling",
-      "grilling",
-      "handoff",
-      "implement",
-      "interrogate",
-      "pause-safely",
-      "session-pickup",
-      "show-me-your-work",
-      "testing",
-      "to-spec",
-      "to-tickets",
-      "writing-for-agents"
-    ],
-    "explanation-request": [
-      "dev-cycle",
-      "investigation"
-    ],
-    "rationale-request": [
-      "dev-cycle",
-      "investigation"
-    ],
-    "small-error-handling-change": [
-      "blast-radius",
-      "dev-cycle",
-      "interrogate"
-    ],
-    "sync-vs-async-comparison": [
-      "blast-radius",
-      "dev-cycle",
-      "interrogate",
-      "how",
-      "to-spec",
-      "writing-for-agents"
     ]
   },
   "optional_principles": {
@@ -119,29 +42,23 @@
       "principle-laziness-protocol",
       "principle-sequence-verifiable-units"
     ],
-    "bug-fix-public-api-change": [
-      "principle-boundary-discipline",
-      "principle-outcome-oriented-execution",
+    "small-error-handling-change": [
       "principle-sequence-verifiable-units"
+    ],
+    "sync-vs-async-comparison": [
+      "principle-experience-first",
+      "principle-exhaust-the-design-space"
+    ],
+    "bug-fix-public-api-change": [
+      "principle-boundary-discipline"
     ],
     "simple-feature": [
-      "principle-foundational-thinking",
-      "principle-laziness-protocol",
-      "principle-never-block-on-the-human",
-      "principle-sequence-verifiable-units"
+      "principle-experience-first"
     ],
     "multi-layer-feature": [
-      "principle-exhaust-the-design-space",
-      "principle-experience-first",
-      "principle-never-block-on-the-human",
-      "principle-prove-it-works",
-      "principle-redesign-from-first-principles",
-      "principle-sequence-verifiable-units",
       "principle-type-system-discipline"
     ],
     "behavior-preserving-refactoring": [
-      "principle-laziness-protocol",
-      "principle-minimize-reader-load",
       "principle-outcome-oriented-execution",
       "principle-sequence-verifiable-units"
     ],
@@ -150,37 +67,25 @@
       "principle-fix-root-causes",
       "principle-sequence-verifiable-units"
     ],
-    "iterative-hillclimb": [
-      "principle-build-the-lever",
-      "principle-guard-the-context-window",
-      "principle-never-block-on-the-human"
-    ],
     "live-runtime-symptom": [
       "principle-prove-it-works"
     ],
     "existing-trace-artifact": [
       "principle-fix-root-causes",
-      "principle-guard-the-context-window",
-      "principle-never-block-on-the-human"
+      "principle-guard-the-context-window"
     ],
     "novel-architecture-decision": [
       "principle-boundary-discipline",
       "principle-minimize-reader-load",
       "principle-prove-it-works",
-      "principle-redesign-from-first-principles",
       "principle-type-system-discipline"
     ],
     "large-uncertain-effort": [
       "principle-prove-it-works"
     ],
-    "small-error-handling-change": [
-      "principle-sequence-verifiable-units"
-    ],
-    "sync-vs-async-comparison": [
-      "principle-laziness-protocol",
-      "principle-never-block-on-the-human",
-      "principle-sequence-verifiable-units",
-      "principle-build-the-lever"
+    "rationale-request": [
+      "principle-minimize-reader-load",
+      "principle-guard-the-context-window"
     ]
   },
   "scenarios": [
@@ -189,6 +94,7 @@
       "prompt": "How does request validation flow through the codebase?",
       "primary_mode": "investigation",
       "capabilities": [
+        "dev-cycle",
         "grilling",
         "how"
       ],
@@ -202,8 +108,9 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Investigation",
-            "Investigate observable facts before asking"
+            "## Select the current mode",
+            "**Investigation**",
+            "Investigate observable facts before asking questions"
           ]
         },
         {
@@ -220,6 +127,7 @@
       "prompt": "Find why the cache sometimes returns stale values without changing code.",
       "primary_mode": "investigation",
       "capabilities": [
+        "dev-cycle",
         "grilling",
         "investigation"
       ],
@@ -239,8 +147,9 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Bug fix",
-            "Reproduce first"
+            "## Select the current mode",
+            "**Bug fix**",
+            "Reproduce, trace the root cause, add regression proof"
           ]
         }
       ]
@@ -250,12 +159,10 @@
       "prompt": "Fix a local parser defect without changing its public contract.",
       "primary_mode": "bug_fix",
       "capabilities": [
+        "dev-cycle",
         "investigation",
         "implement",
-        "coding-standards",
-        "architect",
-        "testing",
-        "code-review"
+        "testing"
       ],
       "principles": [
         "principle-fix-root-causes",
@@ -269,8 +176,9 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Bug fix",
-            "smallest regression proof"
+            "## Select the current mode",
+            "**Bug fix**",
+            "add regression proof"
           ]
         },
         {
@@ -288,12 +196,10 @@
       "prompt": "Change how one recovery error is handled in a personal macOS utility: suspend instead of retrying. No persisted format or external contract changes.",
       "primary_mode": "bug_fix",
       "capabilities": [
+        "dev-cycle",
         "investigation",
         "implement",
-        "coding-standards",
-        "architect",
-        "testing",
-        "code-review"
+        "testing"
       ],
       "principles": [
         "principle-fix-root-causes",
@@ -305,18 +211,18 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "## Size the work",
+            "## Size before routing",
             "Default to **small**",
-            "how an error is handled",
-            "bug fix at small size",
+            "error-handling change stays a bug fix at small size",
             "references/sizing.md"
           ]
         },
         {
           "file": "code-review/SKILL.md",
           "contains": [
-            "## Scope the review",
-            "skip the sub-agents"
+            "## Scope",
+            "**Small change**",
+            "review inline in the same three groups"
           ]
         },
         {
@@ -339,8 +245,9 @@
         {
           "file": "implement/SKILL.md",
           "contains": [
-            "expected line",
-            "run it to see it fail"
+            "record the **expected line**",
+            "An explicit, unambiguous user request already confirms the required behavior",
+            "Run the regression test red before fixing the owning cause"
           ]
         }
       ]
@@ -350,16 +257,11 @@
       "prompt": "Decide whether a media-key event tap should run on the main run loop or a dedicated thread in a personal utility, by comparing both.",
       "primary_mode": "feature",
       "capabilities": [
+        "dev-cycle",
         "grilling",
-        "prototype",
-        "implement",
-        "coding-standards",
-        "architect",
-        "testing",
-        "code-review"
+        "prototype"
       ],
       "principles": [
-        "principle-exhaust-the-design-space",
         "principle-prove-it-works"
       ],
       "checkpoint": "product_scope",
@@ -392,31 +294,20 @@
       "prompt": "Fix the defect even though the public API must change.",
       "primary_mode": "feature",
       "capabilities": [
-        "grilling",
-        "architect",
-        "to-spec",
-        "implement",
-        "coding-standards",
-        "testing",
-        "code-review"
+        "dev-cycle",
+        "grilling"
       ],
       "principles": [
-        "principle-never-block-on-the-human",
-        "principle-fix-root-causes",
-        "principle-foundational-thinking",
-        "principle-type-system-discipline",
-        "principle-migrate-callers-then-delete-legacy-apis",
-        "principle-experience-first",
-        "principle-prove-it-works"
+        "principle-never-block-on-the-human"
       ],
       "checkpoint": "human_owned_contract",
       "checks": [
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "Promote to the governed feature path",
-            "a public API or trait",
-            "Preserve the human checkpoint"
+            "Promote to the governed decision path",
+            "a public API consumed outside the repository",
+            "Preserve the human checkpoint after grilling"
           ]
         },
         {
@@ -433,27 +324,21 @@
       "prompt": "Add one small user-visible option in an existing bounded context.",
       "primary_mode": "feature",
       "capabilities": [
-        "grilling",
-        "to-spec",
-        "implement",
-        "coding-standards",
-        "architect",
-        "testing",
-        "code-review"
+        "dev-cycle",
+        "grilling"
       ],
       "principles": [
-        "principle-experience-first",
-        "principle-prove-it-works"
+        "principle-never-block-on-the-human"
       ],
       "checkpoint": "product_scope",
       "checks": [
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Feature",
-            "product and scope decisions",
-            "checkpoint",
-            "to-spec"
+            "## Select the current mode",
+            "**Feature**",
+            "Follow the sized route",
+            "Preserve the human checkpoint after grilling"
           ]
         },
         {
@@ -472,17 +357,11 @@
       "prompt": "Add behavior spanning handler, service, repository, and a trust boundary.",
       "primary_mode": "feature",
       "capabilities": [
-        "grilling",
-        "architect",
-        "to-spec",
-        "implement",
-        "coding-standards",
-        "testing",
-        "code-review"
+        "dev-cycle",
+        "grilling"
       ],
       "principles": [
-        "principle-foundational-thinking",
-        "principle-model-the-domain",
+        "principle-never-block-on-the-human",
         "principle-boundary-discipline"
       ],
       "checkpoint": "product_scope_boundary",
@@ -490,16 +369,18 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "Activate `architect`",
-            "changes a shape or contract"
+            "Activate `architect` for an unsettled shape",
+            "ownership model",
+            "Consume an approved sketch directly when the design is settled"
           ]
         },
         {
           "file": "architect/SKILL.md",
           "contains": [
-            "Design it twice.",
-            "Build a real mental model of every system the new code touches.",
-            "fill in code against the chosen sketch"
+            "Design an unsettled shape before implementing",
+            "Reuse current grounding for the relevant subsystems",
+            "Where it is missing or invalidated, run the **how** skill",
+            "The synthesized sketch is the contract"
           ]
         },
         {
@@ -516,12 +397,10 @@
       "prompt": "Restructure a shared API while preserving behavior.",
       "primary_mode": "refactoring",
       "capabilities": [
+        "dev-cycle",
         "blast-radius",
         "implement",
-        "coding-standards",
-        "architect",
-        "testing",
-        "code-review"
+        "testing"
       ],
       "principles": [
         "principle-subtract-before-you-add",
@@ -533,8 +412,9 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Refactoring",
-            "Pin the behavior",
+            "## Select the current mode",
+            "**Refactoring**",
+            "Pin behavior",
             "verify equivalence"
           ]
         },
@@ -543,7 +423,7 @@
           "contains": [
             "For a refactoring",
             "blast-radius",
-            "migrate every caller"
+            "migrate every affected caller against the selected target shape"
           ]
         },
         {
@@ -561,12 +441,11 @@
       "prompt": "Reduce one measured latency bottleneck.",
       "primary_mode": "performance_issue",
       "capabilities": [
+        "dev-cycle",
         "perf-issue",
+        "how",
         "implement",
-        "coding-standards",
-        "architect",
-        "testing",
-        "code-review"
+        "testing"
       ],
       "principles": [
         "principle-prove-it-works"
@@ -579,9 +458,10 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Performance issue",
+            "## Select the current mode",
+            "**Performance issue**",
             "realistic baseline",
-            "measure before and after"
+            "before/after measurement"
           ]
         },
         {
@@ -599,27 +479,23 @@
       "prompt": "Keep improving throughput across sessions until the target is met.",
       "primary_mode": "hillclimb",
       "capabilities": [
-        "hillclimb",
-        "show-me-your-work",
-        "handoff",
-        "implement",
-        "coding-standards",
-        "architect",
-        "testing",
-        "code-review"
+        "dev-cycle",
+        "grilling",
+        "hillclimb"
       ],
       "principles": [
-        "principle-sequence-verifiable-units",
-        "principle-prove-it-works"
+        "principle-never-block-on-the-human"
       ],
       "checkpoint": "target_stop_predicate",
       "checks": [
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Hillclimb",
-            "Freeze the measurement harness",
-            "keep or revert"
+            "## Select the current mode",
+            "**Hillclimb**",
+            "frozen harness",
+            "keep/revert iterations through `implement`",
+            "explicit stop predicate or documented plateau"
           ]
         },
         {
@@ -635,6 +511,7 @@
       "prompt": "Diagnose intermittent CPU spin in the running process.",
       "primary_mode": "investigation",
       "capabilities": [
+        "dev-cycle",
         "grilling",
         "runtime-forensics"
       ],
@@ -654,7 +531,7 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "Do not declare success from a self-report"
+            "verify artifacts rather than trusting a worker's self-report"
           ]
         }
       ]
@@ -664,6 +541,7 @@
       "prompt": "Analyze this supplied profile without rerunning the system.",
       "primary_mode": "investigation",
       "capabilities": [
+        "dev-cycle",
         "grilling",
         "trace-forensics"
       ],
@@ -705,8 +583,9 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Architecture",
-            "proceeds without an automatic checkpoint"
+            "## Select the current mode",
+            "**Architecture**",
+            "`architect` has no automatic checkpoint"
           ]
         },
         {
@@ -730,7 +609,9 @@
       "prompt": "Map a project too large and uncertain for one session.",
       "primary_mode": "large_work",
       "capabilities": [
-        "wayfinder"
+        "dev-cycle",
+        "wayfinder",
+        "writing-for-agents"
       ],
       "principles": [
         "principle-guard-the-context-window",
@@ -742,10 +623,10 @@
         {
           "file": "dev-cycle/SKILL.md",
           "contains": [
-            "### Large or multi-session work",
-            "for every large-size task",
-            "wayfinder",
-            "handoff"
+            "**Large work**",
+            "user's explicit agreement to the size",
+            "`wayfinder` owns map and decision tickets",
+            "`handoff`"
           ]
         },
         {
@@ -765,6 +646,7 @@
       "prompt": "Explain how this subsystem works from caller to effect.",
       "primary_mode": "investigation",
       "capabilities": [
+        "dev-cycle",
         "grilling",
         "how"
       ],
@@ -781,12 +663,6 @@
             "Load `how`",
             "current code flow"
           ]
-        },
-        {
-          "file": "architect/SKILL.md",
-          "contains": [
-            "Run the **how** skill over the relevant subsystems."
-          ]
         }
       ]
     },
@@ -795,6 +671,7 @@
       "prompt": "Explain why this design exists and whether history constrains it.",
       "primary_mode": "investigation",
       "capabilities": [
+        "dev-cycle",
         "grilling",
         "why"
       ],
@@ -811,12 +688,6 @@
           "contains": [
             "Load `why`",
             "historical decisions"
-          ]
-        },
-        {
-          "file": "architect/SKILL.md",
-          "contains": [
-            "also run the **why** skill on the existing shape"
           ]
         }
       ]
@@ -896,8 +767,21 @@
         {
           "file": "writing-for-agents/SKILL.md",
           "contains": [
-            "source of truth for agent-facing writing",
-            "single source of truth"
+            "Use this contract for agent-facing writing",
+            "name a retrievable source or include the context needed to understand each claim",
+            "Keep one source of truth per meaning.",
+            "Keep scope tight.",
+            "make branch-specific instructions conditional",
+            "Define completion for each step or deliverable in observable, checkable terms",
+            "Load [authoring.md](references/authoring.md)",
+            "When authoring a skill, read [SKILL-MECHANICS.md](SKILL-MECHANICS.md) for frontmatter, invocation choice, and router skills."
+          ]
+        },
+        {
+          "file": "writing-for-agents/references/authoring.md",
+          "contains": [
+            "The parent [`SKILL.md`](../SKILL.md) is the source of truth for shared prose rules.",
+            "This reference extends it with authoring design guidance."
           ]
         },
         {
@@ -929,8 +813,12 @@
             "## Standards",
             "## Spec",
             "## Adversarial",
-            "Do **not** merge or rerank findings",
-            "rerun every affected axis"
+            "Do not merge or rerank the axes into one score",
+            "rerun affected axes",
+            "Require reviewers to read their own sources",
+            "accessible source paths",
+            "The parent does not preload or paste the full standards corpus",
+            "not permission to execute `architect` inside review"
           ]
         }
       ]

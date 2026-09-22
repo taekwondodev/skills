@@ -55,7 +55,7 @@ Loaded once per session. Open tickets are **not** listed; they are open child is
 
 ## Notes
 
-<domain; skills every session should consult (e.g. /grilling, /domain-modeling, /architect, /coding-standards, /testing); standing preferences for this effort>
+<domain; standing preferences and artifact pointers; specialist triggers for the active ticket, not a list to load every session>
 
 ## Decisions so far
 
@@ -136,7 +136,7 @@ User invokes with a map (URL or number). A ticket is optional. Without one, pick
 
 1. Load the map, using the low-res view rather than every ticket body.
 2. Choose the ticket. If named, use it. Otherwise take the first frontier ticket in order. **Claim it** by assigning it to yourself before any work.
-3. Resolve it, zooming as needed: fetch the full body of any related or closed ticket on demand; read whichever skills the Notes block names. If in doubt, read the `grilling` and `domain-modeling` skills.
+3. Resolve it, zooming as needed: fetch related or closed ticket bodies only when their evidence is needed. Use the Notes pointers and the active ticket type to select skills; reuse current grounding and decisions instead of loading every skill named by the map.
 4. Record the resolution: post the answer as a resolution comment, close the issue, append a context pointer to the map's Decisions-so-far.
 5. Add newly-surfaced tickets (create-then-wire); graduate any fog the answer made specifiable, clearing it from Not yet specified. If the answer reveals a ticket sits beyond the destination, rule it out of scope rather than resolving it. If the decision invalidates other parts of the map, update or delete those tickets.
 6. **When the frontier empties and Not yet specified holds nothing further, the map is done. Hand off instead of building.** Tell the user to run `/to-spec` against this map. It is user-invoked, so you can't call it yourself; the command reads every closed ticket's full body and the map's Decisions-so-far, then collapses them into one buildable spec. Looping straight into `/implement` from the map skips that collapse and throws the linked detail away. Skip the handoff only when the resolved map turned out small enough that a spec would just restate one ticket.

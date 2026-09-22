@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Architect
 
-Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.
+Design an unsettled shape before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize independent alternatives, then fill in code against the chosen sketch. When another phase requests only a design artifact, return that artifact within its scope instead of starting implementation. Use an approved sketch directly as the input to the requested phase.
 
 ## Start
 
@@ -20,9 +20,9 @@ Track one entry per phase using the available task-tracking capability before st
 
 ## Phase A: Ground the problem
 
-Build a real mental model of every system the new code touches. Run the **how** skill over the relevant subsystems.
+Reuse current grounding for the relevant subsystems. Where it is missing or invalidated, run the **how** skill to trace the systems the new code touches.
 
-Naming a file isn't grounding. Produce the traced model `how` prescribes. If the design redefines ownership or layering, also run the **why** skill on the existing shape so the rationale becomes a constraint, not a guess.
+Naming a file is not grounding. Consume the traced model `how` prescribes. If the design redefines ownership or layering and its rationale is unknown, run **why** on the existing shape.
 
 Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.
 
@@ -73,7 +73,7 @@ Use judgment. A few edge cases don't condemn an architecture. Some problems are 
 
 When you scrap:
 
-1. Re-run the **how** skill over what's been built.
+1. Refresh **how** evidence for the parts invalidated by what was built.
 2. Redesign as if the new constraints had been day-one assumptions, per principle-redesign-from-first-principles.
 3. Subtract before adding, per the **principle-subtract-before-you-add** principle skill. The new sketch should be smaller than the old one before it grows.
 4. Return to Phase B and re-run arena.

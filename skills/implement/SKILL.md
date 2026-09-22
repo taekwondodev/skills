@@ -4,38 +4,32 @@ description: "Implement a piece of work based on a spec, ticket, or agreed small
 disable-model-invocation: true
 ---
 
-Implement the work described by the user in the spec or ticket.
+# Implement
 
-**This step is user-invoked**: do not start it on your own. The user triggers it explicitly.
+Implement the approved spec, ticket, or small change. Start only when the user requests implementation, directly or by approving that transition from `dev-cycle`.
 
-The input is a spec, a ticket, or, for a small change, the user's own description of the fix plus the reproduction. Read the ticket's **Layer(s)** line first when there is one. It tells you which of `/architect`'s Handler/Service/Repository/Middleware layers this touches before you open a single file.
+## Establish the contract
 
-**Read the standards FIRST, before opening any file**: load the `coding-standards`, `architect`, and `testing` skills and keep their bodies in context for the whole implementation. Their titles in the index are not enough: the rules live in the bodies (TyDD, dependency direction, secure defaults, layer placement, test seams), and skills load lazily, so you must read them explicitly or they never enter context. Apply them while you write, not just at review time: place new code in the layer the ticket names, wire it through the port the layer already exposes, and apply `/coding-standards`' TyDD/dependency/secure-defaults rules as you write each piece. Do not defer this to `/code-review` to catch after the fact (the review's Standards axis loads the same skills and judges against them, so anything you skip here surfaces there as rework).
+Read the approved behavior, acceptance criteria, selected architecture or sketch, and applicable security and compatibility constraints. Use the project's actual components and ownership. Reuse current grounding; a settled design is an input, not a reason to run `architect` again.
 
-Write tests alongside the implementation, at the seams `/testing` allows. Take expected values from the spec/ticket's Testing Decisions or acceptance criteria. Never invent them from the same reasoning that produced the implementation; that's the self-graded anti-pattern in `/testing`'s Test quality section. Layers outside `/testing`'s scope get integration coverage instead. Never bend a unit test to reach them.
+For a small change without a spec, record the **expected line**: observed behavior from the reproduction and required behavior after the change. An explicit, unambiguous user request already confirms the required behavior; ask only about a missing or conflicting expectation. Preserve the line in the issue or another durable task artifact before implementation.
 
-For a small change with no spec or ticket, the order is fixed: write the **expected line** (observed behavior from the reproduction, required behavior after the change) and get the user's confirmation; write the regression test against that line and run it to see it fail; then change the code. The expected line is the artifact the test and the review judge against. When the user confirms the line in chat, record it in the issue or commit message so it outlives the conversation.
+Record the starting commit and the review unit. One independent ticket is one unit; a dependent ticket chain shares its starting commit and one final review.
 
-## Modes, capabilities, and principles
+## Build and verify
 
-When the ticket crosses a boundary, use the `/architect` sketch and its threat-model decisions as the implementation contract. Load the canonical owner when its trigger fires:
+1. Write tests at the agreed seams using `testing` when adding or changing tests. Expected values come from the approved contract, not the implementation. For a bug fix, use `principle-fix-root-causes` to guide reproduction and the causal check. Run the regression test red before fixing the owning cause when following the small-change path without a spec or ticket.
+2. Implement within the selected boundaries. Preserve required authorization, validation, secure defaults, and secrets handling while coding; these are not deferred to review.
+3. Load a specialist only for an unresolved need in this step: `investigation` for an unknown cause, `blast-radius` for uncertain consumer impact, `architect` for an unsettled shape or boundary, or `coding-standards` for a dependency or API decision. Return scope, contract, and security changes to the user before choosing them.
+4. Reuse the active procedure's workload, pinned behavior, and evidence rather than restarting its router. For a direct performance task without that context, use `perf-issue` or `hillclimb` to establish the realistic workload and measured verdict. For a refactoring, pin behavior and migrate every affected caller against the selected target shape. Run focused tests and typechecking during the change, then the relevant suite and build at the unit boundary.
+5. Exercise the changed behavior against the real artifact using `principle-prove-it-works` when selecting the proof. Report what was exercised, unavailable, or unproven.
 
-- For a bug fix, use `investigation` and `principle-fix-root-causes`: reproduce before editing, trace the mechanism, add the smallest regression proof, then fix the owning cause.
-- For a refactoring, use `blast-radius`, `principle-subtract-before-you-add`, and `principle-migrate-callers-then-delete-legacy-apis`: pin behavior, remove dead weight, migrate every caller, and verify equivalence.
-- For a performance issue, use `perf-issue`; for repeated metric work, use `hillclimb`. Preserve the realistic workload, baseline, regression gate, and measured verdict.
-- Use `principle-build-the-lever` when a focused script, transform, or harness makes non-trivial work safer or reviewable.
-- Use `principle-sequence-verifiable-units` to split the implementation into todo items that each finish in an observable state.
-- Use `principle-prove-it-works` to choose a check against the real artifact rather than compilation or a delegated self-report.
-- Apply the canonical domain, type, boundary, idempotence, and migration principles named by `/architect` when their triggers fire; each must change a type, owner, boundary, operation, or verification step.
+Extended coding-conformance checks belong to the Standards reviewer. Supply its source paths at review time instead of preloading the standards corpus into the implementation context.
 
-Record the changed behavior for every applied principle. Do not add a principle list that has no effect on the implementation or its checks.
+## Close the unit
 
-Run typechecking regularly, single test files regularly, and the full test suite once at the end. When the suite is long or slow, dispatch it as a sub-agent and read its output rather than blocking the session inline.
+Use `code-review` once before committing the completed unit, against its recorded starting commit and approved contract. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings and rerun only affected review axes.
 
-When closing a ticket unblocks new frontier tickets (per `docs/agents/issue-tracker.md`), **ask** the user whether to dispatch a sub-agent to implement one of them in parallel. Never spawn it without asking first.
+Commit reviewed work to the current branch. If the work is tracked, close completed tickets through `docs/agents/issue-tracker.md`. Ask before dispatching newly unblocked frontier tickets; completing this unit does not authorize another.
 
-Completion criterion: the suite and build are green on the real artifact, the changed behavior has been exercised once end to end, and every changed file is accounted for. Report what was exercised and what was not.
-
-Then read the `code-review` skill and review the work against its spec, ticket, or agreed change, with `git rev-parse` of the starting commit as the fixed point. `code-review` decides how much review the change earns (inline for a small change, full axes for larger ones); its Standards axis independently judges the tests you wrote, catching what a self-graded pass would miss. A blocking finding stops the commit. Fix it and re-review the affected axis; do not commit around it.
-
-Commit your work to the current branch, then close the ticket per `docs/agents/issue-tracker.md`'s tracer-bullet operations.
+Completion: the approved behavior is implemented, the relevant checks passed on the real artifact, the review gate is satisfied, and every changed file is accounted for.

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user. Just synthesize what you already know. If real gaps remain, read the `grilling` skill (and `domain-modeling` too if the gap is a domain term) for just those gaps, not a full re-interview.
 
-**This step is user-invoked**: do not start it on your own; the user triggers it explicitly.
+**This step is user-invoked**: start when the user requests the spec, directly or by approving that transition from `dev-cycle`. A completed investigation alone is not authorization to publish.
 
 The issue tracker and issue-label vocabulary should have been provided to you. Tell the user to run `/dev-cycle-setup` if not; it's user-invoked, so you can't call it yourself.
 
@@ -18,9 +18,9 @@ When invoked with a `wayfinder` map whose frontier is empty, read the map's Deci
 
 ## Budget
 
-A spec is a decision record, not a manual. Each section has a budget below; the whole spec stays under 800 words excluding the template headings. When a section wants more, the material is either a decision that belongs in an ADR, a procedure that belongs in a ticket's acceptance criteria, or detail the implementer can read from the code. Move it there or cut it.
+A spec is a decision record, not a manual. Aim for 800 words excluding headings, using the section budgets below as review thresholds. When a section grows, remove repetition and link existing rationale or procedures rather than copying them. Keep detail necessary to make requirements, boundaries, and expected behavior unambiguous.
 
-A section that would exceed its budget is a signal that the work is oversized for one spec. Say so to the user instead of writing a longer spec.
+Exceeding a budget is a signal to review the structure, not proof that the work is oversized. Explain necessary excess rather than deleting an acceptance criterion or creating extra tickets solely to meet a word count.
 
 ## Evidence and principles
 
@@ -47,11 +47,11 @@ Record a principle only where the spec can name the decision it changed. Evidenc
 
 ## Problem Statement
 
-The problem that the user is facing, from the user's perspective. Budget: one paragraph, at most 80 words.
+The problem that the user is facing, from the user's perspective. Guideline: one paragraph, at most 80 words.
 
 ## Solution
 
-The solution to the problem, from the user's perspective. Budget: one paragraph, at most 120 words.
+The solution to the problem, from the user's perspective. Guideline: one paragraph, at most 120 words.
 
 ## User Stories
 
@@ -59,7 +59,7 @@ A numbered list of user stories, each in the format:
 
 1. As an <actor>, I want a <feature>, so that <benefit>
 
-Budget: at most 6 stories. One story per distinct user-visible outcome; stories that restate the same outcome under different conditions collapse into one. Constraints and failure behavior go in Implementation Decisions, not in stories.
+Guideline: at most 6 stories. One story per distinct user-visible outcome; stories that restate the same outcome under different conditions collapse into one. Constraints and failure behavior go in Implementation Decisions, not in stories.
 
 ## Architecture
 
@@ -70,7 +70,7 @@ Describe the selected structure using its actual components and responsibilities
 - The important dependencies, ownership, and error or security boundaries
 - The concrete reason for the selected shape over viable alternatives, when a choice was needed
 
-Budget: at most 6 bullets. Include only decisions relevant to this change. Ports, layers, and bounded contexts belong here only when they are part of the selected architecture.
+Guideline: at most 6 bullets. Include only decisions relevant to this change. Ports, layers, and bounded contexts belong here only when they are part of the selected architecture.
 
 ## Implementation Decisions
 
@@ -84,7 +84,7 @@ A list of implementation decisions that were made. This can include:
 - Specific interactions
 - Dependency additions, if any, with the `/coding-standards` justification for each
 
-Budget: at most 8 bullets, one decision each. A decision that needs its own paragraph of rationale goes in an ADR, with the bullet pointing at it.
+Guideline: at most 8 bullets, one decision each. A decision that needs its own paragraph of rationale goes in an ADR, with the bullet pointing at it.
 
 Do NOT include specific file paths or code snippets. They may end up being outdated very quickly.
 
@@ -98,14 +98,14 @@ A list of testing decisions that were made, scoped by `/testing`'s rules. Includ
 - Prior art for the tests (i.e. similar types of tests in the codebase)
 - Any OWASP-relevant security test called for by `/testing`'s coverage rule
 
-Budget: at most 6 bullets. Name the behaviors to prove and the seam; list neither test case names nor an apparatus. A verification apparatus larger than the change is a separate decision the user makes, not a Testing Decision.
+Guideline: at most 6 bullets. Name the behaviors to prove and the seam; list neither test case names nor an apparatus. A verification apparatus larger than the change is a separate decision the user makes, not a Testing Decision.
 
 ## Out of Scope
 
-The things that are out of scope for this spec. Budget: at most 5 bullets.
+The things that are out of scope for this spec. Guideline: at most 5 bullets.
 
 ## Further Notes
 
-Anything that does not fit above. Budget: at most 80 words; usually empty.
+Anything that does not fit above. Guideline: at most 80 words; usually empty.
 
 </spec-template>

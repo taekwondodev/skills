@@ -17,9 +17,9 @@ Every assertion's expected value comes from an artifact written **before** the i
 
 * the spec's Testing Decisions;
 * the ticket's acceptance criteria;
-* for a small change with neither, the **expected line**: one or two sentences stating the observed behavior before the change (from the reproduction) and the required behavior after it, confirmed by the user before any code is written.
+* for a small change with neither, the **expected line**: one or two sentences stating the observed behavior before the change (from the reproduction) and the required behavior after it, established by an explicit user request or confirmed with the user before implementation.
 
-A test whose expected value was derived from the implementation tests the code as it is, not as it should be. When no artifact exists, write the expected line and get it confirmed; do not write the test.
+A test whose expected value was derived from the implementation tests the code as it is, not as it should be. When no artifact exists, record the expected line from the approved request. Ask before writing the test only when the required behavior is missing or conflicting; an unambiguous user request does not need a second approval.
 
 ## Proportion
 

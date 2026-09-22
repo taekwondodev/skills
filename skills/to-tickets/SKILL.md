@@ -1,18 +1,18 @@
 ---
 name: to-tickets
-description: Break a complete approved spec into tracer-bullet tickets when multiple implementation slices are needed, each declaring blocking edges and architecture layers, published to the configured tracker.
+description: Break a complete approved spec into tracer-bullet tickets when multiple implementation slices are needed, each declaring blocking edges and affected components, published to the configured tracker.
 disable-model-invocation: true
 ---
 
 # To Tickets
 
-Decompose a complete, approved spec into the smallest useful set of **tickets**: implementable slices with real blocking edges and the architecture layers they touch.
+Decompose a complete, approved spec into the smallest useful set of **tickets**: implementable slices with real blocking edges and the selected components they touch.
 
 **Scope conservation:** completing the tickets delivers the approved spec, neither less nor more. Every ticket obligation must trace to a requirement, constraint, or testing decision in the spec or an explicitly approved input it references. Clarify acceptance without inventing product behavior, architecture, or verification requirements. Present newly discovered necessary prerequisites separately for approval; leave optional improvements outside the breakdown.
 
 Use the architecture, ownership, and security decisions referenced by the approved spec as inputs.
 
-**This step is user-invoked**: do not start it on your own; the user triggers it explicitly.
+**This step is user-invoked**: start when the user requests decomposition, directly or by approving that transition from `dev-cycle`. The breakdown still requires approval before publication.
 
 The issue tracker and issue-label vocabulary should have been provided to you. Tell the user to run `/dev-cycle-setup` if not; it's user-invoked, so you can't call it yourself.
 

@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
+import json
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -11,6 +13,7 @@ SPEC = importlib.util.spec_from_file_location("run_dev_cycle_behavior", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 RUNNER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(RUNNER)
+MATRIX = SCRIPT.parent.parent / "references" / "dev-cycle-scenarios.json"
 
 
 class DevCycleBehaviorRunnerTests(unittest.TestCase):
@@ -21,6 +24,71 @@ class DevCycleBehaviorRunnerTests(unittest.TestCase):
         self.assertNotIn("Policy variant", prompt)
         self.assertNotIn("baseline", prompt)
         self.assertNotIn("candidate", prompt)
+
+    def test_v2_matrix_hash_matches_embedded_contract(self) -> None:
+        matrix = json.loads(MATRIX.read_text())
+
+        self.assertEqual(matrix["version"], 2)
+        self.assertEqual(matrix["expected_scenario_count"], 18)
+        self.assertEqual(len(matrix["scenarios"]), 18)
+        self.assertEqual(
+            hashlib.sha256(MATRIX.read_bytes()).hexdigest(),
+            RUNNER.EXPECTED_MATRIX_SHA256,
+        )
+
+    def test_policy_bundle_includes_moved_principle_index(self) -> None:
+        relative = "dev-cycle/references/principles.md"
+
+        self.assertIn(relative, RUNNER.POLICY_FILES)
+        self.assertTrue((SCRIPT.parents[2] / relative).is_file())
+
+    def test_prompt_limits_route_to_current_phase_and_checkpoint(self) -> None:
+        prompt = RUNNER.build_prompt({"scenarios": []}, lambda relative: f"policy:{relative}")
+
+        self.assertIn("describe only the current phase", prompt)
+        self.assertIn("do not assume approval or include later-phase procedures", prompt)
+        self.assertIn("only when `code-review` is the current phase", prompt)
+
+    def test_review_axes_are_required_only_for_current_code_review(self) -> None:
+        all_axes = ["Standards", "Spec", "Adversarial"]
+
+        def compare(expected_capabilities, actual_capabilities, review_axes):
+            matrix = {
+                "scenarios": [{
+                    "id": "runtime",
+                    "primary_mode": "bug_fix",
+                    "project_skills": [],
+                    "capabilities": expected_capabilities,
+                    "principles": [],
+                    "checkpoint": "none",
+                }],
+                "optional_capabilities": {},
+                "optional_principles": {},
+                "forbidden_capabilities": [],
+            }
+            observed = [{
+                "id": "runtime",
+                "primary_mode": "bug_fix",
+                "capabilities": actual_capabilities,
+                "principles": [],
+                "checkpoint": "none",
+                "questions_before_evidence": [],
+                "testing_methods": [],
+                "architecture_styles": [],
+                "review_axes": review_axes,
+                "verification_steps": [{"artifact": "parser", "observation": "verified"}],
+            }]
+            return RUNNER.compare(matrix, observed, known_skills={"code-review", "dev-cycle"})
+
+        self.assertEqual(compare(["code-review"], ["code-review"], all_axes), {})
+        self.assertIn(
+            "review_axes expected [], got ['Adversarial', 'Spec', 'Standards']",
+            compare(["dev-cycle"], ["dev-cycle"], all_axes)["runtime"],
+        )
+        future_review = compare(
+            ["dev-cycle"], ["dev-cycle", "code-review"], all_axes
+        )["runtime"]
+        self.assertIn("unexpected capabilities ['code-review']", future_review)
 
     def test_identical_policy_bundles_share_one_fresh_decision(self) -> None:
         matrix = {"scenarios": []}

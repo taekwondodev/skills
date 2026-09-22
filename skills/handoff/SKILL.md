@@ -39,8 +39,8 @@ Extract from conversation + git state:
 - **Blockers:** stuck or unclear items
 - **Verification:** tests, checks, measurements, and processes with their latest observed result
 - **Next Completion Criterion:** the exact observable state the next session should reach
-- **Active Skills:** skills active in current session (e.g. `/grilling`, `/architect`)
-- **Suggested Skills:** skills the next agent should read (e.g. `architect`, `testing`)
+- **Current phase:** the procedure still needed and the artifacts it consumes
+- **Next skills:** only skills needed for the next action, not every skill previously used
 
 The handoff is a pointer, not a copy of another skill's procedure. Preserve the canonical owner of every rule and record which principles changed decisions.
 
@@ -53,12 +53,11 @@ Policies:
 Write to `HANDOFF.md` at the repository root.
 
 Add `## Resume Prompt` at bottom. It must be self-contained and copy-paste ready.
-Expand Active Skills into direct invocations at the top, one per line:
+Name the next procedure, its source, and its inputs. Include the skill bodies needed for the next action as explicit reads:
 ```
-/<skill1> <args>
-/<skill2> <args>
-Read `HANDOFF.md`. We're working on <project>: <task goal>.
-Continue from the Pending section. Ask me nothing until you've read the handoff.
+Read `HANDOFF.md`. We are working on <project>: <task goal>.
+Load <next skill> from <retrievable source> and read <required inputs>.
+Continue from the Pending section toward <next completion criterion>.
 ```
 
 Then confirm the path, print the Resume Prompt in chat, and say "Open new session, paste prompt above."

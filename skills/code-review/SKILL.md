@@ -3,123 +3,57 @@ name: code-review
 description: Review a diff on Standards, Spec, and Adversarial axes.
 ---
 
-Three-axis review of the diff between `HEAD` and a fixed point the user supplies:
+# Code Review
 
-- **Standards**: does the code conform to `/coding-standards` and `/architect`?
-- **Spec**: does the code faithfully implement the originating issue / spec?
-- **Adversarial**: what unsafe assumption, hidden impact, or unproven claim survives the first two axes?
+Review one completed unit against a fixed point on three separate axes:
 
-The Standards axis also checks the applicable principles through their canonical skills.
+- **Standards**: conformity to project conventions, the selected architecture contract, and test quality.
+- **Spec**: fidelity to the approved behavior, scope, and acceptance criteria.
+- **Adversarial**: unsafe assumptions, missed consumers, and unproven safety or runtime claims.
 
-The Adversarial axis loads `interrogate` and uses `blast-radius` evidence to challenge callers, contracts, migrations, runtime effects, and verification without merging its findings into Standards or Spec.
+`implement` requests this gate before committing a completed unit. Direct requests may review a branch, ticket, PR, or working tree. This skill owns review scope and re-review; it does not restart implementation or architecture workflows.
 
-All available axes run as **parallel sub-agents** so they do not pollute each other's context, then this skill reports them side by side.
+## Scope
 
-`implement` invokes this as its close-out step, before committing. Reach for it directly whenever you want to review a branch, a ticket, or a PR against a fixed point.
+- **Small change**: review inline in the same three groups. Read the applicable standards for this review. Escalate when an unresolved hard finding requires independent review.
+- **Medium or large change**: run available axes as **parallel sub-agents** with isolated contexts, once after the unit's checks pass. A dependent ticket chain earns one full review at its boundary, not one per intermediate slice.
+- **Re-review**: rerun only affected axes, checking the listed fixes and regressions they introduce. After two full rounds without convergence, show the remaining findings to the user.
+- Review shipped code, tests, and contracts. Note disposable scripts and evidence artifacts; review them when requested or when they are themselves the deliverable.
 
-The issue tracker should have been provided to you. Tell the user to run `/dev-cycle-setup` if `docs/agents/issue-tracker.md` is missing; it's user-invoked, so you can't call it yourself.
+## 1. Pin the inputs
 
-## Scope the review
+Use the supplied fixed point, or the implementation unit's recorded starting commit. Ask when neither exists. Verify it with `git rev-parse`, resolve `git merge-base <fixed-point> HEAD`, and capture `git diff <merge-base>`, `git status --short`, and `git log <fixed-point>..HEAD --oneline`.
 
-A review costs three sub-agent runs and a fix round. Spend it once per unit of work, on the code that ships.
+This diff includes committed, staged, and unstaged changes. Include untracked paths separately; an empty tracked diff with new files is still reviewable. Stop on an invalid base or genuinely empty review scope.
 
-- **Small change** (one behavior, few files, reversible): skip the sub-agents. Read the diff yourself against `/coding-standards`, the spec or issue, and the Adversarial questions below, and report findings inline in the same three groups. Escalate to the full review only when you find a hard violation you cannot fix locally.
-- **Medium or large change**: run the full three-axis review once, after the last ticket of the unit lands and the suite is green. Do not review each ticket separately when the tickets are one dependent chain; review the chain.
-- **Re-review after fixes**: run only the axis that produced each fixed finding, with the brief narrowed to "confirm the listed findings are resolved and report any regression the fixes introduced". A re-review does not reopen the whole diff.
-- **Review target**: product code, its tests, and contracts. Verification scripts, evidence files, and disposable prototypes are reviewed only when the user asks; otherwise note their presence and size in the summary.
+Find the approved contract from the supplied spec, ticket, agreed-change artifact, or originating issue. Retrieve issue material through `docs/agents/issue-tracker.md` when using the tracker. If no contract is discoverable, ask; if none exists, skip Spec and report that limitation.
 
-Two full review rounds on the same unit without convergence is a signal to stop and show the user the remaining findings rather than starting a third.
+## 2. Dispatch only what each reviewer needs
 
-## Process
+Give each reviewer the resolved base, diff command, untracked paths, commit list, scope, and accessible source paths. Require reviewers to read their own sources and inspect the actual changes. When a worker cannot access a source, supply its necessary contents or report the missing capability. The parent does not preload or paste the full standards corpus merely to delegate it.
 
-### 1. Pin the fixed point
+Reuse current `blast-radius` evidence. If consumer impact is unsettled, assign that investigation to the relevant reviewer; send confirmed cross-axis findings to other reviewers when needed.
 
-Whatever the user said is the fixed point: a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If they didn't specify one, ask for it. When the review closes a ticket, the fixed point is the ticket's starting commit.
+### Standards
 
-Resolve the comparison base once with `git merge-base <fixed-point> HEAD`, then capture the review command as `git diff <merge-base>`. Comparing the working tree to the merge-base includes committed, staged, and unstaged changes; `git diff <fixed-point>...HEAD` would silently omit uncommitted implementation work. Also record `git status --short` and the commit list via `git log <fixed-point>..HEAD --oneline`.
+Provide paths to `coding-standards`, the project's conventions, the approved architecture sketch or ADRs, and [the smell baseline](references/standards-review.md). When tests change, include `testing`. The reviewer reads applicable principle bodies only where they affect a concrete decision in the diff.
 
-Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`), the merge-base resolves, and the working-tree diff is non-empty. A bad ref or empty diff should fail here, not inside the parallel sub-agents. Treat untracked paths in `git status --short` as review inputs and pass their paths to every reviewer because Git does not include their contents in a diff until they are staged.
+Review the selected components and ownership, not a universal layer taxonomy. An unresolved architecture contract is a finding, not permission to execute `architect` inside review. Skip rules already enforced by tooling. Separate hard violations from smell heuristics and cite the rule plus file/hunk. Check implementation-coupled, tautological, and self-graded tests against their approved expected behavior.
 
-### 2. Identify the spec source
+### Spec
 
-Look for the originating spec, in this order:
+Provide the approved contract. Report missing or partial requirements, unrequested behavior, and incorrect implementations. For a refactoring, check the pinned behavior and selected target-shape contract. Cite the requirement and the relevant change or omission.
 
-1. Issue references in the commit messages (`#123`, `Closes #45`, etc.). Fetch via the workflow in `docs/agents/issue-tracker.md`.
-2. A path the user passed as an argument.
-3. A `/to-spec`-published issue or `/to-tickets` ticket matching the branch name or feature.
-4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
+### Adversarial
 
-### 3. The standards source
+Provide the `interrogate` path, contract, and available impact evidence. The reviewer acts as the bounded adversarial worker, without spawning another review tree. Challenge consumers, migrations, security, runtime effects, and whether checks prove the claims. Categorize findings as act on, consider, noted, or dismissed. Keep stylistic conformity with Standards.
 
-The Standards axis is anchored on this repo's own rules, never a generic baseline:
+Each reviewer returns evidenced findings and coverage limits, normally under 400 words. If independent delegation is unavailable, report the limitation; an inline pass is not an independent review.
 
-- **`/coding-standards`**: TyDD, dependency management, secure defaults, visibility, secrets hygiene, version/API lookup discipline.
-- **`/architect`**: layering (Handler/Service/Repository/Middleware), bounded contexts, shared kernel, cross-boundary error handling, observability, threat modeling.
-- **`/testing`**: scope rule and the Test quality anti-patterns (implementation-coupled, tautological, self-graded). The implementer writes tests itself, so this axis is their only independent judge.
+## 3. Resolve and report
 
-Read all three skills' full bodies before spawning the sub-agent. The sub-agent gets them pasted in, not a pointer, since it has no other access.
+Inspect the cited evidence before accepting findings. Report **Standards**, **Spec**, and **Adversarial** separately, with counts and the worst issue within each axis. Do not merge or rerank the axes into one score.
 
-Select every canonical principle skill whose trigger fires in the spec or diff and paste its full body into the Standards context. A principle is reviewable only through the concrete type, boundary, ownership, migration, or verification choice it should have changed.
+Hard Standards violations, missing Spec requirements, and evidenced Adversarial findings marked `act on` block the commit. Return them to the implementer, then rerun affected axes. Smells and `consider` findings are judgment calls for the user, not automatic scope expansion.
 
-Load `blast-radius` before dispatch when the diff changes a shared symbol, contract, data shape, migration, or persisted behavior. Pass confirmed consumers, checks, and unproven risks to all applicable reviewers.
-
-Underneath those, the axis also carries the **smell baseline** below: a fixed set of Fowler code smells (_Refactoring_, ch.3) for anything `/coding-standards`/`/architect` don't already cover. Two rules bind it:
-
-- **`/coding-standards` and `/architect` override.** Where either endorses something the baseline would flag, suppress the smell.
-- **Always a judgement call.** Each smell is a labelled heuristic ("possible Feature Envy"), never a hard violation. Like any standard here, skip anything tooling already enforces (linters, type checker).
-
-Each smell reads *what it is* → *how to fix*; match it against the diff:
-
-- **Mysterious Name**: a function, variable, or type whose name doesn't reveal what it does or holds. → rename it; if no honest name comes, the design's murky.
-- **Duplicated Code**: the same logic shape appears in more than one hunk or file in the change. → extract the shared shape, call it from both.
-- **Feature Envy**: a method that reaches into another object's data more than its own. This signals it's living in the wrong `/architect` layer. → move the method onto the data it envies.
-- **Data Clumps**: the same few fields or params keep travelling together. This suggests a type wanting to be born: a Domain Type per `/coding-standards`' TyDD rule. → bundle them into one type, pass that.
-- **Primitive Obsession**: a primitive or string standing in for a domain concept that deserves its own type. → give the concept its own small type; make the invalid state unrepresentable.
-- **Repeated Switches**: the same `switch`/`if`-cascade on the same type recurs across the change. → replace with polymorphism, or one map both sites share.
-- **Shotgun Surgery**: one logical change forces scattered edits across many files in the diff. → gather what changes together into one module, respecting `/architect`'s layer boundaries.
-- **Divergent Change**: one file or module is edited for several unrelated reasons. → split so each module changes for one reason.
-- **Speculative Generality**: abstraction, parameters, or hooks added for needs the spec doesn't have. → delete it; inline back until a real need shows.
-- **Message Chains**: long `a.b().c().d()` navigation the caller shouldn't depend on. → hide the walk behind one method on the first object.
-- **Middle Man**: a class or function that mostly just delegates onward. → cut it, call the real target direct.
-- **Refused Bequest**: a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
-
-### 4. Spawn independent reviewers in parallel
-
-Dispatch the three axes as parallel sub-agents (one per axis), each with the corresponding prompt below. Each runs in its own isolated context. The review prompts carry their source material explicitly, since each sub-agent has no other access.
-
-**Standards sub-agent prompt**: include:
-
-- The full diff command and commit list.
-- The full bodies of `/coding-standards`, `/architect`, `/testing`'s Test quality section, and every applicable principle, **plus the smell baseline from step 3** pasted in full. The sub-agent has no other access to any of it.
-- The brief: "Report, per file/hunk where relevant: (a) every place the diff violates `/coding-standards`, `/architect`, or an applicable principle: cite the rule and the concrete decision it should have changed; (b) any baseline smell you spot: name it and quote the hunk; (c) any test that's implementation-coupled, tautological, or self-graded per `/testing`'s Test quality section; quote the assertion and name which one. Distinguish hard violations from judgement calls. Standards and Test quality violations can be hard, but baseline smells are always judgement calls, and canonical skills override the baseline where they conflict. Skip anything tooling enforces. Under 400 words."
-
-**Spec sub-agent prompt**: include:
-
-- The diff command and commit list.
-- The path or fetched contents of the spec/ticket.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. For a refactoring, also verify the pinned behavior and target-shape contract. Quote the spec line for each finding. Under 400 words."
-
-**Adversarial sub-agent prompt**: include:
-
-- The diff command, commit list, full `interrogate` body, relevant `blast-radius` findings, and spec when available.
-- The brief: "Challenge the diff independently. Look for unsafe assumptions, affected consumers missed by the visible diff, migration or rollback gaps, security and runtime failure modes, and tests or checks that do not prove the claim. Do not propose scope expansion by default. Cite a file, hunk, requirement, consumer, or observable behavior for every finding. Categorize each as act on, consider, noted, or dismissed. Under 400 words."
-
-If the spec is missing, skip the Spec sub-agent and note this in the final report. Standards and Adversarial still run.
-
-### 5. Aggregate
-
-Present the reports under `## Standards`, `## Spec`, and `## Adversarial` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings. The axes are deliberately separate (see _Why separate axes_).
-
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Do not pick a single winner across axes.
-
-A hard Standards violation, a missing Spec requirement, or an evidenced Adversarial finding categorized `act on` blocks the commit. Fix it and rerun every affected axis, narrowed as described in Scope the review, rather than committing around it. Judgement-call smells, scope-creep notes, and `consider` findings do not block; surface them and let the user decide.
-
-## Why separate axes
-
-A change can pass one axis and fail another:
-
-- Code that follows every standard but implements the wrong thing → **Standards pass, Spec fail.**
-- Code that does exactly what the issue asked but breaks the project's conventions → **Spec pass, Standards fail.**
-- Code that satisfies both but relies on an unsafe assumption or misses a distant consumer → **Standards and Spec pass, Adversarial fail.**
-
-Reporting them separately stops one axis from masking another.
+Completion: every available axis covered the unit, unavailable coverage is explicit, and blocking findings are resolved before the caller commits.

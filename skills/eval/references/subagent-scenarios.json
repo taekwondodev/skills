@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "expected_scenario_count": 5,
   "scenarios": [
     {
@@ -8,7 +8,7 @@
       "policy_files": [
         "code-review/SKILL.md",
         "coding-standards/SKILL.md",
-        "architect/SKILL.md",
+        "code-review/references/standards-review.md",
         "testing/SKILL.md"
       ],
       "task_context": "Review this bounded diff. The API boundary receives an account identifier as an unvalidated string and passes it into the service. A test only checks that the source text contains the new branch. A one-line local variable rename is also present.\n\nEvidence anchors:\n- src/http/account.py:18: `account_id: str = request.path_params[\"account_id\"]`\n- src/http/account.py:19: `service.load(account_id)`\n- tests/test_account.py:31: `assert \"if account_id\" in inspect.getsource(load_account)`\n- src/http/account.py:17: local variable `req` renamed to `request`",

@@ -6,17 +6,12 @@ disable-model-invocation: true
 
 # Interrogate
 
-Apply adversarial pressure to a design, implementation, or diff. Look for blind spots, missing requirements, unsafe assumptions, and tests that do not prove the claim.
+Challenge a design or diff for unsafe assumptions, missed consumers, failure modes, and checks that do not prove the claim. Review against the approved contract, not a new preferred architecture.
 
-## Procedure
+1. Read the source material, selected design, and relevant impact or runtime evidence. Load a principle or policy only when it governs the risk under investigation; stylistic conformity belongs to the Standards axis.
+2. For a direct request that warrants independent perspectives, assign bounded risk areas to separate subagents. When already acting as a delegated Adversarial reviewer, inspect the assigned area yourself without spawning another review tree. Report unavailable independence instead of simulating it.
+3. Check findings against actual sources or a discriminating probe. Reuse current `blast-radius` evidence; investigate missing consumer impact when needed.
+4. Categorize findings as act on, consider, noted, or dismissed, with evidence and reasons. Distinguish hard constraints from judgment calls and keep proposed scope expansion separate.
+5. Return evidenced findings and unresolved risks to the caller.
 
-1. Read the source material, applicable principles, `coding-standards`, `architect`, `testing`, and the spec when available.
-2. When the change warrants independent review, launch separate subagents through the available delegation capability.
-3. Give each reviewer self-contained context and a distinct risk area, and prevent scope expansion by default. If delegation is unavailable, label any single-context review as such and do not claim independent coverage.
-4. Inspect the evidence and diff yourself.
-5. Categorize findings as act on, consider, noted, or dismissed, with reasons.
-6. Return findings to `code-review` or `architect` without merging separate review axes into one score.
-
-## Verification
-
-Each finding cites a file, hunk, requirement, or observable behavior. Hard violations are separated from judgment calls. Delegate summaries are checked against artifacts.
+Completion: every finding cites a file, hunk, requirement, consumer, or observation; unresolved claims remain explicitly unproven.

@@ -12,7 +12,7 @@ from typing import Any, Callable
 
 REQUIRED_MODEL = "deepseek-v4-flash"
 REQUIRED_PROVIDER = "opencode-go"
-EXPECTED_MATRIX_SHA256 = "603b4c65e201c2ec821b4ca854b37dba87a1f4c10ad0c6e25390ffa4606e8aee"
+EXPECTED_MATRIX_SHA256 = "fc9ded8beeaede7bbc5c73e3fc906e853c36cdf7c7b88de75dc5faec602249b6"
 REQUIRED_RESPONSE_KEYS = {
     "id",
     "verdict",
@@ -45,6 +45,10 @@ def baseline_reader(repo: Path, baseline_ref: str) -> Callable[[str], str]:
     def read(relative: str) -> str:
         result = git(repo, "show", f"{baseline_ref}:skills/{relative}")
         if result.returncode != 0:
+            if relative == "code-review/references/standards-review.md":
+                tree = git(repo, "ls-tree", "--name-only", baseline_ref, "--", f"skills/{relative}")
+                if tree.returncode == 0 and not tree.stdout.strip():
+                    return "[Reference not present as a separate file in this policy revision.]"
             raise RuntimeError(f"baseline missing {relative}: {result.stderr.strip()}")
         return result.stdout
 

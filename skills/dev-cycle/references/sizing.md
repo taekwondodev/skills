@@ -1,10 +1,10 @@
 # Sizing examples
 
-Reference for the `Size the work` step in `dev-cycle`. Each example names the signal that decides the size and the ceremony that size buys. Read it when the table alone does not settle the size.
+Reference for the `Size before routing` step in `dev-cycle`. Each example names the signal that decides the size and the ceremony that size buys. Read it when the table alone does not settle the size.
 
 ## Small
 
-- **Changing how one error is handled** (retry becomes suspend, a failure becomes a logged pass-through). Signal: one behavior, reversible, nothing persisted. Route: reproduce, expected line confirmed by the user, regression test, change, existing suite and build, the user tries it once, inline review.
+- **Changing how one error is handled** (retry becomes suspend, a failure becomes a logged pass-through). Signal: one behavior, reversible, nothing persisted. Route: reproduce, expected line established by the explicit user request or clarified with the user, regression test, change, existing suite and build, the user tries it once, inline review.
 - **Moving work between threads, actors, or queues inside one application.** Signal: internal ownership only, no consumer outside the process. Route: same as above. Record the choice in an ADR when it is durable; an ADR is not a spec.
 - **Adjusting a threshold, timeout, or label.** Signal: one value, one file.
 

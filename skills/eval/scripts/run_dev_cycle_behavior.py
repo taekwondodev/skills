@@ -11,6 +11,7 @@ from typing import Any, Callable
 
 POLICY_FILES = [
     "dev-cycle/SKILL.md",
+    "dev-cycle/references/principles.md",
     "grilling/SKILL.md",
     "architect/SKILL.md",
     "to-spec/SKILL.md",
@@ -35,11 +36,11 @@ PRIMARY_MODES = [
     "catalog",
 ]
 
-# Immutable approved 16-scenario contract. The runner refuses to evaluate a
+# Immutable approved v2 18-scenario contract. The runner refuses to evaluate a
 # candidate matrix whose SHA-256 differs, so the expected set of scenarios,
-# capabilities, and checkpoints cannot be silently weakened by a future edit.
+# current-phase capabilities, and checkpoints cannot be silently weakened.
 # Changing scenarios deliberately requires updating this hash in the same commit.
-EXPECTED_MATRIX_SHA256 = "ba2a045fa4cf0c9c873f617513a07664fc878406fdf2c56d30269f3b17d74449"
+EXPECTED_MATRIX_SHA256 = "8b0d1c1763038333bcdf06031e3eca05f0b14b96fdb2f2b690bd2d715e1f2e1d"
 
 def git(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
@@ -62,6 +63,10 @@ def baseline_reader(repo: Path, baseline_ref: str) -> Callable[[str], str]:
     def read(relative: str) -> str:
         result = git(repo, "show", f"{baseline_ref}:skills/{relative}")
         if result.returncode != 0:
+            if relative == "dev-cycle/references/principles.md":
+                tree = git(repo, "ls-tree", "--name-only", baseline_ref, "--", f"skills/{relative}")
+                if tree.returncode == 0 and not tree.stdout.strip():
+                    return "[Reference not present as a separate file in this policy revision.]"
             raise RuntimeError(f"baseline missing {relative}: {result.stderr.strip()}")
         return result.stdout
 
@@ -114,7 +119,7 @@ Allowed checkpoints and meanings:
 - hitl_decisions: the map contains human-owned decision tickets while factual research remains autonomous.
 - user_choice: catalog output is neutral and the user chooses what to invoke.
 
-Use canonical skill names for capabilities. Capabilities describe the complete eventual route, including phases after a required checkpoint and every skill that a routed phase says it must load as a dependency or standard; do not truncate the route at the checkpoint. Assume the user approves the proposed direction without changing the requirements, and use the checkpoint field to record where the route pauses. Include only principles that concretely change routing, ownership, implementation, or verification for that scenario. A bug that requires a public API change is promoted to feature. `questions_before_evidence` contains only questions asked before repository inspection, tests, profiling, or other available evidence; do not include later human-owned decision questions. Name a testing methodology or architecture style only when the route actually requires it. For review_axes, return all three names when the complete route activates code-review, even when a checkpoint occurs first; otherwise return an empty array. Every route must name at least one verification object whose artifact is the real thing being checked and whose observation is the concrete result required before completion.
+Use canonical skill names for capabilities. Capabilities and principles describe only the current phase, not the complete planned workflow. A checkpoint marks where the route pauses; do not assume approval or include later-phase procedures. Reuse available unchanged skill bodies; reload only when content is lost, a file changes, or a new context needs it. Include only principles that concretely change routing, ownership, implementation, or verification for the current phase. A bug that requires a public API change is promoted to feature. `questions_before_evidence` contains only questions asked before repository inspection, tests, profiling, or other available evidence; it does not record later user-owned decisions. Name a testing methodology or architecture style only when the current phase actually requires it. For `review_axes`, return all three names only when `code-review` is the current phase; otherwise return an empty array. Every route must name at least one verification object whose artifact is the real thing being checked and whose observation is the concrete result required before completion.
 
 <scenarios>
 {json.dumps(scenarios, indent=2)}
@@ -331,9 +336,16 @@ def compare(
                 "verification_steps must contain artifact and observation objects"
             )
 
+        code_review_is_current = (
+            "code-review" in expected["capabilities"]
+            or (
+                "code-review" in optional_capabilities
+                and "code-review" in actual_capabilities
+            )
+        )
         expected_axes = (
             {"Standards", "Spec", "Adversarial"}
-            if "code-review" in actual_capabilities
+            if code_review_is_current
             else set()
         )
         raw_axes = actual.get("review_axes")

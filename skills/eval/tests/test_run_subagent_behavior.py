@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 import subprocess
@@ -13,6 +14,7 @@ SPEC = importlib.util.spec_from_file_location("run_subagent_behavior", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 RUNNER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(RUNNER)
+MATRIX = SCRIPT.parent.parent / "references" / "subagent-scenarios.json"
 
 
 def scenario() -> dict[str, object]:
@@ -75,6 +77,29 @@ def passing_observed() -> dict[str, object]:
 
 
 class SubagentBehaviorRunnerTests(unittest.TestCase):
+    def test_v2_matrix_hash_matches_embedded_contract(self) -> None:
+        matrix = json.loads(MATRIX.read_text())
+
+        self.assertEqual(matrix["version"], 2)
+        self.assertEqual(matrix["expected_scenario_count"], 5)
+        self.assertEqual(len(matrix["scenarios"]), 5)
+        self.assertEqual(
+            hashlib.sha256(MATRIX.read_bytes()).hexdigest(),
+            RUNNER.EXPECTED_MATRIX_SHA256,
+        )
+
+    def test_standards_fixture_uses_review_reference_without_architect_workflow(self) -> None:
+        matrix = json.loads(MATRIX.read_text())
+        standards = next(item for item in matrix["scenarios"] if item["id"] == "standards-review")
+        policy_files = set(standards["policy_files"])
+
+        self.assertIn("code-review/references/standards-review.md", policy_files)
+        self.assertIn("coding-standards/SKILL.md", policy_files)
+        self.assertIn("testing/SKILL.md", policy_files)
+        self.assertNotIn("architect/SKILL.md", policy_files)
+        for relative in policy_files:
+            self.assertTrue((MATRIX.parents[2] / relative).is_file(), relative)
+
     def test_prompt_does_not_disclose_expected_decision(self) -> None:
         prompt = RUNNER.build_prompt(scenario(), lambda relative: f"policy:{relative}")
 
