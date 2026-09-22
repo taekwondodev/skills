@@ -55,12 +55,9 @@ Take these steps before the other sections, because their output feeds Sections 
 
 > Explainer: this is where issues and tickets live for this repo. `/capture-issue`, `/to-tickets`, `/to-spec`, and `/wayfinder` read from and write to it.
 
-Default posture: if a `git remote` points at GitHub, propose GitHub Issues. Otherwise, propose personal Linear. Never use a local-markdown fallback (a wayfinder map needs a real tracker to show blocking edges visually).
+Use GitHub Issues for every project. If the current directory is already a Git repository, proceed using its GitHub remote when available. Otherwise, create a private GitHub repository with `gh repo create --private`, clone or initialize it as needed, and then proceed with GitHub Issues.
 
-- **GitHub Issues**: uses the `gh` CLI, native sub-issues and blocking
-- **Linear**: for repos without a GitHub remote, or non-repo efforts
-
-Record the choice in `docs/agents/issue-tracker.md`, seeded from [issue-tracker-github.md](./issue-tracker-github.md) or [issue-tracker-linear.md](./issue-tracker-linear.md).
+Record the choice in `docs/agents/issue-tracker.md`, seeded from [issue-tracker-github.md](./issue-tracker-github.md).
 
 **Section B: Issue-label vocabulary.**
 
@@ -126,7 +123,6 @@ The block contains pointers only, never the content itself:
 Then write the docs files using the seed templates in this skill folder as a starting point:
 
 - [issue-tracker-github.md](./issue-tracker-github.md): GitHub issue tracker, including the operations `/wayfinder` needs
-- [issue-tracker-linear.md](./issue-tracker-linear.md): Linear issue tracker, including the operations `/wayfinder` needs
 - [triage-labels.md](./triage-labels.md): label mapping
 - [domain.md](./domain.md): domain doc consumer rules + layout
 
