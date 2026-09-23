@@ -47,7 +47,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 
 | Skill | Description |
 | --- | --- |
-| [commit](skills/commit/SKILL.md) | Create Conventional Commits, with an optional push. |
+| [commit](skills/commit/SKILL.md) | Create requested commits and handle issue delivery. |
 
 ## Investigation and performance
 

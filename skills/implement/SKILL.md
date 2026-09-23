@@ -30,10 +30,10 @@ Extended coding-conformance checks belong to the Standards reviewer. Supply its 
 
 For an agent-facing return, load [delivery/1](references/result-contract.md). Locate the changed artifact or commit and retain the actual checks, review disposition, and unresolved limits. Keep review evidence accessible instead of repeating every finding.
 
-## Close the unit
+## Complete the unit
 
-Use `code-review` once before committing the completed unit, against its recorded starting commit and approved contract. Load its [result contract](../code-review/references/result-contract.md) when consuming the review. Use the returned axes, finding actions, and coverage limits directly; apply its gates without expanding the payload into another report. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings and rerun only affected review axes.
+Use `code-review` once at the completed unit boundary, against its recorded starting commit and approved contract. Load its [result contract](../code-review/references/result-contract.md) when consuming the review. Use the returned axes, finding actions, and coverage limits directly; apply its gates without expanding the payload into another report. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings and rerun only affected review axes.
 
-Commit reviewed work to the current branch. If the work is tracked, close completed tickets through `docs/agents/issue-tracker.md`. Ask before dispatching newly unblocked frontier tickets; completing this unit does not authorize another.
+Stop with the reviewed changes uncommitted. When the user requests a commit, load `commit` with the reviewed scope, verification evidence, and issue reference, if any. Ask before dispatching another unit.
 
 Completion: the approved behavior is implemented, the relevant checks passed on the real artifact, the review gate is satisfied, and every changed file is accounted for.
