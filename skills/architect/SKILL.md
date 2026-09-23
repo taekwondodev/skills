@@ -38,7 +38,7 @@ Screen every candidate against [`references/design-red-flags.md`](references/des
 
 Compare viable candidates on interface depth. Prefer the design that hides more complexity behind a smaller, simpler public surface. A rich interface can keep call chains short by concentrating capability instead of scattering it across layers.
 
-Arena returns one synthesized design package. The synthesis decision populates the rationale's "Synthesis decision" section.
+Arena returns a `decision/1` result with the synthesized design package's locators. Load the [decision result contract](../arena/references/result-contract.md), inspect those artifacts, and use the verified synthesis to populate the rationale's "Synthesis decision" section.
 
 ## Phase C: Agree (opt-in)
 
@@ -82,6 +82,10 @@ When you scrap:
 
 The caller's usage is written first and the type sketch derived from it. One file with new types and signatures for small changes. Module map plus type definitions for larger work. The rationale ships alongside, shaped per `references/rationale-template.md`, including the usage sketch and the synthesis decision.
 
+
+## Agent result
+
+For an agent-facing design return, use the [decision result contract](../arena/references/result-contract.md) and reference the native design package. If the requested work continues through implementation, return that phase's result instead of restating the design report. Consume grounding and prototype evidence through each producer's declared result contract.
 
 ## Optional architecture references
 

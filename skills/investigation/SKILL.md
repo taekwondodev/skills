@@ -18,6 +18,10 @@ Answer a read-only question or reduce an unknown cause using inspected evidence.
 6. Record evidence, rejected hypotheses, and unresolved uncertainty.
 7. Return the result to `grilling` when it is part of a decision tree.
 
+## Agent result
+
+For an agent-facing return, load [evidence/1](references/result-contract.md). Return findings and limits directly to the caller without a second report.
+
 ## Verification
 
 Every material claim has an inspected source or reproducible observation. Facts, inferences, and hypotheses are clearly separated. No code or external state changed.

@@ -60,4 +60,8 @@ Load <next skill> from <retrievable source> and read <required inputs>.
 Continue from the Pending section toward <next completion criterion>.
 ```
 
-Then confirm the path, print the Resume Prompt in chat, and say "Open new session, paste prompt above."
+For a human-facing return, confirm the path, print the Resume Prompt in chat, and say "Open new session, paste prompt above."
+
+## Agent result
+
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Return the handoff locator, verification, and next completion criterion without repeating the Resume Prompt or handoff body.

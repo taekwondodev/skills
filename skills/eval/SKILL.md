@@ -38,6 +38,10 @@ For the structural gate, run `python3 skills/eval/scripts/validate_dev_cycle.py 
 
 Keep verification proportional to the changed behavior and agreed risk. Use model-backed gates when the changed behavior is materially uncertain or the user requests that confidence level.
 
+## Agent result
+
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the evaluation report with its contract and policy versions, and represent each scoped gate's actual outcome in checks. Preserve skipped, unrun, and failing gates without replaying the report. Existing runner output schemas remain unchanged.
+
 ## Verification
 
 Report the contract and policy versions, executed checks, actual observations, and unresolved failures. Distinguish structural, routing, and execution evidence. A skipped model gate is unrun, not passed; an unchanged-policy alias is not a second independent observation. Promote only on evidence appropriate to the agreed risk.

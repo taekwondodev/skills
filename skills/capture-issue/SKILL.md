@@ -12,6 +12,10 @@ Read `writing-for-agents` before writing the issue title or body. Keep the resul
 
 The issue tracker and issue-label vocabulary must be configured before this skill runs. If `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is missing, tell the user to run `dev-cycle-setup` and stop without publishing. Read `docs/agents/issue-tracker.md` for the tracker's issue-creation operations and quick-capture rules, then read the right-hand mappings in `docs/agents/triage-labels.md`: `bug` and `enhancement` are fixed category labels, while the state and workflow-marker labels may be tracker-specific.
 
+## Agent result
+
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Return the created issue reference after reading back its body and labels. The receipt records capture only, not readiness for implementation.
+
 ## Process
 
 1. Read the user's request as the only source material. Do not explore the repository or ask design questions.
@@ -19,7 +23,7 @@ The issue tracker and issue-label vocabulary must be configured before this skil
 3. If the category is ambiguous, ask one focused classification question before publishing. Do not ask any other question in this skill.
 4. Create a new issue in the configured tracker with the concise title and minimally cleaned body.
 5. Apply the category label and the configured `needs-grilling` state label.
-6. Report the created issue and stop. Do not apply `ready-for-agent` and do not start grilling, `to-spec`, `to-tickets`, or `implement`.
+6. Return the created issue through the agent result contract, or report it concisely to the human, and stop. Do not apply `ready-for-agent` and do not start grilling, `to-spec`, `to-tickets`, or `implement`.
 
 ## Resuming from a fresh session
 

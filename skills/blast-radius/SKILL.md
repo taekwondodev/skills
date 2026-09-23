@@ -17,6 +17,10 @@ Find dependencies and behavior outside the obvious diff before a change ships. P
 5. Run the smallest check that proves the important safety assumption.
 6. Return the findings to `to-spec`, `implement`, or `code-review`.
 
+## Agent result
+
+For an agent-facing return, load [evidence/1](../investigation/references/result-contract.md). Identify each affected consumer in its claim and distinguish confirmed impact from plausible risk.
+
 ## Verification
 
 Every claimed consumer is found through an actual search. Important assumptions have a check or are marked unproven. The result distinguishes confirmed impact from plausible risk.

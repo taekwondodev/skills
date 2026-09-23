@@ -17,6 +17,10 @@ Improve one measurable result against an explicit target through repeated experi
 5. Push past the first plateau by changing hypothesis category or revisiting the grounded architecture.
 6. Stop only when the predicate is met, cheap hypotheses are exhausted, or the remaining cost is explicitly accepted.
 
+## Agent result
+
+For an agent-facing return, load [measurement/1](../perf-issue/references/result-contract.md). Link the complete trial log and return the retained result, actual stopping reason, and remaining hypotheses without replaying every iteration.
+
 ## Verification
 
-Every attempt has a recorded result and verdict. Accepted changes clear noise and preserve correctness. Rejected changes are fully reverted. The final report includes baseline, final metric, delta, and remaining ideas.
+Every attempt has a recorded result and verdict. Accepted changes clear noise and preserve correctness. Rejected changes are fully reverted. The result includes baseline, final metric, and remaining ideas; derive the delta from those measurements when rendering a human-facing report.

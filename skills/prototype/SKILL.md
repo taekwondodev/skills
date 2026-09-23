@@ -17,6 +17,10 @@ Use a small disposable experiment when observation can resolve a technical or be
 5. Record behavior, complexity, failure modes, and measurements.
 6. Return the evidence to `grilling` or `architect` without silently retaining prototype code.
 
+## Agent result
+
+For an agent-facing return, load [evidence/1](../investigation/references/result-contract.md). Include each candidate's outcome against the shared check, evidence locators, retained artifact scope, and the unresolved decision.
+
 ## Verification
 
 The prototype is disposable or its retained scope is explicit. Every candidate ran against the same check. The result states what was learned and what remains undecided.

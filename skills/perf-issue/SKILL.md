@@ -10,7 +10,7 @@ Handle one measured performance problem with a realistic workload and a before-a
 
 ## Procedure
 
-1. Use `how` to ground the affected path and workload dimensions.
+1. Use `how` to ground the affected path and workload dimensions. Consume its evidence result directly and retain the sources needed for measurement.
 2. Establish a reproducible baseline and a regression gate.
 3. Profile or measure the matching surface.
 4. Form one mechanism-based hypothesis.
@@ -18,6 +18,10 @@ Handle one measured performance problem with a realistic workload and a before-a
 6. Measure before and after with the same harness.
 7. Keep the change only when the improvement clears measurement noise and the regression gate stays green.
 8. Promote to `architect` when the solution changes a boundary or data shape.
+
+## Agent result
+
+For an agent-facing return, load [measurement/1](references/result-contract.md). Preserve the workload, retained-state measurements, regression evidence, and keep/revert verdict.
 
 ## Verification
 

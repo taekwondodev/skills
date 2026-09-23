@@ -17,6 +17,10 @@ Read `writing-for-agents` before drafting the generated project context, domain,
 
 This is a prompt-driven skill, not a deterministic script. Explore, present what you found, confirm with the user, then write.
 
+## Agent result
+
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the configuration and domain artifacts actually written and their verification; preserve the interactive draft approvals above the final return boundary.
+
 ## Process
 
 ### 1. Explore
@@ -126,4 +130,4 @@ Then write the docs files using the seed templates in this skill folder as a sta
 - [triage-labels.md](./triage-labels.md): label mapping
 - [domain.md](./domain.md): domain doc consumer rules + layout
 
-Tell the user the base setup is complete and which skills will now read from these files. Mention they can edit `docs/agents/*.md` and `AGENTS.md` directly later. Re-running this skill is only necessary if they want to switch issue trackers, redo the context merge, or restart from scratch.
+For a human-facing return, tell the user the base setup is complete and which skills will now read from these files. Mention they can edit `docs/agents/*.md` and `AGENTS.md` directly later. For an agent-facing return, use the receipt instead. Re-running this skill is only necessary if they want to switch issue trackers, redo the context merge, or restart from scratch.

@@ -12,6 +12,10 @@ Read `writing-for-agents` before drafting map bodies, ticket bodies, resolution 
 
 The destination varies per effort, and naming it is the first act of charting because it shapes every ticket. It might be a spec to hand off, a decision to lock before work starts, or a change made in place. The map is domain-agnostic across coding projects, app projects, exams, cloud-security work, or whatever else fits the shape.
 
+## Agent result
+
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Locate the map, affected tickets, and resolution artifacts; include queried blockers when reporting readiness. Consume each specialist's declared result contract and inspect its evidence before updating the map. Keep tracker artifacts and human decision checkpoints intact.
+
 ## Plan, don't do
 
 Wayfinder is **planning** by default: each ticket resolves a decision, and the map is done when the way is clear, with nothing left to decide before someone goes and does the thing. The pull to just do the work is usually the signal you've reached the edge of the map and it's time to hand off. The one exception is the Task ticket type (below), which does rather than decides.
@@ -92,7 +96,7 @@ The answer isn't part of the body. Record it when resolving the ticket. Assets c
 
 Every ticket is either **HITL**, meaning human in the loop and worked *with* a human who speaks for themselves, or **AFK**, driven by the agent alone. A HITL ticket only resolves through that live exchange.
 
-- **Research** (AFK): Reading documentation, third-party APIs, or local resources to surface a fact a decision waits on. Resolved by a subagent following the research flow from `/coding-standards`. Verify against current sources (search → extract, browser if needed), never from memory, returning *verified, context-lean* findings (excerpts/URLs, not page dumps). Fire these in parallel at charting time, capturing findings on a throwaway `research/<name>` branch with a context pointer from the ticket.
+- **Research** (AFK): Reading documentation, third-party APIs, or local resources to surface a fact a decision waits on. Resolved by a subagent following the research flow from `/coding-standards`. Verify against current sources (search → extract, browser if needed), never from memory, returning [evidence/1](../investigation/references/result-contract.md). Give the worker that reference; verify the returned findings before recording the ticket's answer. Fire these in parallel at charting time, capturing findings on a throwaway `research/<name>` branch with a context pointer from the ticket.
 - **Grilling** (HITL, default case): Conversation, one question at a time. Read the `grilling` and `domain-modeling` skills to sharpen the terms the question turns on, and additionally consult `architect` (architecture, bounded contexts) and `coding-standards` (types, dependencies) whenever the decision is code-shaped.
 - **Task** (HITL or AFK): Manual work that must happen before a decision can be made. There is nothing to decide or research, but the discussion is blocked until it's done. Signing up for a service, provisioning access, moving data. This is the one type that *does* rather than decides. It earns its place by unblocking a decision, not by delivering the destination.
   - **AFK Task tickets are restricted to non-code chores.** Anything that touches code is HITL and requires explicit confirmation before code is written.

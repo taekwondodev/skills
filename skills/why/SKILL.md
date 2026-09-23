@@ -29,6 +29,10 @@ Use `how` first when the current behavior is not understood. Use `architect` whe
 5. Report the strongest supported explanation, competing explanations, and remaining uncertainty.
 6. Return durable rationale to the owning artifact, such as an ADR or spec, only when that write is part of the user's requested workflow.
 
+## Agent result
+
+For an agent-facing return, load [evidence/1](../investigation/references/result-contract.md). Distinguish recorded rationale from inferred explanations and retain evidence for competing or rejected explanations.
+
 ## Verification
 
 Before presenting the result:

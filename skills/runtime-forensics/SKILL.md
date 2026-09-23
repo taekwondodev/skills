@@ -16,6 +16,10 @@ Diagnose a live symptom through real runtime instrumentation. Use for leaks, idl
 4. Map the finding to source file, symbol, and line.
 5. Return the diagnosis to `grilling`, then route to `perf-issue` or bug-fix if a fix is requested.
 
+## Agent result
+
+For an agent-facing return, load [evidence/1](../investigation/references/result-contract.md). Include the captured signal, artifact locator, source mapping, and confirmed or hypothetical mechanism.
+
 ## Verification
 
 The signal and artifact path are recorded. The mechanism is confirmed or marked as the strongest supported hypothesis. The source mapping is explicit. No fix is silently applied.

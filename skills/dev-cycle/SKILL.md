@@ -64,6 +64,8 @@ Keep one coordinator responsible for synthesis, external effects, and verificati
 
 `code-review` owns the review gate once per completed unit, including a dependent ticket chain, and reruns only affected axes after fixes. When consuming its result directly, load the [review result contract](../code-review/references/result-contract.md) and apply its gates to the payload without an intermediate prose report. Use the repository's GitHub and `commit` procedures for delivery. Report unavailable independence instead of simulating it, and verify artifacts rather than trusting a worker's self-report.
 
-Completion: the requested result exists, its relevant behavior or evidence was checked, user-owned decisions are settled, changed files are accounted for, and remaining risks are explicit. Report checks and principles that changed actual choices.
+For an agent-facing return, consume and forward the active phase's declared result contract without wrapping it in another report. Preserve that procedure's pending decisions and next checkpoint. If no phase result exists yet, continue the current interaction rather than fabricating a completed payload.
+
+Completion: the requested result exists, its relevant behavior or evidence was checked, user-owned decisions are settled, changed files are accounted for, and remaining risks are explicit. For a human-facing summary, report checks and principles that changed actual choices.
 
 Direct invocation remains supported: each phase owns its prerequisites and consumes only the sources needed for that invocation.

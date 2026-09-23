@@ -50,7 +50,7 @@ When uncertain, do not silently convert a decision into an agent preference. Sta
 
 ## Investigation capabilities
 
-Load only the specialist skill that matches the uncertainty. The specialist owns its procedure; `grilling` owns the trigger and reintegrates its evidence into the design tree.
+Load only the specialist skill that matches the uncertainty. The specialist owns its procedure; `grilling` owns the trigger and reintegrates its evidence into the design tree. Consume the selected specialist's declared result contract, verify its evidence, and update the ledger directly rather than requesting a prose report.
 
 - Load `how` for current code flow, ownership, layering, and runtime walkthroughs.
 - Load `why` for rationale, historical decisions, regressions, ADRs, and non-obvious constraints.
@@ -84,16 +84,13 @@ For each decision round, use the available structured user-question capability. 
 
 The grilling session ends only when every reachable branch of the design tree is settled and the user confirms shared understanding.
 
-Then stop. Report:
-
-- decisions made;
-- evidence gathered;
-- alternatives rejected;
-- principles that changed choices;
-- unresolved risks;
-- the recommended next phase.
+Then stop. For a human-facing handoff, summarize only the decisions, decisive evidence, rejected alternatives, principles that changed choices, unresolved risks, and recommended next phase. For an agent-facing handoff, use the result contract below without a second prose report.
 
 Do not start any other skill automatically. The user invokes the next step.
+
+## Agent result
+
+For a return to another skill, load [decision/1](../arena/references/result-contract.md). Carry settled decisions and the next completion criterion; unresolved user choices remain limits. A completed handoff does not authorize the next phase.
 
 ## Verification
 

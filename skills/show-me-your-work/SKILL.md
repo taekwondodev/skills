@@ -26,6 +26,10 @@ For measurement work, include hypothesis, change, before, after, tests, and verd
 4. Read the log before making the next dependent decision.
 5. Keep it local by default. Commit it only when the work outlives the session or needs an auditable record.
 
+## Agent result
+
+At an agent-facing handoff, load [delivery/1](../implement/references/result-contract.md). Return the log locator and verification, not a replay of its rows. Keep the TSV artifact and append procedure unchanged.
+
 ## Verification
 
 Every row has a reason, evidence, and result. The log distinguishes decisions from observations. It contains no secrets or unsupported self-reports.

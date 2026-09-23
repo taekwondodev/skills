@@ -20,11 +20,15 @@ Record the starting commit and the review unit. One independent ticket is one un
 
 1. Write tests at the agreed seams using `testing` when adding or changing tests. Expected values come from the approved contract, not the implementation. For a bug fix, use `principle-fix-root-causes` to guide reproduction and the causal check. Run the regression test red before fixing the owning cause when following the small-change path without a spec or ticket.
 2. Implement within the selected boundaries. Preserve required authorization, validation, secure defaults, and secrets handling while coding; these are not deferred to review.
-3. Load a specialist only for an unresolved need in this step: `investigation` for an unknown cause, `blast-radius` for uncertain consumer impact, `architect` for an unsettled shape or boundary, or `coding-standards` for a dependency or API decision. Return scope, contract, and security changes to the user before choosing them.
+3. Load a specialist only for an unresolved need in this step: `investigation` for an unknown cause, `blast-radius` for uncertain consumer impact, `architect` for an unsettled shape or boundary, or `coding-standards` for a dependency or API decision. Consume each specialist's declared result contract and inspect its evidence without requesting a second report. Return scope, contract, and security changes to the user before choosing them.
 4. Reuse the active procedure's workload, pinned behavior, and evidence rather than restarting its router. For a direct performance task without that context, use `perf-issue` or `hillclimb` to establish the realistic workload and measured verdict. For a refactoring, pin behavior and migrate every affected caller against the selected target shape. Run focused tests and typechecking during the change, then the relevant suite and build at the unit boundary.
 5. Exercise the changed behavior against the real artifact using `principle-prove-it-works` when selecting the proof. Report what was exercised, unavailable, or unproven.
 
 Extended coding-conformance checks belong to the Standards reviewer. Supply its source paths at review time instead of preloading the standards corpus into the implementation context.
+
+## Agent result
+
+For an agent-facing return, load [delivery/1](references/result-contract.md). Locate the changed artifact or commit and retain the actual checks, review disposition, and unresolved limits. Keep review evidence accessible instead of repeating every finding.
 
 ## Close the unit
 

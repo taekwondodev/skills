@@ -18,6 +18,10 @@ Diagnose a problem from an existing profiling or tracing artifact. Read the supp
 6. State whether the result is confirmed or only the strongest artifact-supported hypothesis.
 7. Return the diagnosis to `grilling`, then route to `perf-issue` or bug-fix if a fix is requested.
 
+## Agent result
+
+For an agent-facing return, load [evidence/1](../investigation/references/result-contract.md). Locate the decisive observation in the supplied artifact and retain its source mapping and confidence.
+
 ## Verification
 
 The original artifact, reduced finding, source mapping, and confidence level are recorded. No claim is based on a proxy or an unexamined self-report.

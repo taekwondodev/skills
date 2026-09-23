@@ -18,11 +18,15 @@ The issue tracker and issue-label vocabulary should have been provided to you. T
 
 Read `writing-for-agents` before drafting ticket bodies. Its general writing rules govern this document; the ticket template below adds only ticket-specific structure. Resolve the configured `ready-for-agent` state label through `docs/agents/triage-labels.md` rather than assuming the canonical name is the tracker label.
 
+## Agent result
+
+For an agent-facing return, use [delivery/1](../implement/references/result-contract.md). Include every published ticket and its verified unresolved `blocked_by` references so the caller can identify ready work. For a one-slice no-op, return the reason without creating tickets. Preserve the separate implementation checkpoint.
+
 ## Process
 
 ### 1. Gather context
 
-Work from the complete approved spec. If the user passes a reference (a spec path, an issue number or URL) as an argument, fetch it and read its full body and comments. If the available material is only a plan, conversation, or incomplete issue, stop and hand off to `to-spec` rather than drafting tickets.
+Work from the complete approved spec. If an upstream skill returns a receipt, consume [delivery/1](../implement/references/result-contract.md), resolve its spec reference, and read the full artifact before decomposition. If the user passes a reference (a spec path, an issue number or URL) as an argument, fetch it and read its full body and comments. If the available material is only a plan, conversation, or incomplete issue, stop and hand off to `to-spec` rather than drafting tickets.
 
 ### 2. Explore the codebase (optional)
 
@@ -79,7 +83,7 @@ Before publication, check both directions: every requirement and testing decisio
 
 Publish the approved tickets in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the tracker's native blocking / sub-issue relationship. See `docs/agents/issue-tracker.md`'s "Tracer-bullet ticket operations" section. Apply the configured `ready-for-agent` state label unless instructed otherwise: the tickets are agent-grabbable by construction.
 
-Read back the published bodies, labels, and native relationships. Report which tickets have no open blockers, then stop; implementation is a separate step.
+Read back the published bodies, labels, and native relationships. For an agent-facing return, use the receipt contract; otherwise report which tickets have no open blockers. Then stop; implementation is a separate step.
 
 Preserve the parent issue's body, labels, and open/closed state. Adding the required native child relationships is permitted.
 

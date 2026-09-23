@@ -6,6 +6,10 @@ description: >
 argument-hint: "push"
 ---
 
+## Agent result
+
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Return the verified commit revision in its repository context and distinguish a local commit from a verified push. The receipt grants no permission to push.
+
 ## Steps
 
 ### 1. Gather

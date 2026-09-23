@@ -2,6 +2,10 @@
 
 These contracts describe the repository's Hermes integration. Select the gate that tests the changed behavior and read its contract before running it. Paths below are relative to the `eval` skill directory unless a command starts from the repository root.
 
+## Agent-result structural check
+
+Run `python3 skills/eval/scripts/validate_agent_results.py` from the repository root after changing result contracts or their consumers. It parses JSON examples, checks format identifiers and common status fields, resolves local document links, and rejects unreferenced contracts. It does not establish domain semantics or model adherence; inspect the owning contract's required information and caller behavior separately.
+
 ## Dev-cycle contract
 
 `references/dev-cycle-scenarios.json` is the fixed v2, 18-scenario contract for current-phase routing in the integrated development workflow.

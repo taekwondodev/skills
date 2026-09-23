@@ -22,9 +22,13 @@ dump. In order:
 2. **Browser for interaction**: when a page needs real navigation (a flow, a click-through, a
    dynamic render, or extraction is blocked), drive the browser instead.
 3. **Delegate long research**. For a broad or multi-source question that would flood your context,
-   hand it to a subagent in an isolated context and aggregate its result. This
+   hand it to a subagent in an isolated context with the research result contract below; verify and consume its findings directly. This
    is what `wayfinder` research tickets do. See the `wayfinder` skill.
 4. **Compression is built-in**: clean page content comes back directly (truncation and large-page spill to disk are handled for you); rely on that instead of pasting raw HTML into context.
+
+## Agent result
+
+For research returned to another skill, load [evidence/1](../investigation/references/result-contract.md) and pass it to any research worker. Keep verified versions, API behavior, sources, and uncertainty in the payload. A worker assigned a review axis uses that review's result contract instead.
 
 ## Version & API Lookup (Mandatory)
 
