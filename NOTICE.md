@@ -68,6 +68,15 @@ The following skills are copies or adaptations of Matt Pocock skills:
 - wayfinder
 - writing-for-agents
 
+## humanlayer/skills (HumanLayer)
+
+Source: https://github.com/humanlayer/skills/tree/ca7c8088db69e315a8b2deea43820270457f8f3c/plugins/visual-pr/skills/visual-pr
+License: MIT, Copyright (c) 2026 HumanLayer
+(`https://github.com/humanlayer/skills/blob/ca7c8088db69e315a8b2deea43820270457f8f3c/LICENSE`)
+
+The `pr` skill and its description guidance adapt visual-pr's concise rationale,
+reviewer notes, and structural-outline conventions.
+
 ## Original
 
 The remaining skills in this repository are original to this project:

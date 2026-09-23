@@ -41,9 +41,9 @@ Used by `/wayfinder`. Read its "Ticket Types" section when choosing child-ticket
 
 ## Tracer-bullet ticket operations
 
-Used by `/to-tickets`, `/implement`, and `/commit`.
+Used by `/to-tickets`, `/implement`, `/commit`, and `/pr`.
 
 - **Ticket**: a GitHub issue, one per tracer-bullet slice. Body states the affected components or layers from the approved architecture and the behaviour to build.
 - **Blocking**: same native issue dependencies as wayfinding above.
 - **Grabbing work**: any ticket whose blockers are all closed and which is unassigned is takeable. Claim with `gh issue edit <n> --add-assignee @me` before `/implement` starts.
-- **Delivery**: for user-requested commits, follow `/commit` for issue updates using the comment and close operations above.
+- **Delivery**: read `docs/agents/delivery.md` for the repository default. Follow `/commit` for local commits and direct-delivery issue updates, or `/pr` for PR publication and issue links.

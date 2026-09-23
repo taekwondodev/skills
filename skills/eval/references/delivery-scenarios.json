@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "expected_scenario_count": 8,
+  "scenarios": [
+    {
+      "id": "resolve-delivery-before-edits",
+      "prompt": "Implement a task using the repository delivery default, an explicit task override, or a question when both are absent.",
+      "capabilities": ["implement"],
+      "checks": [
+        {"file": "implement/SKILL.md", "contains": ["references/delivery.md", "before editing", "Stop with the reviewed changes uncommitted"]},
+        {"file": "implement/references/delivery.md", "contains": ["docs/agents/delivery.md", "explicit task choice", "ask the user", "not authorization"]}
+      ]
+    },
+    {
+      "id": "prepare-or-reuse-pr-branch",
+      "prompt": "Prepare PR work without creating redundant branches or discarding unrelated work; handle a late request without rewriting history.",
+      "capabilities": ["implement", "pr"],
+      "checks": [
+        {"file": "implement/references/delivery.md", "contains": ["Reuse", "before edits", "late PR request", "already integrated", "reset", "worktree", "base...HEAD"]},
+        {"file": "pr/SKILL.md", "contains": ["../implement/references/delivery.md", "head repository", "base branch"]}
+      ]
+    },
+    {
+      "id": "commit-only-reviewed-scope",
+      "prompt": "Commit task changes including deletions and paths with spaces while preserving unrelated staged work.",
+      "capabilities": ["commit"],
+      "checks": [
+        {"file": "commit/SKILL.md", "contains": ["git diff --cached", "unrelated staged", "git add --", "deletions", "local-only", "reviewed scope"], "not_contains": ["git add $(git ls-files", "git add .", "git add -A"]}
+      ]
+    },
+    {
+      "id": "direct-delivery-before-issue-closure",
+      "prompt": "Deliver directly, leave an issue open after a failed push, and avoid treating a closed issue as push permission.",
+      "capabilities": ["commit"],
+      "checks": [
+        {"file": "commit/SKILL.md", "contains": ["integration", "before closing", "If push", "already closed", "explicit", "ls-remote"]}
+      ]
+    },
+    {
+      "id": "pr-full-scope-and-retry",
+      "prompt": "Create or update one PR for the entire task range, preserving human edits and stopping on an ambiguous or finished PR lifecycle.",
+      "capabilities": ["pr"],
+      "checks": [
+        {"file": "pr/SKILL.md", "contains": ["base...HEAD", "base..HEAD", "local-only", "human", "same open PR", "closed or merged", "--head", "--base", "headRefOid"]}
+      ]
+    },
+    {
+      "id": "issue-link-is-not-integration",
+      "prompt": "Use closing links only for approved complete work targeting the default branch; never merge or close the issue when opening the PR.",
+      "capabilities": ["pr"],
+      "checks": [
+        {"file": "pr/SKILL.md", "contains": ["Closes #N", "default branch", "non-closing", "partial", "merge", "issue open"]}
+      ]
+    },
+    {
+      "id": "visual-description-and-real-checks",
+      "prompt": "Explain the change concisely using a useful structural view, preserve repository templates, and report actual local and remote verification.",
+      "capabilities": ["pr"],
+      "checks": [
+        {"file": "pr/SKILL.md", "contains": ["references/description.md", "pending", "unavailable", "delivery/1"]},
+        {"file": "pr/references/description.md", "contains": ["Why the change", "Special things to note", "Change outline", "Verification", "template", "human"]}
+      ]
+    },
+    {
+      "id": "setup-and-routing-share-policy",
+      "prompt": "Configure one delivery policy and route implementation, commits, and PRs without a new deliver skill.",
+      "capabilities": ["dev-cycle", "dev-cycle-setup", "commit", "pr"],
+      "checks": [
+        {"file": "dev-cycle/SKILL.md", "contains": ["`commit`", "`pr`", "references/delivery.md"]},
+        {"file": "dev-cycle-setup/SKILL.md", "contains": ["docs/agents/delivery.md", "delivery.md", "direct", "pr"]},
+        {"file": "dev-cycle-setup/issue-tracker-github.md", "contains": ["/commit", "/pr", "docs/agents/delivery.md"]}
+      ]
+    }
+  ],
+  "global_checks": [
+    {"id": "references-resolve", "type": "references_resolve"}
+  ]
+}

@@ -15,6 +15,10 @@ Run `python3 skills/eval/scripts/validate_agent_results.py` from the repository 
 
 Run the structural gate with `python3 skills/eval/scripts/validate_dev_cycle.py --baseline-ref HEAD`. Run the behavioral gate with `python3 skills/eval/scripts/run_dev_cycle_behavior.py --baseline-ref HEAD`. A baseline or shared-policy failure is comparative evidence; any failure from a fresh candidate policy is a blocking regression.
 
+## Delivery contract
+
+`references/delivery-scenarios.json` fixes the v1 structural contract for route selection, branch preparation, scoped commits, integration-before-closure, PR identity and retries, issue links, descriptions, and setup ownership. Run `python3 skills/eval/scripts/validate_dev_cycle.py --matrix skills/eval/references/delivery-scenarios.json --baseline-ref HEAD` from the repository root. These checks establish instruction presence and reference integrity, not model adherence or GitHub effects.
+
 ## Subagent contract
 
 `references/subagent-scenarios.json` is the fixed v2 behavior contract for bounded work delegated to DeepSeek. It covers Standards, Spec, and Adversarial review, read-only investigation, and blast-radius analysis. It excludes routing, implementation, checkpoints, and other responsibilities owned by the main model.

@@ -2,14 +2,14 @@
 
 My collection of agent skills, grouped by how I use them. Each link opens the skill’s instructions.
 
-This repository is licensed under the [MIT License](LICENSE). It includes original skills and adaptations of MIT-licensed work from [pstack](https://github.com/cursor/plugins/tree/main/pstack) (Copyright (c) 2026 Lauren Tan) and [mattpocock/skills](https://github.com/mattpocock/skills) (Copyright (c) 2026 Matt Pocock). See [NOTICE.md](NOTICE.md) for which skills come from where.
+This repository is licensed under the [MIT License](LICENSE). It includes original skills and adaptations of MIT-licensed work from [pstack](https://github.com/cursor/plugins/tree/main/pstack) (Copyright (c) 2026 Lauren Tan), [mattpocock/skills](https://github.com/mattpocock/skills) (Copyright (c) 2026 Matt Pocock), and [humanlayer/skills](https://github.com/humanlayer/skills) (Copyright (c) 2026 HumanLayer). See [NOTICE.md](NOTICE.md) for which skills come from where.
 
 ## Workflow and repository setup
 
 | Skill | Description |
 | --- | --- |
 | [dev-cycle](skills/dev-cycle/SKILL.md) | Route development tasks through the right skills and verification steps. |
-| [dev-cycle-setup](skills/dev-cycle-setup/SKILL.md) | Configure project instructions, issue tracking, labels, and domain docs. |
+| [dev-cycle-setup](skills/dev-cycle-setup/SKILL.md) | Configure project instructions, issue tracking, delivery, labels, and domain docs. |
 | [menu](skills/menu/SKILL.md) | Find skills by name, category, or intended outcome. |
 
 ## Planning and requirements
@@ -47,7 +47,8 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 
 | Skill | Description |
 | --- | --- |
-| [commit](skills/commit/SKILL.md) | Create requested commits and handle issue delivery. |
+| [commit](skills/commit/SKILL.md) | Create scoped commits and perform authorized direct delivery. |
+| [pr](skills/pr/SKILL.md) | Create or update pull requests with concise visual explanations. |
 
 ## Investigation and performance
 

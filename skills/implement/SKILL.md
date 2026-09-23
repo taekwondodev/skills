@@ -14,7 +14,7 @@ Read the approved behavior, acceptance criteria, selected architecture or sketch
 
 For a small change without a spec, record the **expected line**: observed behavior from the reproduction and required behavior after the change. An explicit, unambiguous user request already confirms the required behavior; ask only about a missing or conflicting expectation. Preserve the line in the issue or another durable task artifact before implementation.
 
-Record the starting commit and the review unit. One independent ticket is one unit; a dependent ticket chain shares its starting commit and one final review.
+Record the starting commit and the review unit. One independent ticket is one unit; a dependent ticket chain shares its starting commit and one final review. Resolve the task's delivery route and prepare its branch before editing through [delivery mode and branch preparation](references/delivery.md).
 
 ## Build and verify
 
@@ -34,6 +34,6 @@ For an agent-facing return, load [delivery/1](references/result-contract.md). Lo
 
 Use `code-review` once at the completed unit boundary, against its recorded starting commit and approved contract. Load its [result contract](../code-review/references/result-contract.md) when consuming the review. Use the returned axes, finding actions, and coverage limits directly; apply its gates without expanding the payload into another report. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings and rerun only affected review axes.
 
-Stop with the reviewed changes uncommitted. When the user requests a commit, load `commit` with the reviewed scope, verification evidence, and issue reference, if any. Ask before dispatching another unit.
+Stop with the reviewed changes uncommitted. When the user requests a commit, load `commit` with the reviewed scope, verification evidence, issue reference, resolved delivery context, and approved actions. If the user requests PR publication, load `pr` with the same evidence. Ask before dispatching another unit.
 
 Completion: the approved behavior is implemented, the relevant checks passed on the real artifact, the review gate is satisfied, and every changed file is accounted for.

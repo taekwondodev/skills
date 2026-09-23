@@ -1,6 +1,6 @@
 ---
 name: dev-cycle-setup
-description: Configure a repo for the dev-cycle skills. Produce one portable AGENTS.md from any existing agent-rule files, set up its issue tracker, issue-label vocabulary, and domain doc layout. Run once before first use of capture-issue, to-spec, to-tickets, implement, or wayfinder.
+description: Configure portable project context, tracking, delivery, and domain documentation for dev-cycle.
 disable-model-invocation: true
 ---
 
@@ -10,6 +10,7 @@ Scaffold the per-repo configuration that `/capture-issue`, `/to-spec`, `/to-tick
 
 - **Issue tracker**: where issues and tickets live
 - **Issue labels**: the strings used for the canonical category, state, and workflow-marker roles
+- **Delivery**: the default direct or PR route and its target refs
 - **Domain docs**: where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
 - **Project context**: one portable `AGENTS.md` at the repo root, produced from whatever agent-rule sources already exist
 
@@ -28,6 +29,7 @@ For an agent-facing return, load [delivery/1](../implement/references/result-con
 Look at the current repo to understand its starting state. Read whatever exists; don't assume:
 
 - `git remote -v`: is this a GitHub repo? Which one?
+- Current branch, remote default branch, contribution rules, branch protection, PR templates, and any existing `docs/agents/delivery.md`: which delivery choices are already explicit? Inspect accessible configuration; report unavailable rules rather than infer permission from missing evidence.
 - `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
 - `docs/adr/` and any `src/*/docs/adr/` directories
 - `docs/agents/`: does this skill's prior output already exist?
@@ -75,6 +77,10 @@ The defaults are the two canonical issue-state labels, each label string equal t
 
 Offer **multi-context** only when exploration found monorepo signals: a root `CONTEXT-MAP.md` pointing to per-context `CONTEXT.md` files. Then confirm which layout they want.
 
+**Section C1: Delivery.** Preserve an existing explicit delivery policy. Otherwise ask for the repository default: `direct` or `pr`. Present discovered integration and PR base refs and ask only about unresolved targets.
+
+Draft `docs/agents/delivery.md` from [delivery.md](./delivery.md), replacing its placeholders with the chosen mode, integration target, PR base, source-remote policy, and required verification gates.
+
 **Section D: Existing rule-file content.** Only runs if Explore flagged a migration candidate; skip entirely otherwise.
 
 Section D runs per flagged source whenever that source contains at least one domain term or one ADR-worthy decision; it does not wait for "substantial prose". Every domain term and architectural decision routed by Section A0 must land in `CONTEXT.md` or `docs/adr/` during this setup, so `AGENTS.md` never points at an artifact that was not written. If a routed artifact cannot be written, stop before writing `AGENTS.md` rather than leaving a dangling pointer.
@@ -94,7 +100,7 @@ Anything that doesn't clearly fit a bucket stays in `AGENTS.md`. Don't force a m
 Show the user a draft of:
 
 - The generated `AGENTS.md`
-- The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, and `docs/agents/triage-labels.md`
+- The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/triage-labels.md`, and `docs/agents/delivery.md`
 - If Section D ran: which section goes where, each one labelled operational/ADR/domain-term, the new ADR files' content, and the `CONTEXT.md` entries drafted from it
 - If any conflicts were found in Section A0: each conflict, both excerpts, and the user's recorded decision
 
@@ -119,6 +125,10 @@ The block contains pointers only, never the content itself:
 
 [one-line summary of the label vocabulary]. See `docs/agents/triage-labels.md`.
 
+### Delivery
+
+[default direct or PR route]. Before implementation or delivery, read `docs/agents/delivery.md` for route and target defaults.
+
 ### Domain docs
 
 [one-line summary of layout: "single-context" or "multi-context"]. See `docs/agents/domain.md`.
@@ -128,6 +138,7 @@ Then write the docs files using the seed templates in this skill folder as a sta
 
 - [issue-tracker-github.md](./issue-tracker-github.md): GitHub issue tracker, including the operations `/wayfinder` needs
 - [triage-labels.md](./triage-labels.md): label mapping
+- [delivery.md](./delivery.md): delivery defaults and verification gates
 - [domain.md](./domain.md): domain doc consumer rules + layout
 
 For a human-facing return, tell the user the base setup is complete and which skills will now read from these files. Mention they can edit `docs/agents/*.md` and `AGENTS.md` directly later. For an agent-facing return, use the receipt instead. Re-running this skill is only necessary if they want to switch issue trackers, redo the context merge, or restart from scratch.
