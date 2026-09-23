@@ -18,7 +18,7 @@ For an agent-facing return, load [delivery/1](../implement/references/result-con
 
 ## Plan, don't do
 
-Wayfinder is **planning** by default: each ticket resolves a decision, and the map is done when the way is clear, with nothing left to decide before someone goes and does the thing. The pull to just do the work is usually the signal you've reached the edge of the map and it's time to hand off. The one exception is the Task ticket type (below), which does rather than decides.
+Wayfinder is **planning** by default: each ticket resolves a decision, and the map is done when the way is clear, with nothing left to decide before someone goes and does the thing. The pull to just do the work is usually the signal you've reached the edge of the map and it's time to hand off. The one exception is the Prerequisite ticket type (below), which does rather than decides.
 
 ## Continuity, capabilities, and principles
 
@@ -84,7 +84,7 @@ Each ticket is a **child issue** of the map. Its body is the question, sized to 
 <the decision or investigation this ticket resolves>
 ```
 
-Each ticket carries a `wayfinder:<type>` label: `research`, `grilling`, or `task`.
+Each ticket carries exactly one type label from **Ticket Types** below, retained after closure. For state labels, follow `docs/agents/triage-labels.md`.
 
 A session **claims** a ticket by assigning it to the dev driving the map, **first**, before any work. An open, unassigned ticket is unclaimed.
 
@@ -96,10 +96,10 @@ The answer isn't part of the body. Record it when resolving the ticket. Assets c
 
 Every ticket is either **HITL**, meaning human in the loop and worked *with* a human who speaks for themselves, or **AFK**, driven by the agent alone. A HITL ticket only resolves through that live exchange.
 
-- **Research** (AFK): Reading documentation, third-party APIs, or local resources to surface a fact a decision waits on. Resolved by a subagent following the research flow from `/coding-standards`. Verify against current sources (search → extract, browser if needed), never from memory, returning [evidence/1](../investigation/references/result-contract.md). Give the worker that reference; verify the returned findings before recording the ticket's answer. Fire these in parallel at charting time, capturing findings on a throwaway `research/<name>` branch with a context pointer from the ticket.
-- **Grilling** (HITL, default case): Conversation, one question at a time. Read the `grilling` and `domain-modeling` skills to sharpen the terms the question turns on, and additionally consult `architect` (architecture, bounded contexts) and `coding-standards` (types, dependencies) whenever the decision is code-shaped.
-- **Task** (HITL or AFK): Manual work that must happen before a decision can be made. There is nothing to decide or research, but the discussion is blocked until it's done. Signing up for a service, provisioning access, moving data. This is the one type that *does* rather than decides. It earns its place by unblocking a decision, not by delivering the destination.
-  - **AFK Task tickets are restricted to non-code chores.** Anything that touches code is HITL and requires explicit confirmation before code is written.
+- **Research** (`wayfinder:research`, AFK): Verifiable evidence answering a factual question that a decision depends on, drawn from documentation, third-party APIs, or local resources. Resolved by a subagent following the research flow from `/coding-standards`. Verify against current sources (search → extract, browser if needed), never from memory, returning [evidence/1](../investigation/references/result-contract.md). Give the worker that reference; verify the returned findings before recording the ticket's answer. Fire these in parallel at charting time, capturing findings on a throwaway `research/<name>` branch with a context pointer from the ticket.
+- **Decision** (`wayfinder:decision`, HITL, default case): A choice settled with the human through conversation, one question at a time. Read the `grilling` and `domain-modeling` skills to sharpen the terms the question turns on, and additionally consult `architect` (architecture, bounded contexts) and `coding-standards` (types, dependencies) whenever the decision is code-shaped.
+- **Prerequisite** (`wayfinder:prerequisite`, HITL or AFK): Manual work that must happen before a decision can be made. There is nothing to decide or research, but the discussion is blocked until it's done. Signing up for a service, provisioning access, moving data. This is the one type that *does* rather than decides. It earns its place by unblocking a decision, not by delivering the destination.
+  - **AFK Prerequisite tickets are restricted to non-code chores.** Anything that touches code is HITL and requires explicit confirmation before code is written.
   - Resolved when the work is done; the answer records what was done and any resulting facts later tickets depend on.
 
 ## Fog of war
