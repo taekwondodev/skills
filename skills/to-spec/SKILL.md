@@ -14,7 +14,7 @@ Read `writing-for-agents` before drafting the spec. Its general writing rules go
 
 When invoked with an issue reference, first read `docs/agents/issue-tracker.md` and fetch the issue's full body, comments, and labels through the configured tracker. Use that issue as the source material, update the same issue with the completed spec and its label transition, and do not create a duplicate issue for the same request. Resolve the configured label strings through `docs/agents/triage-labels.md`; do not assume canonical state names are the tracker labels.
 
-When an upstream skill supplies a structured result, load its declared result contract, resolve its artifact references, and read the decision evidence. A result marked complete does not replace the required approval or permit publishing an incomplete spec.
+When an upstream skill supplies a structured result, load its declared result contract, resolve its artifact references, and read the decision evidence.
 
 When invoked with a `wayfinder` map whose frontier is empty, read the map's Decisions-so-far and the full body of each closed ticket. That is the source material, not the conversation.
 

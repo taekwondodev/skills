@@ -1,6 +1,6 @@
 # Decision results
 
-Use for agent-facing candidate designs, synthesis, and resolved decision handoffs. Return JSON only unless the caller supplies a compatible contract. Human questions and approval checkpoints remain interactive.
+Use for agent-facing candidate designs, synthesis, and resolved decision handoffs. Return JSON only unless the caller supplies a compatible contract.
 
 ## Shape: decision/1
 
@@ -12,9 +12,9 @@ Each decision contains nonempty `choice` and `reason` strings and an `evidence` 
 - `partial`: a required decision, approval, comparison, or artifact remains outstanding. `blocked`: prerequisites prevented useful work. Both require limits explaining what remains and how to resolve it.
 - Empty decisions mean none were settled; they do not resolve open questions. Human-owned choices require actual confirmation before they are reported as settled.
 
-Keep native sketches, signatures, module maps, and rationale files intact. Design results require locators for those deliverables in `artifacts`; they do not replace them with a summary. Record the selected base, justified grafts, and reasons for rejected candidates in the synthesis. Keep speculative options out of settled decisions.
+When the assigned task requires artifacts, reference those deliverables in `artifacts`. Keep speculative options out of settled decisions.
 
-Give each candidate worker this contract and its artifact requirements. The caller reads the artifacts, verifies evidence and independence, then consumes the decisions without requesting a second report. An unverified candidate or missing independent attempt remains a limit. `next` describes the next action and completion criterion, not permission to cross a checkpoint.
+The caller checks evidence and required artifacts, then consumes the decisions without requesting a second report. Unverified decisions or unmet task requirements remain limits. `next` describes the next action and completion criterion, not permission to cross a checkpoint.
 
 Examples use fictional sources.
 

@@ -90,7 +90,7 @@ Do not start any other skill automatically. The user invokes the next step.
 
 ## Agent result
 
-For a return to another skill, load [decision/1](../arena/references/result-contract.md). Carry settled decisions and the next completion criterion; unresolved user choices remain limits. A completed handoff does not authorize the next phase.
+For a return to another skill, load [decision/1](../arena/references/result-contract.md). Carry settled decisions and the next completion criterion; unresolved user choices remain limits.
 
 ## Verification
 

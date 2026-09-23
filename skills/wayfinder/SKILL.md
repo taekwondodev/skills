@@ -14,7 +14,7 @@ The destination varies per effort, and naming it is the first act of charting be
 
 ## Agent result
 
-For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Locate the map, affected tickets, and resolution artifacts; include queried blockers when reporting readiness. Consume each specialist's declared result contract and inspect its evidence before updating the map. Keep tracker artifacts and human decision checkpoints intact.
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Locate the map, affected tickets, and resolution artifacts; include queried blockers when reporting readiness. Consume each specialist's declared result contract and inspect its evidence before updating the map.
 
 ## Plan, don't do
 

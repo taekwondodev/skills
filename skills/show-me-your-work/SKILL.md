@@ -28,7 +28,7 @@ For measurement work, include hypothesis, change, before, after, tests, and verd
 
 ## Agent result
 
-At an agent-facing handoff, load [delivery/1](../implement/references/result-contract.md). Return the log locator and verification, not a replay of its rows. Keep the TSV artifact and append procedure unchanged.
+At an agent-facing handoff, load [delivery/1](../implement/references/result-contract.md). Return the log locator and verification, not a replay of its rows.
 
 ## Verification
 

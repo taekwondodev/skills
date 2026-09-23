@@ -13,7 +13,7 @@ Each finding has `kind` (`fact`, `inference`, `hypothesis`, or `rejected`), `cla
 - `rejected` requires refuting evidence. Include rejected hypotheses only when their disposition affects the decision or avoids repeated work.
 - `complete` means the assigned scope was examined, not that every hypothesis became fact. `partial` means required coverage is missing; `blocked` means meaningful investigation could not proceed. Non-complete results require limits explaining the gap and how to resolve it. Empty findings alone never establish safety or absence.
 
-Preserve flow order for explanations, consumer identity for impact findings, capture/source mapping for forensics, and each candidate's observed outcome for prototypes. Keep measurements and uncertainty with their evidence. Link large captures or comparisons through accessible locators; include necessary excerpts when the receiver lacks access.
+Keep observations and uncertainty with their evidence. Link large sources through accessible locators; include necessary excerpts when the receiver lacks access.
 
 Before delegation, give workers this contract and their bounded questions. The caller verifies sources, merges distinct findings, and updates its decision or risk record directly. Preserve unresolved claims and coverage gaps; a result neither authorizes changes nor resolves user-owned choices.
 

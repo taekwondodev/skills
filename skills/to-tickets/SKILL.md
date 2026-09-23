@@ -20,7 +20,7 @@ Read `writing-for-agents` before drafting ticket bodies. Its general writing rul
 
 ## Agent result
 
-For an agent-facing return, use [delivery/1](../implement/references/result-contract.md). Include every published ticket and its verified unresolved `blocked_by` references so the caller can identify ready work. For a one-slice no-op, return the reason without creating tickets. Preserve the separate implementation checkpoint.
+For an agent-facing return, use [delivery/1](../implement/references/result-contract.md). Include every published ticket and its verified unresolved `blocked_by` references so the caller can identify ready work. For a one-slice no-op, return the reason without creating tickets.
 
 ## Process
 

@@ -53,7 +53,7 @@ If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](
 
 ## Agent result
 
-For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the glossary entries and ADRs actually written, or explain a no-op. Keep unresolved terminology or decisions in limits; the receipt does not replace the native documents.
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the glossary entries and ADRs actually written, or explain a no-op. Keep unresolved terminology or decisions in limits.
 
 ## Where this gets invoked
 

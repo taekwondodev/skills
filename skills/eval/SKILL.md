@@ -40,7 +40,7 @@ Keep verification proportional to the changed behavior and agreed risk. Use mode
 
 ## Agent result
 
-For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the evaluation report with its contract and policy versions, and represent each scoped gate's actual outcome in checks. Preserve skipped, unrun, and failing gates without replaying the report. Existing runner output schemas remain unchanged.
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the evaluation report with its contract and policy versions, and represent each scoped gate's actual outcome in checks. Preserve skipped, unrun, and failing gates without replaying the report.
 
 ## Verification
 

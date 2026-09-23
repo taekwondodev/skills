@@ -19,7 +19,7 @@ This is a prompt-driven skill, not a deterministic script. Explore, present what
 
 ## Agent result
 
-For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the configuration and domain artifacts actually written and their verification; preserve the interactive draft approvals above the final return boundary.
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the configuration and domain artifacts actually written and their verification.
 
 ## Process
 
