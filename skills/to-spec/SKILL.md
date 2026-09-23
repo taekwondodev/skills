@@ -90,7 +90,7 @@ A list of implementation decisions that were made. This can include:
 - Specific interactions
 - Dependency additions, if any, with the `/coding-standards` justification for each
 
-Guideline: at most 8 bullets, one decision each. A decision that needs its own paragraph of rationale goes in an ADR, with the bullet pointing at it.
+Guideline: at most 8 bullets, one decision each. Keep the rationale here or link its existing authoritative record. Before creating a separate ADR, read [ADR-FORMAT.md](../domain-modeling/ADR-FORMAT.md) and apply its necessity gate.
 
 Do NOT include specific file paths or code snippets. They may end up being outdated very quickly.
 

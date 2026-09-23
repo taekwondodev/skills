@@ -20,4 +20,6 @@ When defining or changing a skill-to-skill or subagent response, load [agent-res
 
 Load [authoring.md](references/authoring.md) when designing or restructuring an agent-facing document or skill, including decisions about information hierarchy, pointers, splitting, and pruning. Routine title or comment work needs only this contract.
 
+When creating or revising an ADR, load [ADR-FORMAT.md](../domain-modeling/ADR-FORMAT.md) for the record's necessity, scope, and completion checks.
+
 When authoring a skill, read [SKILL-MECHANICS.md](SKILL-MECHANICS.md) for frontmatter, invocation choice, and router skills.

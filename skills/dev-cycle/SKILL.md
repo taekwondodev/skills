@@ -56,7 +56,7 @@ Preserve the human checkpoint after grilling. Planning approval does not silentl
 
 Promote to the governed decision path when the work changes unapproved product behavior, scope, a public API consumed outside the repository, a schema or persisted format, a bounded context, a security boundary, or a major compatibility decision. Continue reversible investigation while the decision is pending.
 
-A prototype, benchmark, or internal ownership change alone is not promotion. Record durable internal architectural choices in an ADR when warranted; do not create a spec solely for ceremony.
+A prototype, benchmark, or internal ownership change alone is not promotion. Before creating an ADR for an internal choice, apply the [ADR necessity gate](../domain-modeling/ADR-FORMAT.md). Do not create a spec solely for ceremony.
 
 ## Delegation and delivery
 

@@ -5,7 +5,7 @@ Reference for the `Size before routing` step in `dev-cycle`. Each example names 
 ## Small
 
 - **Changing how one error is handled** (retry becomes suspend, a failure becomes a logged pass-through). Signal: one behavior, reversible, nothing persisted. Route: reproduce, expected line established by the explicit user request or clarified with the user, regression test, change, existing suite and build, the user tries it once, inline review.
-- **Moving work between threads, actors, or queues inside one application.** Signal: internal ownership only, no consumer outside the process. Route: same as above. Record the choice in an ADR when it is durable; an ADR is not a spec.
+- **Moving work between threads, actors, or queues inside one application.** Signal: internal ownership only, no consumer outside the process. Route: same as above. Keep the verdict in the task record; apply the [ADR necessity gate](../../domain-modeling/ADR-FORMAT.md) before creating a separate decision record.
 - **Adjusting a threshold, timeout, or label.** Signal: one value, one file.
 
 ## Medium

@@ -9,7 +9,7 @@ Actively build and sharpen the project's domain model as you design. This is the
 
 Read `writing-for-agents` before writing `CONTEXT.md` entries or ADRs. Its general writing rules govern those documents; the context and ADR formats below add only domain-specific structure.
 
-`CONTEXT.md` and `docs/adr/` are project-local files, never the project context file. `AGENTS.md` stays a router of pointers, and this skill owns the content behind it.
+`AGENTS.md` holds concise rules needed across repository work and conditional pointers; `CONTEXT.md` holds the glossary. Separate decision records must earn their place through the ADR gate below.
 
 ## File structure
 
@@ -43,13 +43,7 @@ When a term is resolved, update `CONTEXT.md` right there. Don't batch these up. 
 
 ### Offer ADRs sparingly
 
-Only offer to create an ADR when all three are true:
-
-1. **Hard to reverse**: the cost of changing your mind later is meaningful
-2. **Surprising without context** means a future reader will wonder "why did they do it this way?"
-3. **The result of a real trade-off**, where genuine alternatives existed and you picked one for specific reasons
-
-If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
+Before offering or updating an ADR, read [ADR-FORMAT.md](./ADR-FORMAT.md). Apply its placement and necessity gate first, then its format and completion checks.
 
 ## Agent result
 

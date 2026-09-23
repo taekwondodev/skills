@@ -50,12 +50,12 @@ Lead each section with the recommended answer so the user can accept it in a wor
 
 Take these steps before the other sections, because their output feeds Sections B through D:
 
-1. Classify each repo-global source's content into three buckets: operational rules, domain terms, and architectural decisions. Use the same bucket tests as Section D.
+1. Classify each repo-global source's content using Section D's placement rules: repository-wide rules, domain terms, and decision rationale.
 2. Merge the operational content: deduplicate instructions that say the same thing in equivalent words, keep genuinely distinct rules side by side, and normalize Claude-specific references (`CLAUDE.md`, "Claude") to harness-neutral wording naming `AGENTS.md` or "the agent".
-3. Surface every contradiction, whether it sits between two sources or inside one source (an old rule contradicting a newer one in the same file). Never pick by filename precedence or position. Show both excerpts and ask one focused question per conflict; write the user's decision into `AGENTS.md`.
-4. Route domain terms to `CONTEXT.md` entries and architectural decisions to ADRs exactly as Section D specifies, then leave pointers in `AGENTS.md` instead of the migrated prose.
-5. Draft `AGENTS.md` with: the merged operational rules, a `## Dev cycle` block per the template below, and pointers to `CONTEXT.md`, `docs/adr/`, and the `docs/agents/` documents.
-6. Show the draft and let the user edit before writing. Then write `AGENTS.md` at the repo root.
+3. Surface every contradiction, whether it sits between two sources or inside one source (an old rule contradicting a newer one in the same file). Never pick by filename precedence or position. Show both excerpts and ask one focused question per conflict; retain the resolution in the content's selected authoritative home.
+4. Apply Section D's placement rules before moving content. Keep concise repository-wide rules in `AGENTS.md`; route glossary entries to `CONTEXT.md` and only qualifying decisions to ADRs. Use conditional pointers for content moved or already recorded elsewhere.
+5. Draft `AGENTS.md` with concise repository-wide rules and a `## Dev cycle` block per the template below. Add conditional pointers only to existing or justified new targets.
+6. Carry the draft into Confirm and edit below; resolve its targets before writing it.
 
 **Section A: Issue tracker.**
 
@@ -73,7 +73,7 @@ The defaults are the two canonical issue-state labels, each label string equal t
 
 `needs-grilling` is the initial issue state for quick issues intentionally created before a grilling session. It is replaced by `ready-for-agent` when the complete spec is published.
 
-**Section C: Domain docs.** Default to **single-context**. Use one `CONTEXT.md` + `docs/adr/` at the repo root. This fits almost every repo; write it without asking.
+**Section C: Domain docs.** Default to the **single-context** layout: `CONTEXT.md` + `docs/adr/` at the repo root. Record this convention without asking; create content files only when a resolved term or a decision passing Section D's gate needs one.
 
 Offer **multi-context** only when exploration found monorepo signals: a root `CONTEXT-MAP.md` pointing to per-context `CONTEXT.md` files. Then confirm which layout they want.
 
@@ -83,17 +83,17 @@ Draft `docs/agents/delivery.md` from [delivery.md](./delivery.md), replacing its
 
 **Section D: Existing rule-file content.** Only runs if Explore flagged a migration candidate; skip entirely otherwise.
 
-Section D runs per flagged source whenever that source contains at least one domain term or one ADR-worthy decision; it does not wait for "substantial prose". Every domain term and architectural decision routed by Section A0 must land in `CONTEXT.md` or `docs/adr/` during this setup, so `AGENTS.md` never points at an artifact that was not written. If a routed artifact cannot be written, stop before writing `AGENTS.md` rather than leaving a dangling pointer.
+Section D runs when a flagged source contains a domain term or a possible decision record. Classify it before creating files. Reuse an existing authoritative target where sufficient, and create only missing qualifying content. Every pointer in the draft must resolve to an existing or newly written target.
 
-> Explainer: before this setup, the old rule files were doing the job `/domain-modeling` and ADRs now own: a place to dump domain terms and "why we built it this way" so you didn't have to repeat it every session. That content moves to where the rest of this pipeline expects to find it; `AGENTS.md` keeps only operational rules and pointers.
+> Explainer: keep concise rules needed across repository work in `AGENTS.md`. Put glossary definitions and task-specific rationale behind conditional pointers, reusing existing records rather than copying them.
 
 Read each flagged source in full and sort each section into one of three buckets:
 
-- **Operational/setup steps** ("run this command", "copy this file", "how to test"): merged into `AGENTS.md`.
-- **ADR-worthy decision**: per `/domain-modeling`'s ADR test in ADR-FORMAT.md. Becomes a numbered ADR in `docs/adr/` while keeping the original rationale prose. That's the part worth preserving, not just the verdict.
+- **Repository-wide rule**: keep the concise instruction and necessary reason in `AGENTS.md`. Task-specific procedures and setup details belong behind conditional pointers.
+- **Decision rationale**: read [ADR-FORMAT.md](../domain-modeling/ADR-FORMAT.md) and apply its placement, necessity, and completion checks to select an existing or new record.
 - **Domain term**: a project-specific concept given a definition. Becomes a `CONTEXT.md` entry per CONTEXT-FORMAT.md.
 
-Anything that doesn't clearly fit a bucket stays in `AGENTS.md`. Don't force a migration to hit a quota. When several sources carry the same bucket content, deduplicate during the merge rather than copying it twice.
+For remaining content, apply `writing-for-agents`' information hierarchy to select its home and reading trigger.
 
 ### 3. Confirm and edit
 
@@ -101,7 +101,7 @@ Show the user a draft of:
 
 - The generated `AGENTS.md`
 - The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/triage-labels.md`, and `docs/agents/delivery.md`
-- If Section D ran: which section goes where, each one labelled operational/ADR/domain-term, the new ADR files' content, and the `CONTEXT.md` entries drafted from it
+- If Section D ran: each section's selected home, reused targets, and the content of any justified new records or glossary entries
 - If any conflicts were found in Section A0: each conflict, both excerpts, and the user's recorded decision
 
 Let them edit before writing.
@@ -110,7 +110,7 @@ Let them edit before writing.
 
 Write `AGENTS.md` at the repo root. If an `AGENTS.md` already existed there, preserve its operational content in the merge. Do not modify any other agent-rule source file; the originals remain byte-for-byte unchanged.
 
-If Section D ran: write the new ADR files and `CONTEXT.md` entries first, then compose `AGENTS.md` with the operational rules plus one-line pointers to where migrated content went, per `/writing-for-agents`' context-pointer rule; name what moved and where, don't restate it.
+If Section D ran: resolve reused targets and write any justified new ADR files or `CONTEXT.md` entries before composing `AGENTS.md`. Keep concise repository-wide rules inline and use conditional pointers for disclosed content, per `writing-for-agents`. Verify every pointer's target and reading trigger.
 
 The block contains pointers only, never the content itself:
 
