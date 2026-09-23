@@ -30,4 +30,4 @@ Add a machine schema when a program consumes the response; keep field definition
 
 ## Acceptance
 
-Before adoption, check that the caller can choose the next action from the payload, retrieve its evidence, and distinguish clean completion from unperformed work. Parse JSON examples and check links locally. Claim model adherence or token savings only when those properties were actually measured; include reference-loading costs when comparing token usage.
+Before adoption, check that the caller can choose the next action from the payload, retrieve its evidence, and distinguish clean completion from unperformed work. Parse JSON examples and check links locally.

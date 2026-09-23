@@ -1,6 +1,6 @@
 # Review results
 
-Load before dispatching, returning, or consuming `code-review` or `interrogate` results. Return compact JSON only, without fences, narration, counts, or a duplicate report. When changing this contract, load [agent-result authoring](../../writing-for-agents/references/agent-results.md); runtime workers need only this file.
+Load before dispatching, returning, or consuming `code-review` or `interrogate` results. Return compact JSON only, without fences, narration, counts, or a duplicate report.
 
 ## Shape: review/1
 
@@ -33,7 +33,7 @@ Every finding contains nonempty strings `class`, `at`, `claim`, `evidence`, and 
 
 `skipped` requires permission from the owning procedure: code-review permits skipping Spec when no approved contract exists after prerequisite handling. Inaccessible existing contracts are unavailable, not skipped. Unavailable and skipped axes have empty findings.
 
-Blocking classes block the caller's gate. Partial or unavailable coverage requires resolution or an explicit user decision before proceeding. Permitted skips remain visible, never labeled passed. Malformed payloads, unknown versions, missing assigned axes, or unsupported evidence are incomplete results, never clean reviews. Request correction only when another model call is authorized; otherwise expose the gap.
+Blocking classes block the caller's gate. Partial or unavailable coverage requires resolution or an explicit user decision before proceeding. Permitted skips remain visible, never labeled passed. Malformed payloads, unknown versions, missing assigned axes, or unsupported evidence are incomplete results, never clean reviews.
 
 ## Consumer
 
