@@ -28,7 +28,7 @@ Extended coding-conformance checks belong to the Standards reviewer. Supply its 
 
 ## Close the unit
 
-Use `code-review` once before committing the completed unit, against its recorded starting commit and approved contract. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings and rerun only affected review axes.
+Use `code-review` once before committing the completed unit, against its recorded starting commit and approved contract. Load its [result contract](../code-review/references/result-contract.md) when consuming the review. Use the returned axes, finding actions, and coverage limits directly; apply its gates without expanding the payload into another report. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings and rerun only affected review axes.
 
 Commit reviewed work to the current branch. If the work is tracked, close completed tickets through `docs/agents/issue-tracker.md`. Ask before dispatching newly unblocked frontier tickets; completing this unit does not authorize another.
 

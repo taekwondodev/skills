@@ -13,6 +13,10 @@ Review one completed unit against a fixed point on three separate axes:
 
 `implement` requests this gate before committing a completed unit. Direct requests may review a branch, ticket, PR, or working tree. This skill owns review scope and re-review; it does not restart implementation or architecture workflows.
 
+## Result contract
+
+Before dispatching or returning results, load [result-contract.md](references/result-contract.md). Reviewers return `review/1` JSON for their assigned axes; the coordinator verifies and merges it for the caller. Human-facing requests receive a concise rendering unless structured output was requested.
+
 ## Scope
 
 - **Small change**: review inline in the same three groups. Read the applicable standards for this review. Escalate when an unresolved hard finding requires independent review.
@@ -30,7 +34,7 @@ Find the approved contract from the supplied spec, ticket, agreed-change artifac
 
 ## 2. Dispatch only what each reviewer needs
 
-Give each reviewer the resolved base, diff command, untracked paths, commit list, scope, and accessible source paths. Require reviewers to read their own sources and inspect the actual changes. When a worker cannot access a source, supply its necessary contents or report the missing capability. The parent does not preload or paste the full standards corpus merely to delegate it.
+Give each reviewer the resolved base, diff command, untracked paths, commit list, scope, accessible source paths, assigned axis, and result-contract reference. Each worker loads the result contract in its own context. Require reviewers to read their own sources and inspect the actual changes. When a worker cannot access a source, supply its necessary contents or report the missing capability. The parent does not preload or paste the full standards corpus merely to delegate it.
 
 Reuse current `blast-radius` evidence. If consumer impact is unsettled, assign that investigation to the relevant reviewer; send confirmed cross-axis findings to other reviewers when needed.
 
@@ -48,12 +52,12 @@ Provide the approved contract. Report missing or partial requirements, unrequest
 
 Provide the `interrogate` path, contract, and available impact evidence. The reviewer acts as the bounded adversarial worker, without spawning another review tree. Challenge consumers, migrations, security, runtime effects, and whether checks prove the claims. Categorize findings as act on, consider, noted, or dismissed. Keep stylistic conformity with Standards.
 
-Each reviewer returns evidenced findings and coverage limits, normally under 400 words. If independent delegation is unavailable, report the limitation; an inline pass is not an independent review.
+Each reviewer returns only its contracted JSON with evidenced findings and coverage limits. If independent delegation is unavailable, report the limitation; an inline pass is not an independent review.
 
 ## 3. Resolve and report
 
-Inspect the cited evidence before accepting findings. Report **Standards**, **Spec**, and **Adversarial** separately, with counts and the worst issue within each axis. Do not merge or rerank the axes into one score.
+Inspect the cited evidence before accepting findings. Keep **Standards**, **Spec**, and **Adversarial** separate in the merged result and apply the result contract's coverage and gate rules. Return the payload directly to the caller without a second prose report. Do not merge or rerank the axes into one score.
 
-Hard Standards violations, missing Spec requirements, and evidenced Adversarial findings marked `act on` block the commit. Return them to the implementer, then rerun affected axes. Smells and `consider` findings are judgment calls for the user, not automatic scope expansion.
+Return blocking actions to the implementer, then rerun affected axes. Preserve unresolved coverage and user-owned judgment calls rather than treating them as a pass or automatic scope expansion.
 
 Completion: every available axis covered the unit, unavailable coverage is explicit, and blocking findings are resolved before the caller commits.

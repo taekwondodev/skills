@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import posixpath
 import re
 import subprocess
 from pathlib import Path
@@ -97,7 +98,9 @@ def evaluate_global(
 
     if check.get("type") == "references_resolve":
         failures = []
-        reference_pattern = re.compile(r"references/[A-Za-z0-9._/-]+\.md")
+        reference_pattern = re.compile(
+            r"(?<![A-Za-z0-9._/-])(?:[A-Za-z0-9._-]+/)*references/[A-Za-z0-9._/-]+\.md"
+        )
         for relative in list_files("*/SKILL.md"):
             content = read(relative)
             if content is None:
@@ -105,7 +108,7 @@ def evaluate_global(
                 continue
             skill_dir = Path(relative).parent
             for reference in sorted(set(reference_pattern.findall(content))):
-                target = str(skill_dir / reference)
+                target = posixpath.normpath((skill_dir / reference).as_posix())
                 if read(target) is None:
                     failures.append(f"{relative} points to missing {target}")
         return failures

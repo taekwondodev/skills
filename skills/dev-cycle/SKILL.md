@@ -62,7 +62,7 @@ A prototype, benchmark, or internal ownership change alone is not promotion. Rec
 
 Keep one coordinator responsible for synthesis, external effects, and verification. Delegate independent research or artifacts in separate contexts, with explicit scope, accessible source paths, write boundaries, and completion criteria. Reviewers load their own standards. Supply source contents only when the worker cannot retrieve them. Use worktrees for concurrent repository writers.
 
-`code-review` owns the review gate once per completed unit, including a dependent ticket chain, and reruns only affected axes after fixes. Use the repository's GitHub and `commit` procedures for delivery. Report unavailable independence instead of simulating it, and verify artifacts rather than trusting a worker's self-report.
+`code-review` owns the review gate once per completed unit, including a dependent ticket chain, and reruns only affected axes after fixes. When consuming its result directly, load the [review result contract](../code-review/references/result-contract.md) and apply its gates to the payload without an intermediate prose report. Use the repository's GitHub and `commit` procedures for delivery. Report unavailable independence instead of simulating it, and verify artifacts rather than trusting a worker's self-report.
 
 Completion: the requested result exists, its relevant behavior or evidence was checked, user-owned decisions are settled, changed files are accounted for, and remaining risks are explicit. Report checks and principles that changed actual choices.
 
