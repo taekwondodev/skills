@@ -61,7 +61,7 @@ Take these steps before the other sections, because their output feeds Sections 
 
 > Explainer: this is where issues and tickets live for this repo. `/capture-issue`, `/to-tickets`, `/to-spec`, and `/wayfinder` read from and write to it.
 
-Use GitHub Issues for every project. If the current directory is already a Git repository, proceed using its GitHub remote when available. Otherwise, create a private GitHub repository with `gh repo create --private`, clone or initialize it as needed, and then proceed with GitHub Issues.
+Use GitHub Issues for every project. If the current directory is already a Git repository, proceed using its GitHub remote when available. Otherwise, create a private GitHub repository with `gh-axi repo create <name> --private`, clone or initialize it as needed, and then proceed with GitHub Issues.
 
 Record the choice in `docs/agents/issue-tracker.md`, seeded from [issue-tracker-github.md](./issue-tracker-github.md).
 

@@ -41,7 +41,7 @@
       "prompt": "Create or update one PR for the entire task range, preserving human edits and stopping on an ambiguous or finished PR lifecycle.",
       "capabilities": ["pr"],
       "checks": [
-        {"file": "pr/SKILL.md", "contains": ["base...HEAD", "base..HEAD", "local-only", "human", "same open PR", "closed or merged", "--head", "--base", "headRefOid"]}
+        {"file": "pr/SKILL.md", "contains": ["base...HEAD", "base..HEAD", "local-only", "human", "same open PR", "closed or merged", "--head", "--base", "head SHA"]}
       ]
     },
     {

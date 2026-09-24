@@ -6,7 +6,7 @@ argument-hint: "[issue or PR] [base] [draft]"
 
 # Pull Request
 
-Create or update a GitHub PR when requested. Read `writing-for-agents` before drafting its title or body.
+Create or update a GitHub PR when requested. Use [gh-axi](https://github.com/kunchenguid/gh-axi) for GitHub operations (`npx -y gh-axi` without a global install). Read `writing-for-agents` before drafting its title or body.
 
 ## 1. Resolve the task and PR
 
@@ -14,7 +14,7 @@ Load [delivery mode and branch preparation](../implement/references/delivery.md)
 
 Inspect remotes and authenticated GitHub access. Read the associated issue through `docs/agents/issue-tracker.md`, repository PR templates, and any supplied PR. Resolve the target repository, head repository and branch, and base branch explicitly.
 
-Query PRs for that source, including open, closed, and merged states, using `gh pr list` or `gh pr view` with JSON metadata. Match the repository identities as well as head and base branches. Reuse the same open PR on repeated requests. If multiple matches exist, or the relevant PR is closed or merged, ask before choosing a different PR or lifecycle. A lookup failure is not evidence that no PR exists.
+Query PRs for that source, including open, closed, and merged states, using `gh-axi pr list --state all`. Use the API readback in step 4 to match repository identities as well as head and base branches. Reuse the same open PR on repeated requests. If multiple matches exist, or the relevant PR is closed or merged, ask before choosing a different PR or lifecycle. A lookup failure is not evidence that no PR exists.
 
 For a description-only request, inspect the named PR's published base and head without switching branches, committing, or pushing. Substitute that head for local HEAD below. Stop at the saved draft unless publication was requested.
 
@@ -42,13 +42,13 @@ Completion: the saved body accurately explains the whole change, preserves requi
 
 When publication and any needed source push are authorized, push the intended revision to the explicit source remote and branch without force. Verify that remote ref with `git ls-remote`; reconcile an unexpected remote advance before publishing. Re-query the intended PR after pushing, including after any ambiguous command failure, to avoid duplicate creation.
 
-For a new PR, use `gh pr create --repo <target> --head <qualified-head> --base <base> --title <title> --body-file <path>`, with `--draft` only for the resolved draft state. Qualify a fork's head using the supported CLI/API identity; do not silently fork or guess a destination if the CLI cannot express it. Explicit head selection avoids the CLI's implicit push/fork path. Add reviewers, labels, or other metadata only when requested or required by the repository.
+For a new PR, use `gh-axi pr create --repo <target> --head <qualified-head> --base <base> --title <title> --body-file <path>`, with `--draft` only for the resolved draft state. Qualify a fork's head using the supported CLI/API identity; do not silently fork or guess a destination if the CLI cannot express it. Explicit head selection avoids the CLI's implicit push/fork path. Add reviewers, labels, or other metadata only when requested or required by the repository.
 
-For an update, compare the current body with the last-published draft when available and preserve human edits. Ask when edits conflict or ownership is unclear. Re-read immediately before `gh pr edit <number> --repo <target> --body-file <path>` to reconcile intervening changes, and preserve unrelated metadata. On partial failure, report the pushed ref or created PR that exists and resume only missing authorized operations.
+For an update, compare the current body with the last-published draft when available and preserve human edits. Ask when edits conflict or ownership is unclear. Re-read immediately before `gh-axi pr edit <number> --repo <target> --body-file <path>` to reconcile intervening changes, and preserve unrelated metadata. On partial failure, report the pushed ref or created PR that exists and resume only missing authorized operations.
 
-Read back the exact PR with `gh pr view` JSON, including `url`, `state`, `isDraft`, `baseRefName`, `headRefName`, `headRefOid`, head repository identity, title, and body. Verify the intended repository/ref pair, published revision, and description. Save the published body for the next update's comparison. An unexpected head change invalidates the old verification claim.
+Read back the exact PR with `gh-axi api /repos/<owner>/<repo>/pulls/<number> --full`. Verify its URL, lifecycle and draft state, base and head repository/ref pair, head SHA, title, and complete body against the intended PR and saved description. Save the published body for the next update's comparison. An unexpected head change invalidates the old verification claim.
 
-Query required checks for that head with `gh pr checks` and the repository's other required gates. Distinguish passing, failing, pending, unavailable, and no configured checks. Keep local test evidence separate from remote CI.
+Query checks for that head with `gh-axi pr checks` and match them to the repository's required gates. Distinguish passing, failing, pending, unavailable, and no configured checks. Keep local test evidence separate from remote CI.
 
 Completion: the intended PR and body are read back, the head revision matches, and actual check states and remaining gates are recorded. This skill never merges, enables auto-merge, or closes an issue directly.
 
