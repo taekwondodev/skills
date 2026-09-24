@@ -81,7 +81,7 @@ Iterate until the user approves the breakdown.
 
 Before publication, check both directions: every requirement and testing decision in the spec is allocated, and every ticket obligation has an approved source. Use the spec's sections or requirement descriptions to check traceability; add a source pointer where the connection is not obvious. Resolve gaps or additions before publishing. Keep shared constraints authoritative in the parent and carry the relevant ones into each ticket without copying unrelated policy.
 
-Publish the approved tickets in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the tracker's native blocking / sub-issue relationship. See `docs/agents/issue-tracker.md`'s "Tracer-bullet ticket operations" section. Apply the configured `ready-for-agent` state label unless instructed otherwise: the tickets are agent-grabbable by construction.
+Publish the approved tickets using the issue template below, in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the tracker's native blocking / sub-issue relationship. See `docs/agents/issue-tracker.md`'s "Tracer-bullet ticket operations" section. Apply the configured `ready-for-agent` state label unless instructed otherwise: the tickets are agent-grabbable by construction.
 
 Read back the published bodies, labels, and native relationships. For an agent-facing return, use the receipt contract; otherwise report which tickets have no open blockers. Then stop; implementation is a separate step.
 
