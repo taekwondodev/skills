@@ -1,6 +1,6 @@
 # Issue tracker: GitHub
 
-Issues, specs, and tickets for this repo live as GitHub issues. Use [gh-axi](https://github.com/kunchenguid/gh-axi) for all operations (`npx -y gh-axi` without a global install).
+Issues, specs, and tickets for this repo live as GitHub issues. Use [gh-axi](https://github.com/kunchenguid/gh-axi) for all operations.
 
 ## Conventions
 

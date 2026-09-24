@@ -6,7 +6,7 @@ argument-hint: "[issue or PR] [base] [draft]"
 
 # Pull Request
 
-Create or update a GitHub PR when requested. Use [gh-axi](https://github.com/kunchenguid/gh-axi) for GitHub operations (`npx -y gh-axi` without a global install). Read `writing-for-agents` before drafting its title or body.
+Create or update a GitHub PR when requested. Use [gh-axi](https://github.com/kunchenguid/gh-axi) for GitHub operations. Read `writing-for-agents` before drafting its title or body.
 
 ## 1. Resolve the task and PR
 
