@@ -1,67 +1,77 @@
 ---
 name: handoff
 description: >
-  Context bridge for session continuity. Synthesizes conversation state, git status, and pending
-  work into a structured HANDOFF.md, then produces a copy-paste resume prompt for the next session.
-  Invoke when user says "save context", "new session", "continue later", "save progress",
-  "running out of context", "handoff", "context limit", or when context window is nearly full
-  and the current task is incomplete.
+  Use when saving unfinished work for a new session or approaching a context limit.
+  Write an agent-to-agent checkpoint with the next authorized action, evidence, and remaining obligations.
 argument-hint: "What will the next session focus on?"
 ---
 
-## Steps
+# Handoff
 
-Read `writing-for-agents` before writing `HANDOFF.md` or its resume prompt. Its general writing rules govern the handoff; this skill adds only handoff-specific structure.
+Read `writing-for-agents` before authoring an execution checkpoint for a fresh agent. The artifact must be usable without the previous conversation.
 
-Use `pause-safely` as the suspension contract and this skill as the artifact writer. Use `session-pickup` in the next session to reconcile the handoff with live repository state. When conversation context is incomplete, retrieve the relevant prior conversation through the available session-history capability and reconcile it with live state. If required history access is unavailable, record the missing evidence instead of inventing it. When long or unattended work has a `show-me-your-work` log, point to it instead of copying it.
+When called by `pause-safely`, use its captured state as input.
 
-Apply the canonical principles where they change the artifact:
+## 1. Recover the continuation boundary
 
-- `principle-guard-the-context-window` keeps the handoff context-lean and links large sources instead of embedding them.
-- `principle-prove-it-works` requires current git, test, process, and artifact evidence before progress is called complete.
-- `principle-sequence-verifiable-units` makes the next action singular and gives it an exact completion criterion.
+Identify the task, current phase, approved scope, authorization limits, next action, and final acceptance source. A requested focus selects the next action without dropping the task's remaining obligations.
 
-### 1. Gather State
+Recover decisions from available conversation and artifacts. If required context is missing, retrieve the relevant prior conversation through the available session-history capability. If retrieval is unavailable, record the gap and the action it blocks.
 
-Run: `git status && git diff HEAD && git log --oneline -10`
+Completion: the next authorized action and its completion criterion are known, or the exact missing decision or evidence is identified as a stop condition.
 
-### 2. Synthesize
+## 2. Inspect relevant state
 
-Extract from conversation + git state:
+Read an existing handoff before replacing it. Reconcile its claims with current sources and retain only information relevant to continuation.
 
-- **Task:** goal in 1-3 sentences. If args given, weight toward that focus.
-- **Mode:** current `dev-cycle` mode, phase, and active capabilities
-- **Progress:** done items (file names, functions, decisions)
-- **What Didn't Work:** failed approaches that the next agent should not repeat
-- **Pending:** ordered, most critical first
-- **Decisions & Context:** non-obvious choices, constraints, gotchas a fresh agent can't derive from code
-- **Files Changed:** path: one-line description
-- **Blockers:** stuck or unclear items
-- **Verification:** tests, checks, measurements, and processes with their latest observed result
-- **Next Completion Criterion:** the exact observable state the next session should reach
-- **Current phase:** the procedure still needed and the artifacts it consumes
-- **Next skills:** only skills needed for the next action, not every skill previously used
+For a Git repository, start with `git status --short --branch`, `git rev-parse HEAD`, and `git diff --stat HEAD`. Inspect relevant diffs, untracked contents, and recent commits as needed to explain unfinished work.
 
-The handoff is a pointer, not a copy of another skill's procedure. Preserve the canonical owner of every rule and record which principles changed decisions.
+Collect existing verification results and inspect other task state only when the next action depends on it. Record what was observed and what remains unknown.
 
-Policies:
-- Don't duplicate PRDs, plans, ADRs, issues, or commits. Reference them by path or URL
-- Redact secrets, API keys, PII
+Completion: evidence distinguishes current observations, earlier results, and unresolved state. The next agent can locate the work and identify what must be refreshed.
 
-### 3. Write & Output
+## 3. Write the checkpoint
 
-Write to `HANDOFF.md` at the repository root.
+Use the agreed artifact path, otherwise `HANDOFF.md` at the repository root. Use compact Markdown with the headings below in this order and explicit `field: value` bullets. `Resume`, `Evidence and gaps`, and `Remaining work` are required. Omit optional sections without useful content; mark unknown required values explicitly.
 
-Add `## Resume Prompt` at bottom. It must be self-contained and copy-paste ready.
-Name the next procedure, its source, and its inputs. Include the skill bodies needed for the next action as explicit reads:
-```
-Read `HANDOFF.md`. We are working on <project>: <task goal>.
-Load <next skill> from <retrievable source> and read <required inputs>.
-Continue from the Pending section toward <next completion criterion>.
-```
+### Resume
 
-For a human-facing return, confirm the path, print the Resume Prompt in chat, and say "Open new session, paste prompt above."
+Put the continuation contract first:
+
+- `task`: stable task reference when available and a concise goal.
+- `workspace`: working location.
+- `snapshot`: observation time with timezone and relevant state identifiers; for Git, include branch, HEAD, and uncommitted state.
+- `phase`: current procedure and its owning skill.
+- `authorization`: recorded permissions, limits, and unresolved approval gates, with their source. Mark unknown permissions explicitly.
+- `next_action`: one concrete action after reconciliation, or the resolution required to unblock it.
+- `required_inputs`: retrievable skill bodies and sources needed for reconciliation and that action. Include `session-pickup` with its source; skill names alone do not supply their instructions.
+- `done_when`: observable completion of that action, distinct from completion of the whole task.
+- `stop_when`: task-specific approval, safety, or missing-evidence conditions that prevent continuation; state explicitly when none are known.
+
+### Retained context
+
+Keep information whose loss could change the next agent's decisions: non-obvious rationale, relevant failed approaches, blockers, and unfinished work that current sources do not explain. Record progress only when it changes what remains to do.
+
+### Evidence and gaps
+
+For each relevant check or finding, record the command or source, result, state covered, and limits. Distinguish observed results, reported results, and required checks not run. Preserve reproduction details for unresolved findings. State explicitly when no relevant verification is available.
+
+### Remaining work
+
+List subsequent obligations in dependency order, with their acceptance sources. Include the final task completion criterion and any pending task checkpoints, distinct from `done_when` for the next action.
+
+### Sources
+
+List later inputs with the condition that requires reading them; keep immediate inputs in `required_inputs`. When an existing `show-me-your-work` log contains needed evidence, reference it. If a required source may be unavailable to the next agent, retain its essential context in the checkpoint.
+
+Redact secrets, API keys, and PII. `Resume` is the single continuation instruction; the return carries the artifact's locator.
+
+## 4. Check the consumer boundary
+
+Check the written artifact and resolve the references needed for the first action. Without the previous conversation, the consumer must be able to identify the workspace, next action and its authorization, required inputs, completion criteria, stop conditions, and unresolved evidence. Mark inaccessible dependencies explicitly.
+
+Completion: the checkpoint exists and supplies a usable continuation contract or identifies what blocks it. Handoff completion describes context preservation, not completion of the underlying task.
 
 ## Agent result
 
-For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Return the handoff locator, verification, and next completion criterion without repeating the Resume Prompt or handoff body.
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Return the artifact locator, checkpoint checks, unresolved limits, and next action with its completion criterion. At the human-facing boundary, confirm the path briefly.
