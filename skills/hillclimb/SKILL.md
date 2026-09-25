@@ -1,7 +1,6 @@
 ---
 name: hillclimb
 description: Improve one metric through measured keep-or-revert iterations.
-disable-model-invocation: true
 ---
 
 # Hillclimb

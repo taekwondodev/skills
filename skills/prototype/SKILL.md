@@ -1,7 +1,6 @@
 ---
 name: prototype
 description: Build disposable alternatives to settle a technical or behavioral fork.
-disable-model-invocation: true
 ---
 
 # Prototype

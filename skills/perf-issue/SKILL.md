@@ -1,7 +1,6 @@
 ---
 name: perf-issue
 description: Diagnose and improve one measured performance problem.
-disable-model-invocation: true
 ---
 
 # Performance Issue

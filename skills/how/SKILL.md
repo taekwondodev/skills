@@ -1,7 +1,6 @@
 ---
 name: how
 description: Explain how a subsystem works, including flow, ownership, and boundaries.
-disable-model-invocation: true
 ---
 
 # How

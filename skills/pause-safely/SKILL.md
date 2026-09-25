@@ -1,7 +1,6 @@
 ---
 name: pause-safely
 description: Suspend development work with enough evidence to resume safely.
-disable-model-invocation: true
 ---
 
 # Pause Safely

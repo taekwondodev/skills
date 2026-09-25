@@ -1,7 +1,6 @@
 ---
 name: dev-cycle
 description: Route development work through principles, capabilities, and verified delivery.
-disable-model-invocation: true
 ---
 
 # Dev Cycle

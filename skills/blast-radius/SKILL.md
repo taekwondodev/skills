@@ -1,7 +1,6 @@
 ---
 name: blast-radius
 description: Find what a change could break beyond the immediate diff.
-disable-model-invocation: true
 ---
 
 # Blast Radius

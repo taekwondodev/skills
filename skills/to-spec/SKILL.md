@@ -1,7 +1,6 @@
 ---
 name: to-spec
 description: Turn the current conversation into a spec and publish it to the project issue tracker (no interview, just synthesis of what you've already discussed).
-disable-model-invocation: true
 ---
 
 This skill takes the current conversation context and codebase understanding and produces a spec. Do NOT interview the user. Just synthesize what you already know. If real gaps remain, read the `grilling` skill (and `domain-modeling` too if the gap is a domain term) for just those gaps, not a full re-interview.

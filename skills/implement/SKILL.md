@@ -1,7 +1,6 @@
 ---
 name: implement
 description: "Implement a piece of work based on a spec, ticket, or agreed small change, writing tests against its Testing Decisions or acceptance criteria."
-disable-model-invocation: true
 ---
 
 # Implement

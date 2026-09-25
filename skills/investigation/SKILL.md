@@ -1,7 +1,6 @@
 ---
 name: investigation
 description: Investigate an observable question with evidence before proposing changes.
-disable-model-invocation: true
 ---
 
 # Investigation

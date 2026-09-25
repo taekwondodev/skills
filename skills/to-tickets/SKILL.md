@@ -1,7 +1,6 @@
 ---
 name: to-tickets
 description: Break a complete approved spec into tracer-bullet tickets when multiple implementation slices are needed, each declaring blocking edges and affected components, published to the configured tracker.
-disable-model-invocation: true
 ---
 
 # To Tickets

@@ -1,7 +1,6 @@
 ---
 name: show-me-your-work
 description: Record decisions, evidence, and results for long or unattended work.
-disable-model-invocation: true
 ---
 
 # Show Me Your Work

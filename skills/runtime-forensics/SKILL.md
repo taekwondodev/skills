@@ -1,7 +1,6 @@
 ---
 name: runtime-forensics
 description: Diagnose a live runtime symptom from captured signals and source mapping.
-disable-model-invocation: true
 ---
 
 # Runtime Forensics

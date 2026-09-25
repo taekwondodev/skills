@@ -1,7 +1,6 @@
 ---
 name: trace-forensics
 description: Diagnose a supplied profile, trace, heap snapshot, or spindump.
-disable-model-invocation: true
 ---
 
 # Trace Forensics

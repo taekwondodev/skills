@@ -1,7 +1,6 @@
 ---
 name: principle-never-block-on-the-human
 description: Proceed on facts and reversible preparation; stop for human-owned decisions.
-disable-model-invocation: true
 ---
 
 # Never Block on the Human

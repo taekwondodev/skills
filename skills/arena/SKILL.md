@@ -1,7 +1,6 @@
 ---
 name: arena
 description: Compare independent candidate solutions and synthesize the strongest shape.
-disable-model-invocation: true
 ---
 
 # Arena

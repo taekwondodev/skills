@@ -1,7 +1,6 @@
 ---
 name: why
 description: Recover the rationale behind code, architecture, and past decisions.
-disable-model-invocation: true
 ---
 
 # Why

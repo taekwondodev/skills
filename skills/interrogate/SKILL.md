@@ -1,7 +1,6 @@
 ---
 name: interrogate
 description: Challenge a design or diff with independent adversarial review.
-disable-model-invocation: true
 ---
 
 # Interrogate

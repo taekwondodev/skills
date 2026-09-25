@@ -1,7 +1,6 @@
 ---
 name: session-pickup
 description: Resume prior development work from its artifacts and live repository state.
-disable-model-invocation: true
 ---
 
 # Session Pickup
