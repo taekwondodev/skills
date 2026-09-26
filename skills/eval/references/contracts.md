@@ -17,7 +17,7 @@ Run the structural gate with `python3 skills/eval/scripts/validate_dev_cycle.py 
 
 ## Delivery contract
 
-`references/delivery-scenarios.json` fixes the v1 structural contract for route selection, branch preparation, scoped commits, integration-before-closure, PR identity and retries, issue links, descriptions, and setup ownership. Run `python3 skills/eval/scripts/validate_dev_cycle.py --matrix skills/eval/references/delivery-scenarios.json --baseline-ref HEAD` from the repository root. These checks establish instruction presence and reference integrity, not model adherence or GitHub effects.
+`references/delivery-scenarios.json` fixes the v2 structural contract for route selection, branch preparation, scoped commits, integration-before-closure, PR identity and retries, issue traceability and native-link readback, descriptions, and setup ownership. Run `python3 skills/eval/scripts/validate_dev_cycle.py --matrix skills/eval/references/delivery-scenarios.json --baseline-ref HEAD` from the repository root. These checks establish instruction presence and reference integrity, not model adherence or GitHub effects.
 
 ## Subagent contract
 

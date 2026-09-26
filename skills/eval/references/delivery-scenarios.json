@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "expected_scenario_count": 8,
+  "version": 2,
+  "expected_scenario_count": 11,
   "scenarios": [
     {
       "id": "resolve-delivery-before-edits",
@@ -49,7 +49,35 @@
       "prompt": "Use closing links only for approved complete work targeting the default branch; never merge or close the issue when opening the PR.",
       "capabilities": ["pr"],
       "checks": [
-        {"file": "pr/SKILL.md", "contains": ["Closes #N", "default branch", "non-closing", "partial", "merge", "issue open"]}
+        {"file": "pr/SKILL.md", "contains": ["Closes #N", "default branch", "non-closing", "partial", "merge", "issue open", "expected closing-issue set", "branch-inherited", "unverified"]}
+      ]
+    },
+    {
+      "id": "issue-mapping-survives-handoffs",
+      "prompt": "Carry child-ticket identity through branch, commit, and PR handoffs, including multi-ticket units and work without an issue.",
+      "capabilities": ["implement", "commit", "pr"],
+      "checks": [
+        {"file": "implement/references/delivery.md", "contains": ["qualified implementation issue references (or none)", "not its parent spec", "multi-ticket unit", "commit and PR handoffs", "<type>/<issue-number>-<slug>", "Preserve existing branch names"]},
+        {"file": "commit/SKILL.md", "contains": ["missing route, branch, or issue mapping"]},
+        {"file": "pr/SKILL.md", "contains": ["missing route, branch, or issue mapping"]}
+      ]
+    },
+    {
+      "id": "commit-references-match-issue-scope",
+      "prompt": "Reference every implementation issue covered by the commit without closing it, confusing repositories, or silently dropping identifiers to fit the subject cap.",
+      "capabilities": ["commit"],
+      "checks": [
+        {"file": "commit/SKILL.md", "contains": ["each implementation issue covered by the commit", "non-closing reference", "repository-qualified", "Keep identifiers intact", "message-length conflicts", "issue references against the recorded mapping"]}
+      ]
+    },
+    {
+      "id": "native-links-require-real-readback",
+      "prompt": "Distinguish a branch name or body mention from a native GitHub link; preserve local-only authority, remote refs, pagination, and the approved closing set.",
+      "capabilities": ["implement", "pr"],
+      "checks": [
+        {"file": "implement/references/delivery.md", "contains": ["native branch associations", "docs/agents/issue-tracker.md", "authorized", "pending", "full-ticket delivery intent", "approved closure on merge"]},
+        {"file": "dev-cycle-setup/issue-tracker-github.md", "contains": ["Native development links", "Issue.linkedBranches", "createLinkedBranch", "repositoryId", "oid", "Existing remote branch", "PullRequest.closingIssuesReferences", "Paginate", "auto-link", "preserves the ref"]},
+        {"file": "pr/SKILL.md", "contains": ["every covered implementation issue", "complete native closing-issue set", "including an empty set", "published body", "prepare pending branch links"]}
       ]
     },
     {

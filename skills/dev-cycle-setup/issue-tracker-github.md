@@ -39,6 +39,17 @@ Used by `/wayfinder`. Read its "Ticket Types" section when choosing child-ticket
 - **Claim**: `gh-axi issue edit <n> --add-assignee @me`. This is the session's first write.
 - **Resolve**: `gh-axi issue comment <n> --body "<answer>"`, then `gh-axi issue close <n>`, then append a context pointer (gist + link) to the map's Decisions-so-far.
 
+## Native development links
+
+Use GraphQL through `gh-axi api POST /graphql --field query='<operation>' --full`. Paginate connections to exhaustion.
+
+- **Branch readback:** query `Issue.linkedBranches`, matching each `ref` by repository and branch name; reuse existing associations.
+- **New remote branch:** use `createLinkedBranch(input: ...)` before the first push creates the ref, with explicit `issueId`, `repositoryId`, `name`, and `oid`. IDs are GraphQL node IDs; `oid` is the verified branch-point commit already available in that repository. Read back the association and ref.
+- **Existing remote branch:** use a supported linking operation that preserves the ref. Report unavailable operations as pending associations.
+- **PR readback:** query `PullRequest.closingIssuesReferences` and compare qualified issue identities. A body mention alone is not a native link.
+
+Linked branches auto-link future PRs.
+
 ## Tracer-bullet ticket operations
 
 Used by `/to-tickets`, `/implement`, `/commit`, and `/pr`.
