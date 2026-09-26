@@ -6,4 +6,3 @@ __pycache__/
 .env.*
 .hermes/
 skills/eval/reports/
-skills/effect-ts/
