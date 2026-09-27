@@ -24,6 +24,8 @@ Completion: the task, intended PR identity, and authorized operations are unambi
 
 Inspect `git status --short`, staged and unstaged changes, untracked files, `git log base..HEAD`, and `git diff base...HEAD`, substituting the resolved base ref. Read the complete diff and enough surrounding code to understand behavior and ownership. Account for every commit and file that would enter the PR. Stop on unrelated scope or an empty task diff.
 
+For a squash request or a history dominated by incremental fixups, load [history guidance](references/history.md) and return a recommendation suited to the repository's merge policy.
+
 Consume the task's verification and review evidence. If that evidence does not cover the complete publication scope, return the gap for verification or review before claiming readiness. If uncommitted task changes remain and committing is authorized, load `commit` with the reviewed scope and **local-only** mode, then consume its verified commit result. Otherwise ask for the missing commit authorization. If no commit is needed, reuse the existing revision. Changes after review require affected checks and review again.
 
 Completion: the head revision and complete PR diff are reviewed and verified, or draft publication is approved with its unresolved scope and checks. A description-only update reports the existing verification state without triggering implementation.
@@ -36,7 +38,7 @@ Use a concise title describing the whole PR. Preserve an existing title and draf
 
 Reference every covered implementation issue in the body; qualify identifiers for other repositories. For fully resolved issue scope and approved closure on merge, use `Closes #N` only when the base is the repository's default branch. Use a non-closing reference for partial work, unapproved closure, or a non-default base. Record the expected closing-issue set from these gates. Resolve conflicting native links, including branch-inherited associations, before publication; ask before changing human-authored links. Leave the issue open while the PR is open; publishing a PR does not complete integration.
 
-Completion: the saved body accurately explains the whole change, preserves required content, and carries only supported check and issue claims.
+Completion: the saved body passes the description guidance's reader check, preserves required content, and carries only supported check and issue claims.
 
 ## 4. Publish or update
 
@@ -56,4 +58,4 @@ Completion: the intended PR and body are read back, the head revision matches, a
 
 ## Agent result
 
-For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the PR, head revision, and saved description, with publication checks and remaining limits. For a human-facing return, give the PR URL, concise change summary, and outstanding checks or decisions.
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the PR, head revision, and saved description, with publication checks, remaining limits, and any history recommendation. For a human-facing return, give the PR URL, concise change summary, and outstanding checks or decisions, including a warranted squash recommendation.

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "expected_scenario_count": 11,
+  "expected_scenario_count": 12,
   "scenarios": [
     {
       "id": "resolve-delivery-before-edits",
@@ -82,11 +82,20 @@
     },
     {
       "id": "visual-description-and-real-checks",
-      "prompt": "Explain the change concisely using a useful structural view, preserve repository templates, and report actual local and remote verification.",
+      "prompt": "Explain the outcome, changed behavior, risks, and verification in a PR. Select visuals that help a reviewer understand the change, allow text-only explanations for simple fixes, and make supporting details available on demand.",
       "capabilities": ["pr"],
       "checks": [
         {"file": "pr/SKILL.md", "contains": ["references/description.md", "pending", "unavailable", "delivery/1"]},
-        {"file": "pr/references/description.md", "contains": ["Why the change", "Special things to note", "Change outline", "Verification", "template", "human"]}
+        {"file": "pr/references/description.md", "contains": ["Why the change", "Change outline", "Reviewer attention", "Verification", "template", "human", "screenshots", "Mermaid", "text-only", "Reader check", "<details>", "outside collapsed sections", "accessible", "omit empty optional sections"]}
+      ]
+    },
+    {
+      "id": "history-recommendation-not-rewrite",
+      "prompt": "Recommend a merge strategy for a cohesive change developed through fixups, and for a history with independently useful commits. Respect repository policy, distinguish squash at merge from branch cleanup, and leave execution subject to separate authorization.",
+      "capabilities": ["pr"],
+      "checks": [
+        {"file": "pr/SKILL.md", "contains": ["references/history.md", "merge policy", "without force", "never merges"]},
+        {"file": "pr/references/history.md", "contains": ["independently meaningful", "Squash and merge", "Commits tab", "branch rewrite", "separate authorization", "squash-message defaults", "recommendation"]}
       ]
     },
     {
