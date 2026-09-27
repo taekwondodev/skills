@@ -52,8 +52,7 @@ For research returned to another skill, load [evidence/1](../investigation/refer
 * **Refactor fearlessly:** prioritize correctness of current version.
 * **Visibility:** default private. Expose publicly only if strictly needed.
 * **Flattened hierarchy:** private submodules + explicit re-exports in parent.
-* No comments by default. A comment is allowed only when it records a non-obvious WHY that the code cannot express more clearly. Never explain WHAT the code does.
-* This no-comments rule applies equally to production code, tests, scripts, migrations, configuration, verification harnesses, and generated artifacts. Review every comment against the rule before declaring work complete.
+* Write comment-free code: express intent through names, types, and structure. Keep decision rationale in documentation. Required tool directives and legal notices are exempt.
 * DRY, modern idioms, zero-cost abstractions.
 * **Low cognitive complexity:** minimize branching, nesting, and hidden control flow. Decompose by domain responsibility, not merely to satisfy complexity metrics.
 * **Fail fast:** missing required config = unrecoverable error. Crash early.
