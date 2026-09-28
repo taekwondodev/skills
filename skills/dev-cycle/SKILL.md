@@ -43,7 +43,7 @@ For a small change, an explicit user request can already establish the expected 
 | **Architecture** | Activate `architect` for an unsettled shape, ownership model, dependency direction, or boundary. Consume an approved sketch directly when the design is settled. |
 | **Large work** | `wayfinder` owns map and decision tickets. Use `handoff` and `session-pickup` at real context boundaries; `show-me-your-work` when an unattended run needs a decision trail. |
 
-Use secondary capabilities only when the current mode needs their result. For a live symptom use `runtime-forensics`; for a supplied trace use `trace-forensics`. Neither automatically authorizes a fix.
+Use secondary capabilities only when the current mode needs their result. Before GitHub operations, load [github-cli](../github-cli/SKILL.md) for command selection and readback. For a live symptom use `runtime-forensics`; for a supplied trace use `trace-forensics`. Neither automatically authorizes a fix.
 
 ## Decisions and promotion
 
