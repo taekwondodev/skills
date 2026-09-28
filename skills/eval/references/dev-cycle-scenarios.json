@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "expected_scenario_count": 18,
+  "version": 3,
+  "expected_scenario_count": 17,
   "forbidden_capabilities": [
     "test-driven-development"
   ],
@@ -691,27 +691,6 @@
           ]
         }
       ]
-    },
-    {
-      "id": "menu-catalog-request",
-      "prompt": "/menu Show me the available development skills without starting work.",
-      "primary_mode": "catalog",
-      "capabilities": [
-        "menu"
-      ],
-      "principles": [],
-      "checkpoint": "user_choice",
-      "checks": [
-        {
-          "file": "menu/SKILL.md",
-          "contains": [
-            "read-only catalog",
-            "complete current inventory",
-            "never invokes the result",
-            "do not start any listed skill"
-          ]
-        }
-      ]
     }
   ],
   "global_checks": [
@@ -747,9 +726,9 @@
         {
           "file": "coding-standards/SKILL.md",
           "contains": [
-            "No comments by default",
-            "non-obvious WHY",
-            "Never explain WHAT"
+            "Write comment-free code: express intent through names, types, and structure.",
+            "Keep decision rationale in documentation.",
+            "Required tool directives and legal notices are exempt."
           ]
         },
         {
@@ -782,12 +761,6 @@
           "contains": [
             "The parent [`SKILL.md`](../SKILL.md) is the source of truth for shared prose rules.",
             "This reference extends it with authoring design guidance."
-          ]
-        },
-        {
-          "file": "menu/SKILL.md",
-          "not_contains": [
-            "only source of truth for agent-facing prose and `unslop`"
           ]
         }
       ]

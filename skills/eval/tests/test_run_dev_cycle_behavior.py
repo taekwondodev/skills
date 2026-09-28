@@ -25,12 +25,12 @@ class DevCycleBehaviorRunnerTests(unittest.TestCase):
         self.assertNotIn("baseline", prompt)
         self.assertNotIn("candidate", prompt)
 
-    def test_v2_matrix_hash_matches_embedded_contract(self) -> None:
+    def test_v3_matrix_hash_matches_embedded_contract(self) -> None:
         matrix = json.loads(MATRIX.read_text())
 
-        self.assertEqual(matrix["version"], 2)
-        self.assertEqual(matrix["expected_scenario_count"], 18)
-        self.assertEqual(len(matrix["scenarios"]), 18)
+        self.assertEqual(matrix["version"], 3)
+        self.assertEqual(matrix["expected_scenario_count"], 17)
+        self.assertEqual(len(matrix["scenarios"]), 17)
         self.assertEqual(
             hashlib.sha256(MATRIX.read_bytes()).hexdigest(),
             RUNNER.EXPECTED_MATRIX_SHA256,

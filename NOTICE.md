@@ -86,5 +86,4 @@ The remaining skills in this repository are original to this project:
 - commit
 - dev-cycle
 - dev-cycle-setup
-- menu
 - testing

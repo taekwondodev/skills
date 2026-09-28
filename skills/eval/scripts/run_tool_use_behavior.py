@@ -17,7 +17,7 @@ from typing import Any, Callable
 
 
 BASELINE_REF = "HEAD"
-EXPECTED_MATRIX_SHA256 = "b41891ceafd847bdced91ef17bd7e7237f00007f1426b701a744f53d12f076dc"
+EXPECTED_MATRIX_SHA256 = "13e9cc72611398427f2a7947f2869e4f4278e7c2e1a1b0e22eecad5408d03cc5"
 SESSION_PATTERN = re.compile(r"session_id:\s*([A-Za-z0-9_-]+)")
 DELEGATION_RUN_LOCK = Lock()
 
@@ -44,7 +44,7 @@ def fixture_sha256(matrix: dict[str, Any]) -> str:
     for kind in kinds:
         for relative, content in sorted(fixture_files(kind).items()):
             material += kind.encode() + b"\0" + relative.encode() + b"\0" + content.encode() + b"\0"
-    material += b"fixture-history\0marigold-envelope\0fixture-sentinel"
+    material += b"fixture-history\0marigold-envelope"
     return sha256_bytes(material)
 
 
@@ -97,13 +97,6 @@ def materialize_skills(home: Path, files: list[str], read: Callable[[str], bytes
         target = home / "skills" / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(read(relative))
-    sentinel = home / "skills" / "fixture-sentinel" / "SKILL.md"
-    sentinel.parent.mkdir(parents=True, exist_ok=True)
-    sentinel.write_text(
-        "---\nname: fixture-sentinel\ndescription: Synthetic catalog sentinel for isolated evaluation.\n"
-        "disable-model-invocation: true\n---\n\n# Fixture Sentinel\n\n"
-        "This synthetic skill proves that catalog discovery reads the isolated runtime inventory.\n"
-    )
 
 
 def fixture_files(kind: str) -> dict[str, str]:
@@ -117,7 +110,7 @@ def fixture_files(kind: str) -> dict[str, str]:
         ),
         "README.md": "# Widget Fixture\n\nRun `python3 -m unittest discover -s tests` to verify it.\n",
     }
-    if kind in {"architecture", "handoff", "catalog", "widget"}:
+    if kind in {"architecture", "handoff", "widget"}:
         return common
     if kind == "broad":
         return {

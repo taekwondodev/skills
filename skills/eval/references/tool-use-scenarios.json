@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "scenarios": [
     {
       "id": "how_narrow",
@@ -80,17 +80,6 @@
       "forbidden_tools": ["write_file", "patch", "terminal", "delegate_task"],
       "clarify_fixture": true,
       "clarify_min_questions": 2,
-      "allowed_writes": []
-    },
-    {
-      "id": "menu_catalog",
-      "skill": "menu",
-      "fixture": "catalog",
-      "prompt": "List the complete current skill catalog exactly once, then explain what fixture-sentinel does. Do not start any listed workflow or modify state.",
-      "toolsets": ["skills"],
-      "required_tools": {"skills_list": 1, "skill_view": 1},
-      "forbidden_tools": ["write_file", "patch", "terminal", "delegate_task", "clarify"],
-      "required_result_text": ["fixture-sentinel"],
       "allowed_writes": []
     },
     {

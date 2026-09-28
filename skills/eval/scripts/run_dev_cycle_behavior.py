@@ -21,7 +21,6 @@ POLICY_FILES = [
     "wayfinder/SKILL.md",
     "handoff/SKILL.md",
     "principle-prove-it-works/SKILL.md",
-    "menu/SKILL.md",
 ]
 
 PRIMARY_MODES = [
@@ -33,14 +32,13 @@ PRIMARY_MODES = [
     "hillclimb",
     "architecture",
     "large_work",
-    "catalog",
 ]
 
-# Immutable approved v2 18-scenario contract. The runner refuses to evaluate a
+# Immutable approved v3 17-scenario contract. The runner refuses to evaluate a
 # candidate matrix whose SHA-256 differs, so the expected set of scenarios,
 # current-phase capabilities, and checkpoints cannot be silently weakened.
 # Changing scenarios deliberately requires updating this hash in the same commit.
-EXPECTED_MATRIX_SHA256 = "8b0d1c1763038333bcdf06031e3eca05f0b14b96fdb2f2b690bd2d715e1f2e1d"
+EXPECTED_MATRIX_SHA256 = "4c436f2122bc4aec6ebebcca6e11eafedce935e9dfd93871f97d4c145d85aad0"
 
 def git(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(
@@ -117,7 +115,6 @@ Allowed checkpoints and meanings:
 - target_stop_predicate: the human owns the metric target and stopping condition.
 - explicit_only: standalone architecture proceeds unless the user explicitly requests a checkpoint.
 - hitl_decisions: the map contains human-owned decision tickets while factual research remains autonomous.
-- user_choice: catalog output is neutral and the user chooses what to invoke.
 
 Use canonical skill names for capabilities. Capabilities and principles describe only the current phase, not the complete planned workflow. A checkpoint marks where the route pauses; do not assume approval or include later-phase procedures. Reuse available unchanged skill bodies; reload only when content is lost, a file changes, or a new context needs it. Include only principles that concretely change routing, ownership, implementation, or verification for the current phase. A bug that requires a public API change is promoted to feature. `questions_before_evidence` contains only questions asked before repository inspection, tests, profiling, or other available evidence; it does not record later user-owned decisions. Name a testing methodology or architecture style only when the current phase actually requires it. For `review_axes`, return all three names only when `code-review` is the current phase; otherwise return an empty array. Every route must name at least one verification object whose artifact is the real thing being checked and whose observation is the concrete result required before completion.
 
