@@ -82,11 +82,11 @@
     },
     {
       "id": "visual-description-and-real-checks",
-      "prompt": "Explain the outcome, changed behavior, risks, and verification in a PR. Select visuals that help a reviewer understand the change, allow text-only explanations for simple fixes, and make supporting details available on demand.",
+      "prompt": "Explain the outcome, changed behavior, risks, and verification in a PR with one captured primary visual, fixed-shape risk and verification tables, and a counted word budget. Allow text-only explanations for simple fixes with a stated reason, and make supporting details available on demand.",
       "capabilities": ["pr"],
       "checks": [
-        {"file": "pr/SKILL.md", "contains": ["references/description.md", "pending", "unavailable", "delivery/1"]},
-        {"file": "pr/references/description.md", "contains": ["Why the change", "Change outline", "Reviewer attention", "Verification", "template", "human", "screenshots", "Mermaid", "text-only", "Reader check", "<details>", "outside collapsed sections", "accessible", "omit empty optional sections"]}
+        {"file": "pr/SKILL.md", "contains": ["references/description.md", "Capture the primary visual", "every count", "pending", "unavailable", "delivery/1"]},
+        {"file": "pr/references/description.md", "contains": ["Why the change", "Change outline", "Reviewer attention", "Verification", "template", "Skeleton", "| Risk | Consequence | Guard | Where |", "| Check | Result | Evidence |", "Remote CI", "at most 150", "at most 5 items", "Capture before drafting", "terminal test harness", "screenshots", "cannot attach uploaded images", "Mermaid", "At most 8 nodes", "at most 4 words", "text-only", "Reader check", "<details>", "reviewer access", "Omit empty optional sections"]}
       ]
     },
     {

@@ -1,50 +1,77 @@
 # PR description
 
-Help the reviewer understand the outcome, changed behavior, material risks, and evidence at a glance. Follow the required repository template and retain human-authored content and required checklists. Treat the sections below as guidance, not mandatory headings; omit empty optional sections.
+Give the reviewer the outcome, the changed behavior, the risks, and the evidence at a glance. One primary visual carries the explanation; prose captions it. A repository template wins over the skeleton below: fit the slots into its sections. Omit empty optional sections.
 
-## First read
+## Skeleton
 
-### Why the change
+Fill the slots and delete every angle-bracket hint.
 
-Lead with a brief summary of the problem and the observable result. Explain what someone can now do, or what no longer goes wrong, before naming implementation machinery.
+```markdown
+## Why the change
 
-### Change outline
+<One or two sentences: the problem, then what someone can now do or what no longer goes wrong.>
 
-Summarize the changed behavior. Use a visual when it explains the behavior more clearly than prose. For broad changes, provide a short linked review path so the reviewer knows where to start.
+## Change outline
 
-### Reviewer attention
+<Primary visual from the capture table.>
 
-Group merge-relevant risks, compatibility constraints, migrations, accepted limitations, and verification gaps outside collapsed sections. State their consequences; link supporting detail while keeping the warning visible.
+<One-sentence caption naming the review question the visual answers.>
 
-### Verification
+Start at `<file>`: <why first>. Then `<file>`: <what to check>.
 
-State what was exercised and its result, with commands or retrievable evidence. Separate local tests from remote CI. Name required checks that failed, remain pending, or were not run, including the reason. Keep the result visible; disclose extended logs on demand.
+## Reviewer attention
 
-## Choose a useful visual
+| Risk | Consequence | Guard | Where |
+| --- | --- | --- | --- |
+| <migration, compatibility limit, accepted limitation, or verification gap> | <what happens> | <what prevents or bounds it> | <file or link> |
 
-| Change to explain | Prefer |
+## Verification
+
+| Check | Result | Evidence |
+| --- | --- | --- |
+| <command or suite> | ✅ passed / ❌ failed / ⏳ pending / ➖ not run | <log, link, or reason> |
+| Remote CI | <status> | <run link or "not checked"> |
+
+<details><summary>Decisions and extended evidence</summary>
+
+<ADR, issue discussion, review outcomes, long logs.>
+
+</details>
+
+<Refs #N or Closes #N, as resolved in the skill.>
+```
+
+## Capture before drafting
+
+Capture the real artifact first; the capture is the visual. Draft the caption from it.
+
+| Change surface | Capture |
 | --- | --- |
-| Visible UI or terminal output | Real before/after screenshots with comparable state and framing |
-| Interaction or timing | A short recording of the relevant action and outcome |
-| Actions and their outcomes, or a compact before/after comparison | A short table |
-| Flow, ownership, or state transitions | A focused Mermaid diagram rendered natively by GitHub |
-| A small, straightforward fix | A text-only explanation or focused diff when that is clearer |
+| Command or log output | Run the command on base and on head; paste both verbatim in fenced blocks, or one unified diff of the two |
+| Full-screen terminal UI | Drive the repository's terminal test harness and paste the final frame as a fenced text block |
+| Graphical UI | Before/after screenshots with the same state and framing, with descriptive alt text |
+| Interaction or timing | A short recording with a caption |
+| Flow, ownership, or state transitions | A Mermaid diagram rendered natively by GitHub |
+| Actions and outcomes, or a compact before/after | A short table |
+| Small, straightforward fix | Text-only explanation or focused diff, stating why no visual |
 
-Choose a visual that answers a specific review question and replaces redundant prose. Keep its level of detail consistent. Ground diagrams in the actual diff, using concise domain labels and accurate relationships. Label conceptual sketches; captured runtime evidence must come from an actual run. Report unavailable captures as verification gaps where they matter.
+Media hosting: the GitHub API cannot attach uploaded images to a PR body. Use the repository's documented media location when one exists; otherwise commit the image under the documentation tree on the head branch and link it, which enters commit scope and needs that authorization. Without a host reachable by every intended reviewer, the fenced text capture is the visual, and the missing image is a verification gap in Reviewer attention. Check rendering and reviewer access before publication.
 
-Give images descriptive alt text and recordings a caption. Host media at destinations accessible to the intended reviewers and consistent with repository privacy. Preview rendering and check access before publication; report anything that could not be verified.
+## Mermaid rules
 
-## Details on demand
-
-Link to the relevant ADR, issue discussion, source location, or verification artifact. Put secondary explanations and extended evidence in labeled `<details>` sections when they belong in the PR itself. Retain outcomes and unresolved decisions that affect this review; keep material warnings in the first read.
+- One review question per diagram.
+- At most 8 nodes.
+- Node labels of at most 4 words; detail goes in the caption or a link.
+- Labels are domain terms from the diff; edges are the actual relationships.
+- Label a conceptual sketch as such; captured runtime evidence comes from an actual run.
 
 ## Reader check
 
-Read the draft as someone unfamiliar with the work, before expanding details:
+Count:
 
-- Can they explain why the change matters and what behaves differently by skimming the opening and outline?
-- Is each visual easy to read, with a clear purpose and enough context to interpret it?
-- Can they find material risks and distinguish verified behavior from pending or missing evidence without expanding details?
-- For a broad change, is it clear where to start reviewing and where to find the supporting rationale and evidence?
+- Words outside tables, diagrams, code blocks, and `<details>`: at most 150.
+- Primary visual: present, or a stated text-only reason.
+- Longest bullet list: at most 5 items.
+- Every table: a header row and at most 5 columns.
 
-Resolve unclear answers by supplying missing context and removing competing or repeated detail.
+Fix a failed count by moving detail into a table or `<details>` and deleting repeated text.

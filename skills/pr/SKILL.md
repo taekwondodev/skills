@@ -32,13 +32,13 @@ Completion: the head revision and complete PR diff are reviewed and verified, or
 
 ## 3. Prepare the description
 
-Load [description guidance](references/description.md) and draft from the verified complete diff, issue, and actual checks. Preserve repository-required sections and human-authored content. Save the proposed body in the task's artifact directory or an available local workspace, outside the commit scope unless the user requests otherwise. Record the destination path for readback and retry.
+Load [description guidance](references/description.md). Capture the primary visual from the real artifact first, then fill its skeleton from the verified complete diff, issue, and actual checks. Preserve repository-required sections and human-authored content. Save the proposed body in the task's artifact directory or an available local workspace, outside the commit scope unless the user requests otherwise. Record the destination path for readback and retry.
 
 Use a concise title describing the whole PR. Preserve an existing title and draft state unless changing them is requested. For a new PR, use the requested draft state; otherwise publish ready for review only when the preceding gate is satisfied. Ask when unresolved work makes the intended state unclear.
 
 Reference every covered implementation issue in the body; qualify identifiers for other repositories. For fully resolved issue scope and approved closure on merge, use `Closes #N` only when the base is the repository's default branch. Use a non-closing reference for partial work, unapproved closure, or a non-default base. Record the expected closing-issue set from these gates. Resolve conflicting native links, including branch-inherited associations, before publication; ask before changing human-authored links. Leave the issue open while the PR is open; publishing a PR does not complete integration.
 
-Completion: the saved body passes the description guidance's reader check, preserves required content, and carries only supported check and issue claims.
+Completion: the saved body passes every count in the description guidance's reader check, preserves required content, and carries only supported check and issue claims.
 
 ## 4. Publish or update
 
