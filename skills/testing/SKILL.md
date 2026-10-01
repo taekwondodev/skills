@@ -2,7 +2,8 @@
 name: testing
 description: >
   Testing strategy guidelines. Invoke when user asks to write tests, add a test suite, mentions
-  unit tests, integration tests, coverage, test file structure, or which layer to test.
+  unit tests, integration tests, coverage, test file structure, or which layer to test, or asks
+  to audit, prune, or sweep existing tests.
 ---
 
 ## Scope & Exclusions
@@ -47,5 +48,15 @@ Scripts, harnesses, and evidence collectors that do not ship with the product re
 ## Test quality and anti-patterns
 
 * **Implementation-coupled**: mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). Tell: the test breaks on refactor with no behavior change.
-* **Tautological**: the assertion recomputes the expected value the way the code does, so it passes by construction. Expected values come from an independent source of truth, such as a known-good literal, a worked example, or the spec's acceptance criteria. Never derive them using the same reasoning that produced the implementation.
+* **Tautological**: the assertion recomputes the expected value the way the code does, or takes it from the helper, renderer, or formatter under test, so it passes by construction. Expected values come from an independent source of truth, such as a known-good literal, a worked example, or the spec's acceptance criteria. Never derive them using the same reasoning that produced the implementation.
 * **Self-graded**: the same agent invocation that wrote the implementation also invented the test's expected values from scratch. It shares the implementation's blind spots by construction. The primary remedy is the artifact above, written before the code. An independent `code-review` pass is the second remedy, for medium and large changes.
+* **Owner**: each contract has one test owner at the strongest boundary where the contract is observable. A second test of the same contract earns its place only with a risk the owner cannot reach, such as a transport, lifecycle, or terminal failure. Before adding a test, name the regression that makes it fail and why the owner does not already catch it; extend the owner's table or fixture before writing a near-duplicate.
+* **Test-only seam**: the test needs an export, option, flag, or hook no production caller needs. Move the test to the real boundary and delete the seam; production code whose only callers are tests is dead code.
+* **Assertion-free**: the test awaits the behavior and asserts nothing a regression would change. Tell: it passes on a stub that does nothing.
+* **Overpromising name**: the name claims more than the assertions check, such as "returns the assessment" asserting only an exit code. Assert the promised output or rename the test.
+* **Negative control for the wrong reason**: a refusal test that passes because a different guard rejected first, or because it builds a state production never builds. Reach the guard under test through the production path.
+* **Mock that implements the behavior**: the fake supplies the ordering, receipt, or admission the owner should produce, so the assertion checks the fake.
+
+## Auditing existing tests
+
+For a sweep of existing tests with no change driving it, load [audit.md](references/audit.md): read-only discovery, candidate evidence, the retention bar, the edit shape, and the proof that a deletion left its owner in place.

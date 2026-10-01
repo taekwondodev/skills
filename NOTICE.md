@@ -77,6 +77,15 @@ License: MIT, Copyright (c) 2026 HumanLayer
 The `pr` skill and its description guidance adapt visual-pr's concise rationale,
 reviewer notes, and structural-outline conventions.
 
+## openclaw (OpenClaw Foundation)
+
+Source: https://github.com/openclaw/openclaw/tree/main/.agents/skills/test-audit
+License: MIT, Copyright (c) 2026 OpenClaw Foundation
+(`https://github.com/openclaw/openclaw/blob/main/LICENSE`)
+
+The `testing` skill's anti-pattern list and its audit reference adapt test-audit's
+junk patterns, retention bar, and candidate evidence.
+
 ## Original
 
 The remaining skills in this repository are original to this project:
@@ -86,4 +95,3 @@ The remaining skills in this repository are original to this project:
 - commit
 - dev-cycle
 - dev-cycle-setup
-- testing

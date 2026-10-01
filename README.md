@@ -36,7 +36,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | --- | --- |
 | [implement](skills/implement/SKILL.md) | Implement an agreed change against its specification and acceptance criteria. |
 | [coding-standards](skills/coding-standards/SKILL.md) | Apply coding conventions, type-driven design, and dependency guidance. |
-| [testing](skills/testing/SKILL.md) | Choose test boundaries, structure, and expected behavior. |
+| [testing](skills/testing/SKILL.md) | Choose test boundaries, structure, and expected behavior; audit existing tests. |
 | [code-review](skills/code-review/SKILL.md) | Review changes for coding standards, specification compliance, and hidden risks. |
 | [interrogate](skills/interrogate/SKILL.md) | Challenge designs and diffs through adversarial review. |
 | [blast-radius](skills/blast-radius/SKILL.md) | Trace affected callers and contracts beyond the immediate diff. |
