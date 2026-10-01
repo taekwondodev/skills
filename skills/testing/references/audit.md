@@ -28,4 +28,4 @@ One coherent batch per owner boundary. Delete the test-only seams and dead produ
 
 ## Proof
 
-Run the owner and sibling suites and every runner that consumes their output, with explicit exit codes. For each deleted test, make one deliberate mutation of the production owner, confirm the keeper goes red, and revert the mutation. Report production and test line counts separately, the retained false positives with their reason, and the candidates left for a later batch.
+Run the owner and sibling suites and every runner that consumes their output. For each deleted test, make one deliberate mutation of the production owner, confirm the keeper goes red, and revert the mutation. Report production and test line counts separately, the retained false positives with their reason, and the candidates left for a later batch.
