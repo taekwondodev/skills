@@ -28,7 +28,7 @@ Completion: every change that would enter the commit or PR is attributable, and 
 
 Name new issue-backed branches using repository conventions, or `<type>/<issue-number>-<slug>` by default. For multiple tickets, use one covered ticket's number and retain the full mapping. Preserve existing branch names.
 
-For issue-backed PR work, establish native branch associations through `docs/agents/issue-tracker.md` within authorized remote and tracker writes. Associations that propagate closing links require full-ticket delivery intent and approved closure on merge. Record deferred or unavailable associations as pending.
+For issue-backed PR work, establish native branch associations through `docs/agents/issue-tracker.md` within authorized remote and tracker writes. For associations that propagate closing links, read [PR issue-link rules](../../pr/SKILL.md#3-prepare-the-description) and apply them to the intended ticket scope and base. Record deferred or unavailable associations as pending.
 
 - **Reuse** a current task branch with the intended base and task-only scope. Do not create another branch merely because a PR is requested.
 - **New task:** create a named task branch before edits from the verified base, for example `git switch -c <task-branch> <base-ref>` in a clean worktree. Check the name and existing refs before creation. Use an isolated worktree for concurrent writers or when the current worktree belongs to another task.

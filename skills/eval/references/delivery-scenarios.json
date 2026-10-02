@@ -46,10 +46,10 @@
     },
     {
       "id": "issue-link-is-not-integration",
-      "prompt": "Use closing links only for approved complete work targeting the default branch; never merge or close the issue when opening the PR.",
+      "prompt": "Link fully resolved implementation issues for closure on merge into the default branch, respecting explicit keep-open requests. Keep issues open while their PR is open.",
       "capabilities": ["pr"],
       "checks": [
-        {"file": "pr/SKILL.md", "contains": ["Closes #N", "default branch", "non-closing", "partial", "merge", "issue open", "expected closing-issue set", "branch-inherited", "unverified"]}
+        {"file": "pr/SKILL.md", "contains": ["use `Closes #N` by default", "fully resolved issue scope", "default branch", "non-closing", "partial", "explicit user request", "merge", "issue open", "expected closing-issue set", "branch-inherited", "unverified"]}
       ]
     },
     {
@@ -72,10 +72,10 @@
     },
     {
       "id": "native-links-require-real-readback",
-      "prompt": "Distinguish a branch name or body mention from a native GitHub link; preserve local-only authority, remote refs, pagination, and the approved closing set.",
+      "prompt": "Distinguish a branch name or body mention from a native GitHub link; apply the PR issue-link rules to branch associations and preserve local-only authority, remote refs, pagination, and the expected closing set.",
       "capabilities": ["implement", "pr"],
       "checks": [
-        {"file": "implement/references/delivery.md", "contains": ["native branch associations", "docs/agents/issue-tracker.md", "authorized", "pending", "full-ticket delivery intent", "approved closure on merge"]},
+        {"file": "implement/references/delivery.md", "contains": ["native branch associations", "docs/agents/issue-tracker.md", "authorized", "pending", "../../pr/SKILL.md#3-prepare-the-description", "intended ticket scope and base"]},
         {"file": "dev-cycle-setup/issue-tracker-github.md", "contains": ["Native development links", "Issue.linkedBranches", "createLinkedBranch", "repositoryId", "oid", "Existing remote branch", "PullRequest.closingIssuesReferences", "Paginate", "auto-link", "preserves the ref"]},
         {"file": "pr/SKILL.md", "contains": ["every covered implementation issue", "complete native closing-issue set", "including an empty set", "published body", "prepare pending branch links"]}
       ]
