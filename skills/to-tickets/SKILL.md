@@ -13,9 +13,9 @@ Use the architecture, ownership, and security decisions referenced by the approv
 
 **This step is user-invoked**: start when the user requests decomposition, directly or by approving that transition from `dev-cycle`. The breakdown still requires approval before publication.
 
-The issue tracker and issue-label vocabulary should have been provided to you. Tell the user to run `/dev-cycle-setup` if not; it's user-invoked, so you can't call it yourself.
+If `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is missing, ask the user to run `/dev-cycle-setup` and stop before publishing.
 
-Read `writing-for-agents` before drafting ticket bodies. Its general writing rules govern this document; the ticket template below adds only ticket-specific structure. Resolve the configured `ready-for-agent` state label through `docs/agents/triage-labels.md` rather than assuming the canonical name is the tracker label.
+Read `writing-for-agents` before drafting ticket bodies. Its general writing rules govern this document; the ticket template below adds only ticket-specific structure. Read `docs/agents/triage-labels.md` for label rules.
 
 ## Agent result
 
@@ -80,7 +80,7 @@ Iterate until the user approves the breakdown.
 
 Before publication, check both directions: every requirement and testing decision in the spec is allocated, and every ticket obligation has an approved source. Use the spec's sections or requirement descriptions to check traceability; add a source pointer where the connection is not obvious. Resolve gaps or additions before publishing. Keep shared constraints authoritative in the parent and carry the relevant ones into each ticket without copying unrelated policy.
 
-Publish the approved tickets using the issue template below, in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the tracker's native blocking / sub-issue relationship. See `docs/agents/issue-tracker.md`'s "Tracer-bullet ticket operations" section. Apply the configured `ready-for-agent` state label unless instructed otherwise: the tickets are agent-grabbable by construction.
+Publish the approved tickets using the issue template below, in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the tracker's native blocking / sub-issue relationship. See `docs/agents/issue-tracker.md`'s "Tracer-bullet ticket operations" section. Apply the `ready-for-agents` readiness label unless instructed otherwise: the tickets are agent-grabbable by construction. Apply the activity default from `docs/agents/triage-labels.md`.
 
 Read back the published bodies, labels, and native relationships. For an agent-facing return, use the receipt contract; otherwise report which tickets have no open blockers. Then stop; implementation is a separate step.
 

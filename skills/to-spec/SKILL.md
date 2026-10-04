@@ -7,11 +7,11 @@ This skill takes the current conversation context and codebase understanding and
 
 **This step is user-invoked**: start when the user requests the spec, directly or by approving that transition from `dev-cycle`. A completed investigation alone is not authorization to publish.
 
-The issue tracker and issue-label vocabulary should have been provided to you. Tell the user to run `/dev-cycle-setup` if not; it's user-invoked, so you can't call it yourself.
+If `docs/agents/issue-tracker.md` or `docs/agents/triage-labels.md` is missing, ask the user to run `/dev-cycle-setup` and stop before publishing.
 
 Read `writing-for-agents` before drafting the spec. Its general writing rules govern this document; the spec template below adds only spec-specific structure and the budget per section.
 
-When invoked with an issue reference, first read `docs/agents/issue-tracker.md` and fetch the issue's full body, comments, and labels through the configured tracker. Use that issue as the source material, update the same issue with the completed spec and its label transition, and do not create a duplicate issue for the same request. Resolve the configured label strings through `docs/agents/triage-labels.md`; do not assume canonical state names are the tracker labels.
+When invoked with an issue reference, first read `docs/agents/issue-tracker.md` and fetch the issue's full body, comments, and labels through the configured tracker. Use that issue as the source material, update the same issue with the completed spec and its label transition, and do not create a duplicate issue for the same request. Read `docs/agents/triage-labels.md` for label rules.
 
 When an upstream skill supplies a structured result, load its declared result contract, resolve its artifact references, and read the decision evidence.
 
@@ -46,7 +46,7 @@ Record a principle only where the spec can name the decision it changed. Evidenc
 
 3. Sketch out where this will be tested, per `/testing`'s scope. Use the highest existing seam possible; new seams are a real decision, not a default.
 
-4. Write the spec using the template below, check every section against its budget, then publish it to the project issue tracker. Apply the configured `ready-for-agent` state label; no additional triage step is needed. When completing an issue, replace the configured `needs-grilling` state with `ready-for-agent`.
+4. Write the spec using the template below, check every section against its budget, then publish it to the project issue tracker. Apply the `ready-for-agents` readiness label; no additional triage step is needed. When completing an issue, replace `needs-grilling` with `ready-for-agents`. For a new issue or a missing activity label, use the activity default in `docs/agents/triage-labels.md`.
 
 <spec-template>
 

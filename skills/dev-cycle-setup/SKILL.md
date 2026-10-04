@@ -9,7 +9,7 @@ disable-model-invocation: true
 Scaffold the per-repo configuration that `/capture-issue`, `/to-spec`, `/to-tickets`, `/implement`, and `/wayfinder` assume:
 
 - **Issue tracker**: where issues and tickets live
-- **Issue labels**: the strings used for the canonical category, state, and workflow-marker roles
+- **Issue labels**: category, readiness, and activity
 - **Delivery**: the default direct or PR route and its target refs
 - **Domain docs**: where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
 - **Project context**: one portable `AGENTS.md` at the repo root, produced from whatever agent-rule sources already exist
@@ -65,13 +65,9 @@ Use GitHub Issues for every project. Before GitHub operations, load [github-cli]
 
 Record the choice in `docs/agents/issue-tracker.md`, seeded from [issue-tracker-github.md](./issue-tracker-github.md).
 
-**Section B: Issue-label vocabulary.**
+**Section B: Issue labels.**
 
-> Do you want to keep the default issue labels? (recommended: **yes**)
-
-The defaults are the two canonical issue-state labels, each label string equal to its name: `needs-grilling` and `ready-for-agent`. On **yes**, write them as-is from [triage-labels.md](./triage-labels.md). Only collect the overrides if the user says no. Usually this is because their tracker already uses other names.
-
-`needs-grilling` is the initial issue state for quick issues intentionally created before a grilling session. It is replaced by `ready-for-agent` when the complete spec is published.
+Copy [triage-labels.md](./triage-labels.md) to `docs/agents/triage-labels.md`.
 
 **Section C: Domain docs.** Default to the **single-context** layout: `CONTEXT.md` + `docs/adr/` at the repo root. Record this convention without asking; create content files only when a resolved term or a decision passing Section D's gate needs one.
 
@@ -137,7 +133,7 @@ The block contains pointers only, never the content itself:
 Then write the docs files using the seed templates in this skill folder as a starting point:
 
 - [issue-tracker-github.md](./issue-tracker-github.md): GitHub issue tracker, including the operations `/wayfinder` needs
-- [triage-labels.md](./triage-labels.md): label mapping
+- [triage-labels.md](./triage-labels.md): label rules
 - [delivery.md](./delivery.md): delivery defaults and verification gates
 - [domain.md](./domain.md): domain doc consumer rules + layout
 
