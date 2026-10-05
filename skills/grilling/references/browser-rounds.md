@@ -19,7 +19,7 @@ Each round carries every independent frontier decision under `# Decidere`. A dec
 
 The last stdout line is one JSON object; its `lavagna` field names the outcome.
 
-- `feedback`: record `choices` in the design tree, read every path in `images`, investigate facts the comments raise, and treat a comment that corrects an assumption as a frontier change. Recompute the frontier, then present the next round.
+- `feedback`: record `choices` in the design tree, read every path in `images`, investigate facts the comments raise, and treat a comment that corrects an assumption as a frontier change. Recompute the frontier, then present the next browser round without waiting for another user request to continue. Put answers to comments and explanation-only followups in the next browser round alongside any remaining decisions. When no decisions remain, proceed directly to the confirmation round.
 - `invalid` for content or bounds: fix the round from the line-numbered errors and rerun it. For usage or identity errors, report them in the terminal as for `error`.
 - `error` or `busy`: report it in the terminal and start no new round on your own initiative.
 - No outcome line: stop and report the interruption without assuming its cause. Respond to any available user message; otherwise wait for the user to resume. The next round returns to the browser unless the user asks to stay in the terminal.
@@ -28,7 +28,7 @@ The last stdout line is one JSON object; its `lavagna` field names the outcome.
 
 When the frontier is empty, present a confirmation round: `# Capire` lists the decisions with their decisive evidence, the rejected alternatives, and the unresolved risks; `# Decidere` holds one confirm-or-correct question.
 
-The confirmation is clean when the user confirms and no comment reopens or changes a decision. Only then run `lavagna close`; it ends the browser phase and the page sends the user back to the terminal. Otherwise handle the batch as `feedback` and continue the loop.
+The confirmation is clean when the user confirms and no comment reopens or changes a decision. Otherwise handle the batch as `feedback` and continue the loop. After a clean confirmation, run `lavagna close`; it ends the browser phase and the page sends the user back to the terminal. Until then, keep the interaction in the browser unless an error or interruption requires the recovery described above, or the user explicitly asks to leave it.
 
 Completion criterion: `lavagna close` returned `closed` after a clean confirmation. Then follow [Checkpoint and handoff](../SKILL.md#checkpoint-and-handoff) for the caller's handoff.
 
