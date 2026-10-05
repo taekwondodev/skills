@@ -44,7 +44,7 @@ A hypothesis can be tested with a probe, prototype, benchmark, or forensic artif
 
 ### Decision
 
-A decision changes product behavior, scope, architecture, ownership, contracts, security, or user preference. Present it with the available structured user-question capability.
+A decision changes product behavior, scope, architecture, ownership, contracts, security, or user preference. Present it through the channel selected under [User questions](#user-questions).
 
 When uncertain, do not silently convert a decision into an agent preference. State the evidence and ask.
 
@@ -71,7 +71,9 @@ When investigation reveals an unsettled data shape, module boundary, ownership m
 
 ## User questions
 
-For each decision round, use the available structured user-question capability. If it is unavailable, ask in ordinary chat while preserving the same checkpoint and state that the structured interaction was unavailable.
+Before the first decision round of a grilling phase, run `lavagna check`. On exit 0, load [browser-rounds.md](references/browser-rounds.md) and present every round of the phase through `lavagna`, text-only rounds included. On any other result, including a missing `lavagna`, use the terminal.
+
+For each terminal decision round, use the available structured user-question capability. If it is unavailable, ask in ordinary chat while preserving the same checkpoint and state that the structured interaction was unavailable.
 
 - Present concrete alternatives as selectable options when the capability supports them.
 - Keep alternatives out of the question text when the capability has a separate options field.
