@@ -10,25 +10,30 @@
 
 ## Rounds
 
-Before the first round of a conversation, run `lavagna round --help` for the `round.md` grammar and bounds; write every round to it.
+Before the first round of a conversation, run `lavagna round --help` for the minimal authoring contract. Load `lavagna round --help grammar` only when the round needs syntax beyond it.
 
 - Text-only round: pipe `round.md` into `lavagna round` through one heredoc in a single shell call.
 - Richer round (SVG, images, `.js` or `.css` files): write `DIR/round.md` and its files in a fresh directory under `$TMPDIR`, never inside the checkout, then run `lavagna round DIR`.
+- Unchanged content, new decisions: use `lavagna round --reuse rN` with decisions-only stdin. It reuses the earlier content snapshot, not its questions or choices. When content changes, submit a new complete round.
 
 Each round carries every independent frontier decision under `# Decidere`. A decision that depends on another waits for a later round. Option order and phrasing follow User questions in `SKILL.md`. Explain before asking: `# Capire` comes first, `# Confrontare` follows when alternatives must be weighed.
 
-The last stdout line is one JSON object; its `lavagna` field names the outcome.
+Stdout is one JSON outcome; its `lavagna` field names the outcome. Operational URL/status goes to stderr.
 
-- `feedback`: record `choices` in the design tree, read every path in `images`, investigate facts the comments raise, and treat a comment that corrects an assumption as a frontier change. Recompute the frontier, then present the next browser round without waiting for another user request to continue. Put answers to comments and explanation-only followups in the next browser round alongside any remaining decisions. When no decisions remain, proceed directly to the confirmation round.
+For `feedback` with `deferred:true`, fetch `lavagna feedback SUBMISSION --all` using the returned `submission` before updating the design tree or closing. Read the complete batch so no objection is missed; counts are not decisions. Retrieval errors stop advancement, never imply empty feedback. For both inline and retrieved batches, omitted choices are not approval.
+
+- `feedback`: read all comments and every path in `images`, then record `choices` in the design tree, investigate facts the comments raise, and treat a comment that corrects an assumption as a frontier change. Recompute the frontier, then present the next browser round without waiting for another user request to continue. Put answers to comments and explanation-only followups in the next browser round alongside any remaining decisions. When no decisions remain, proceed directly to the confirmation round.
 - `invalid` for content or bounds: fix the round from the line-numbered errors and rerun it. For usage or identity errors, report them in the terminal as for `error`.
 - `error` or `busy`: report it in the terminal and start no new round on your own initiative.
-- No outcome line: stop and report the interruption without assuming its cause. Respond to any available user message; otherwise wait for the user to resume. The next round returns to the browser unless the user asks to stay in the terminal.
+- No outcome object: stop and report the interruption without assuming its cause. Respond to any available user message; otherwise wait for the user to resume. The next round returns to the browser unless the user asks to stay in the terminal.
 
 ## Completion
 
 When the frontier is empty, present a confirmation round: `# Capire` lists the decisions with their decisive evidence, the rejected alternatives, and the unresolved risks; `# Decidere` holds one confirm-or-correct question.
 
-The confirmation is clean when the user confirms and no comment reopens or changes a decision. Otherwise handle the batch as `feedback` and continue the loop. After a clean confirmation, run `lavagna close`; it ends the browser phase and the page sends the user back to the terminal. Until then, keep the interaction in the browser unless an error or interruption requires the recovery described above, or the user explicitly asks to leave it.
+The confirmation is clean when the user confirms and no comment reopens or changes a decision. Otherwise handle the batch as `feedback` and continue the loop. After a clean confirmation and reading all retained feedback and images, run `lavagna close`; it ends the browser phase and directs a connected page back to the terminal. Until then, keep the interaction in the browser unless an error or interruption requires the recovery described above, or the user explicitly asks to leave it.
+
+`close` deletes retained phase content, feedback and images, not source round directories. Conversation data is swept after one day of inactivity, skipping live calls. The close result's `page` is `cleaned` only when a connected page acknowledges cleanup, `unconfirmed` when the close event was delivered without acknowledgment, or `not-connected` when no page connected. Local deletion still occurs without acknowledgment; none of these statuses proves other offline copies were erased.
 
 Completion criterion: `lavagna close` returned `closed` after a clean confirmation. Then follow [Checkpoint and handoff](../SKILL.md#checkpoint-and-handoff) for the caller's handoff.
 
