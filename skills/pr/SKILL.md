@@ -1,6 +1,6 @@
 ---
 name: pr
-description: Create or update PRs with concise visual explanations.
+description: Create or update PRs with concise visual explanations, then keep them open or land them.
 argument-hint: "[issue or PR] [base] [draft]"
 ---
 
@@ -54,8 +54,14 @@ Read back the complete native closing-issue set through the tracker adapter and 
 
 Query checks for that head with `gh-axi pr checks` and match them to the repository's required gates. Distinguish passing, failing, pending, unavailable, and no configured checks. Keep local test evidence separate from remote CI.
 
-Completion: the intended PR and body are read back, the head revision matches, and actual check states and remaining gates are recorded. This skill never merges, enables auto-merge, or closes an issue directly.
+Completion: the intended PR and body are read back, the head revision matches, and actual check states and remaining gates are recorded. Publication never merges, enables auto-merge, or closes an issue directly.
+
+## 5. Choose the next step
+
+After publication, ask through the structured user-question capability whether to keep the PR open or land it. A landing request in the user's message answers the question. For landing, load [landing guidance](references/landing.md) and consume its result. For a kept PR, stop with the publication result.
+
+Completion: the user's choice is recorded and, for landing, the landing result exists.
 
 ## Agent result
 
-For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the PR, head revision, and saved description, with publication checks, remaining limits, and any history recommendation. For a human-facing return, give the PR URL, concise change summary, and outstanding checks or decisions, including a warranted squash recommendation.
+For an agent-facing return, load [delivery/1](../implement/references/result-contract.md). Reference the PR, head revision, and saved description, with publication checks, remaining limits, and any history recommendation; when landing ran, forward its result. For a human-facing return, give the PR URL, concise change summary, and outstanding checks or decisions, including a warranted squash recommendation.

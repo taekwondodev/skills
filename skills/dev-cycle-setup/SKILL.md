@@ -106,6 +106,8 @@ Let them edit before writing.
 
 Write `AGENTS.md` at the repo root. If an `AGENTS.md` already existed there, preserve its operational content in the merge. Do not modify any other agent-rule source file; the originals remain byte-for-byte unchanged.
 
+Add `HANDOFF.md` to the repository `.gitignore` when it is not already ignored.
+
 If Section D ran: resolve reused targets and write any justified new ADR files or `CONTEXT.md` entries before composing `AGENTS.md`. Keep concise repository-wide rules inline and use conditional pointers for disclosed content, per `writing-for-agents`. Verify every pointer's target and reading trigger.
 
 The block contains pointers only, never the content itself:

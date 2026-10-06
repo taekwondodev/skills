@@ -46,7 +46,7 @@ Record a principle only where the spec can name the decision it changed. Evidenc
 
 3. Sketch out where this will be tested, per `/testing`'s scope. Use the highest existing seam possible; new seams are a real decision, not a default.
 
-4. Write the spec using the template below, check every section against its budget, then publish it to the project issue tracker. Apply the `ready-for-agents` readiness label; no additional triage step is needed. When completing an issue, replace `needs-grilling` with `ready-for-agents`. For a new issue or a missing activity label, use the activity default in `docs/agents/triage-labels.md`.
+4. Write the spec using the template below, check every section against its budget, then publish it to the project issue tracker. Apply the `ready-for-agent` readiness label; no additional triage step is needed. When completing an issue, replace `needs-grilling` with `ready-for-agent`. For a new issue or a missing activity label, use the activity default in `docs/agents/triage-labels.md`.
 
 <spec-template>
 

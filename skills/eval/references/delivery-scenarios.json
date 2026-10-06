@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "expected_scenario_count": 12,
+  "version": 3,
+  "expected_scenario_count": 13,
   "scenarios": [
     {
       "id": "resolve-delivery-before-edits",
@@ -94,7 +94,7 @@
       "prompt": "Recommend a merge strategy for a cohesive change developed through fixups, and for a history with independently useful commits. Respect repository policy, distinguish squash at merge from branch cleanup, and leave execution subject to separate authorization.",
       "capabilities": ["pr"],
       "checks": [
-        {"file": "pr/SKILL.md", "contains": ["references/history.md", "merge policy", "without force", "never merges"]},
+        {"file": "pr/SKILL.md", "contains": ["references/history.md", "merge policy", "without force", "Publication never merges"]},
         {"file": "pr/references/history.md", "contains": ["independently meaningful", "Squash and merge", "Commits tab", "branch rewrite", "separate authorization", "squash-message defaults", "recommendation"]}
       ]
     },
@@ -106,6 +106,17 @@
         {"file": "dev-cycle/SKILL.md", "contains": ["`commit`", "`pr`", "references/delivery.md"]},
         {"file": "dev-cycle-setup/SKILL.md", "contains": ["docs/agents/delivery.md", "delivery.md", "direct", "pr"]},
         {"file": "dev-cycle-setup/issue-tracker-github.md", "contains": ["/commit", "/pr", "docs/agents/delivery.md"]}
+      ]
+    },
+    {
+      "id": "land-after-publication",
+      "prompt": "After publishing a PR, ask whether to keep it open or land it. Landing squash-merges with the verified head pinned, fast-forwards the base checkout, removes only the worktrees the workflow recorded for the task, reports any other worktree holding the branch, deletes the local branch, and reports each expected issue as closed, open, or unverified.",
+      "capabilities": ["pr", "implement", "dev-cycle-setup"],
+      "checks": [
+        {"file": "pr/SKILL.md", "contains": ["keep the PR open or land it", "references/landing.md", "Publication never merges"]},
+        {"file": "pr/references/landing.md", "contains": ["Already merged", "pulls/<number>/merge", "\"merge_method\":\"squash\"", "\"sha\":\"<verified head>\"", "<PR title> (#N)", "fast-forward only", "worktrees recorded for this task in the task record", "with the recorded branch checked out", "`git worktree remove --force -- <path>`", "stale", "`held`", "`git branch -D <task-branch>`", "`closed`, `open`, or `unverified`", "delivery/1"]},
+        {"file": "implement/references/delivery.md", "contains": ["record its path and branch in the task record"]},
+        {"file": "dev-cycle-setup/SKILL.md", "contains": ["`HANDOFF.md`", ".gitignore"]}
       ]
     }
   ],

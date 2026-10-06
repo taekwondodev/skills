@@ -48,7 +48,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | --- | --- |
 | [commit](skills/commit/SKILL.md) | Create scoped commits and perform authorized direct delivery. |
 | [github-cli](skills/github-cli/SKILL.md) | Perform GitHub operations with gh-axi. |
-| [pr](skills/pr/SKILL.md) | Create or update pull requests with concise visual explanations. |
+| [pr](skills/pr/SKILL.md) | Create or update pull requests with concise visual explanations, then keep them open or land them. |
 
 ## Investigation and performance
 
