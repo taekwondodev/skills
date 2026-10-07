@@ -86,7 +86,9 @@ For each terminal decision round, use the available structured user-question cap
 
 The grilling session ends only when every reachable branch of the design tree is settled and the user confirms shared understanding.
 
-Then stop. For a human-facing handoff, summarize only the decisions, decisive evidence, rejected alternatives, principles that changed choices, unresolved risks, and recommended next phase. For an agent-facing handoff, use the result contract below without a second prose report.
+Use the recap to obtain confirmation. In the browser, follow [Confirmation](references/browser-rounds.md#7-confirmation). In the terminal, summarize the decisions, decisive evidence, rejected alternatives, principles that changed choices, and unresolved risks, then ask whether the user agrees or wants corrections. Process corrections before asking for confirmation again.
+
+After confirmation and any required browser closure, give the user only the recommended next phase and its completion criterion. For an agent-facing handoff, return only the result contract below.
 
 Do not start any other skill automatically. The user invokes the next step.
 
