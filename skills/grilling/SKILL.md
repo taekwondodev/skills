@@ -71,7 +71,7 @@ When investigation reveals an unsettled data shape, module boundary, ownership m
 
 ## User questions
 
-Before the first decision round of a grilling phase, run `lavagna check`. On exit 0, load [browser-rounds.md](references/browser-rounds.md) and present every round of the phase through `lavagna`, text-only rounds included. On any other result, including a missing `lavagna`, use the terminal.
+Before the first decision round of a grilling phase, run `lavagna check`. On exit 0, load [browser-rounds.md](references/browser-rounds.md) and follow its per-question delta loop for every call of the phase, including replies, text-only questions and confirmation. On any other result, including a missing `lavagna`, use the terminal.
 
 For each terminal decision round, use the available structured user-question capability. If it is unavailable, ask in ordinary chat while preserving the same checkpoint and state that the structured interaction was unavailable.
 
