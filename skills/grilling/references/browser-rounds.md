@@ -1,22 +1,20 @@
 # Browser rounds
 
-`lavagna` keeps a grilling phase on one browser page. Each `lavagna round` call applies changes to its questions and waits for one feedback batch, resuming after `waiting` as described in [Recovery](#8-recovery). Other questions stay in the terminal.
+`lavagna` keeps a grilling phase on one browser page. Other questions stay in the terminal.
 
 ## 1. Opt-in
 
-`lavagna check` passes when the environment binds a conversation identity. If it fails, use terminal questions and show the user the hint from the check error about configuring `LAVAGNA_SESSION`. Leave the variable to that configuration rather than setting it to pass the check.
+Follow [User questions](../SKILL.md#user-questions) for the check and terminal fallback. For every browser call, apply the shell-timeout policy from `lavagna round --help`, including `--within` when required.
 
-Where the shell tool can run without a timeout, run every `lavagna round` that way, explicitly disabling any default timeout, and omit `--within`. Where the tool imposes a maximum timeout, use that maximum for every call and pass the same duration as `--within`. Consult `lavagna round --help` for its syntax and the `waiting` outcome.
+## 2. Feedback loop
 
-## 2. One call per turn
-
-Make one blocking `lavagna round` call per agent turn, except for immediate empty calls after `waiting` as described in [Recovery](#8-recovery). The first call names the phase, presents every independent frontier question, and plans every known dependent decision with its prerequisites. Complete planned questions once their prerequisites are settled.
+The first call names the phase, presents every independent frontier question, and plans every known dependent decision with its prerequisites. Complete planned questions once their prerequisites are settled.
 
 Later calls carry only changes: replies, settlements, replacement questions or new questions. Lavagna retains the questions and discussions; an unchanged question needs no input. Keep the design tree in step with this question ledger.
 
 ## 3. Writing a question
 
-Before the first call, run `lavagna round --help` for the minimal authoring contract. Load `lavagna round --help grammar` when a call element, dependency, option effect, representation or resource needs syntax beyond it. These outputs own the syntax and rendering behavior.
+Before the first call, run `lavagna round --help` for the authoring, timeout and outcome contracts. Load `lavagna round --help grammar` when a call element, dependency, option effect, representation or resource needs syntax beyond it. These outputs own the syntax and rendering behavior.
 
 - Keep question ids stable when replacing or completing a planned question.
 - Explain the subject and alternatives before asking for a decision.
@@ -74,7 +72,7 @@ Completion: `lavagna close` returned `closed` after a clean confirmation. Then f
 
 ## 8. Recovery
 
-- `waiting`: immediately make an empty `lavagna round` call in the same turn, with the same shell timeout and `--within` duration, if used. Repeat on each `waiting`; do not resend questions or report an interruption to the user. `lavagna round --help` owns the outcome contract and call syntax.
+- `waiting`: continue in the same turn using the empty-call contract from `lavagna round --help`, retaining the call's timeout settings. This continues the current wait rather than entering interruption recovery.
 - `invalid` for content or bounds: fix the line-numbered errors and retry. The rejected call changes no questions. For usage or identity errors, report them in the terminal as for `error`.
 - `error` or `busy`: report it in the terminal and start no new call on your own initiative.
 - No outcome object: report the interruption without assuming its cause. Respond to an available user message; otherwise wait for the user to resume.
