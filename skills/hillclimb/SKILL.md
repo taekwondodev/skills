@@ -12,7 +12,10 @@ Improve one measurable result against an explicit target through repeated experi
 1. Define the realistic workload, metric, direction of improvement, target, and stop predicate.
 2. Build and freeze a sensitive measurement harness.
 3. Record the baseline and green regression gate.
-4. For each iteration, record one hypothesis, implement one change, measure before and after, run the gate, and keep or revert the change.
+4. For each iteration:
+   1. Choose and record one hypothesis against the retained state. For performance metrics, load the [performance mantras](../perf-issue/SKILL.md#performance-mantras) to order hypothesis categories. Reconsider earlier categories when a change makes them viable.
+   2. If the candidate crosses a function boundary or changes a data shape, use `architect` before implementation and consume its design sketch.
+   3. Implement one change, measure before and after, run the gate, and record the keep/revert verdict before selecting the next hypothesis.
 5. Push past the first plateau by changing hypothesis category or revisiting the grounded architecture.
 6. Stop only when the predicate is met, cheap hypotheses are exhausted, or the remaining cost is explicitly accepted.
 
