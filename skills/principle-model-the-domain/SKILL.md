@@ -1,18 +1,16 @@
 ---
 name: principle-model-the-domain
-description: "Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files. Encode the domain in a structure instead of scattered conditionals."
+description: "Apply when writing stateful logic, or when code branches a lot or repeats a shape assumption across files."
 ---
 
 # Model the Domain
 
-Encode the real domain in a data structure instead of scattering it across conditionals.
+Encode the domain in a data structure instead of scattered conditionals. A matching structure makes invalid states unrepresentable and deletes branches. Choose it at write time; recovering it later reads as a refactor and gets deferred.
 
-**Why:** Scattered booleans, repeated shape assumptions, and branching spread across files are accidental complexity. A structure that matches the domain makes invalid states unrepresentable and deletes branches. Choosing it at write time is cheap; recovering it later reads as a refactor and gets deferred.
-
-**Reach for structures like these:**
+Reach for:
 
 - A state machine instead of scattered booleans, phases, or lifecycle checks.
-- A typed object/model instead of loose parameters or repeated shape assumptions.
+- A typed model instead of loose parameters or repeated shape assumptions.
 - A map, registry, lookup table, or discriminated union instead of branching spread across files.
 - A reducer or command/event model instead of ad hoc state mutations.
 - A module organized around one body of domain knowledge instead of a sequence such as load, validate, transform, and save. Execution order is not ownership.
