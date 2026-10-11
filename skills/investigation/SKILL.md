@@ -12,7 +12,7 @@ Answer a read-only question or reduce an unknown cause using inspected evidence.
 1. State the question, scope, and current hypotheses.
 2. Search and read the relevant repository, issue, documentation, or runtime sources.
 3. Trace the mechanism from trigger to effect.
-4. Load `principle-prove-it-works` when a material claim depends on public runtime behavior. Consume its project-verification selection and evidence contract.
+4. Load [principle-prove-it-works](../principle-prove-it-works/SKILL.md) when a material claim depends on public runtime behavior. Use its proportional-proof guidance to select a check against the real artifact.
 5. Run a focused probe, test, or query when it can distinguish hypotheses.
 6. Record evidence, rejected hypotheses, and unresolved uncertainty.
 7. Return the result to `grilling` when it is part of a decision tree.

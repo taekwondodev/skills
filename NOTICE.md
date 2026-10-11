@@ -14,6 +14,7 @@ The following skills are copies or adaptations of pstack skills:
 
 - architect
 - arena
+- benchmark-checklist
 - blast-radius
 - eval
 - hillclimb
@@ -27,6 +28,7 @@ The following skills are copies or adaptations of pstack skills:
 - principle-encode-lessons-in-structure
 - principle-exhaust-the-design-space
 - principle-experience-first
+- principle-explain-the-number
 - principle-fix-root-causes
 - principle-foundational-thinking
 - principle-guard-the-context-window

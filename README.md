@@ -59,6 +59,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | [investigation](skills/investigation/SKILL.md) | Answer observable questions before proposing changes. |
 | [runtime-forensics](skills/runtime-forensics/SKILL.md) | Diagnose live symptoms using captured signals and source mapping. |
 | [trace-forensics](skills/trace-forensics/SKILL.md) | Analyze existing profiles, traces, heap snapshots, and spindumps. |
+| [benchmark-checklist](skills/benchmark-checklist/SKILL.md) | Check measurement validity before reporting or acting on performance numbers. |
 | [perf-issue](skills/perf-issue/SKILL.md) | Diagnose and improve a specific, measured performance problem. |
 | [hillclimb](skills/hillclimb/SKILL.md) | Improve a metric through repeated, measured keep-or-revert experiments. |
 
@@ -86,6 +87,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | [principle-encode-lessons-in-structure](skills/principle-encode-lessons-in-structure/SKILL.md) | Turn recurring corrections into checks, metadata, or scripts. |
 | [principle-exhaust-the-design-space](skills/principle-exhaust-the-design-space/SKILL.md) | Compare distinct prototypes before committing to a novel design. |
 | [principle-experience-first](skills/principle-experience-first/SKILL.md) | Favor a polished user experience over implementation convenience. |
+| [principle-explain-the-number](skills/principle-explain-the-number/SKILL.md) | Explain measured results and rule out misleading numbers before using them. |
 | [principle-fix-root-causes](skills/principle-fix-root-causes/SKILL.md) | Reproduce problems and fix their causes rather than masking symptoms. |
 | [principle-foundational-thinking](skills/principle-foundational-thinking/SKILL.md) | Choose core types and data structures before writing logic. |
 | [principle-guard-the-context-window](skills/principle-guard-the-context-window/SKILL.md) | Keep context focused and isolate large intermediate outputs. |

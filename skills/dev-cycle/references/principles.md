@@ -26,6 +26,7 @@ Consult this index when choosing the principle that governs a current decision. 
 ### Verification
 
 - **Prove It Works**. Verify against the real artifact, not a proxy, self-report, or “it compiles.”
+- **Explain the Number**. Before trusting or reporting a measured result, identify what bounds it and rule out misleading measurements.
 - **Fix Root Causes**. Trace each symptom to its root cause and fix it there; reproduce first.
 - **Sequence Verifiable Units**. Break multi-step work into small units that each end in a checkable state.
 

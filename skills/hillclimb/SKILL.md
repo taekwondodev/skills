@@ -10,12 +10,12 @@ Improve one measurable result against an explicit target through repeated experi
 ## Procedure
 
 1. Define the realistic workload, metric, direction of improvement, target, and stop predicate.
-2. Build and freeze a sensitive measurement harness.
+2. Build and freeze a sensitive measurement harness. Before freezing, load [principle-explain-the-number](../principle-explain-the-number/SKILL.md) to establish the evidence needed to interpret results. For performance metrics, vet the harness with [benchmark-checklist](../benchmark-checklist/SKILL.md) and include error and completed-work counts in its output.
 3. Record the baseline and green regression gate.
 4. For each iteration:
    1. Choose and record one hypothesis against the retained state. For performance metrics, load the [performance mantras](../perf-issue/SKILL.md#performance-mantras) to order hypothesis categories. Reconsider earlier categories when a change makes them viable.
    2. If the candidate crosses a function boundary or changes a data shape, use `architect` before implementation and consume its design sketch.
-   3. Implement one change, measure before and after, run the gate, and record the keep/revert verdict before selecting the next hypothesis.
+   3. Implement one change, measure before and after, and run the gate. Recheck measurement validity with the applicable procedure, then record the keep/revert verdict before selecting the next hypothesis.
 5. Push past the first plateau by changing hypothesis category or revisiting the grounded architecture.
 6. Stop only when the predicate is met, cheap hypotheses are exhausted, or the remaining cost is explicitly accepted.
 
@@ -25,4 +25,4 @@ For an agent-facing return, load [measurement/1](../perf-issue/references/result
 
 ## Verification
 
-Every attempt has a recorded result and verdict. Accepted changes clear noise and preserve correctness. Rejected changes are fully reverted. The result includes baseline, final metric, and remaining ideas; derive the delta from those measurements when rendering a human-facing report.
+Every attempt has a recorded result and verdict. Accepted changes have conclusive measurements, clear noise, and preserve correctness. Rejected changes are fully reverted. The result includes baseline, final metric, and remaining ideas; derive the delta from those measurements when rendering a human-facing report.
