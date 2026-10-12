@@ -12,7 +12,7 @@ from typing import Any, Callable
 
 REQUIRED_MODEL = "deepseek-v4-flash"
 REQUIRED_PROVIDER = "opencode-go"
-EXPECTED_MATRIX_SHA256 = "fc9ded8beeaede7bbc5c73e3fc906e853c36cdf7c7b88de75dc5faec602249b6"
+EXPECTED_MATRIX_SHA256 = "bb5b1378d257e79da6ddc3bbce277fb4dbe27fc08c5486e3ffa8c29a4d129db7"
 REQUIRED_RESPONSE_KEYS = {
     "id",
     "verdict",

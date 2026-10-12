@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "expected_scenario_count": 5,
   "scenarios": [
     {
@@ -7,7 +7,7 @@
       "role": "Standards reviewer",
       "policy_files": [
         "code-review/SKILL.md",
-        "coding-standards/SKILL.md",
+        "principle-boundary-discipline/SKILL.md",
         "code-review/references/standards-review.md",
         "testing/SKILL.md"
       ],

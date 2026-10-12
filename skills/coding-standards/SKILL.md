@@ -1,63 +1,35 @@
 ---
 name: coding-standards
-description: >
-  Review coding standards, or decide dependency and API changes.
-  Use for conformity reviews, explicit coding-policy questions, library choices, and version lookup.
+description: Choose project coding policy, dependencies, or external APIs when a decision is unresolved.
 ---
 
-## Research & Knowledge Retrieval
+# Coding Decisions
 
-* When a dependency or API decision needs current information, verify official docs and relevant practices before choosing.
-* Retrieve uncertain library versions or API behavior; report unavailable evidence rather than guessing or asking the user to perform an available lookup.
-* Prefer verified sources over memory. The research flow below makes this cheap and context-safe:
+Resolve an explicit coding-policy, dependency, or API choice. Start from the project's existing conventions, toolchain, approved behavior, and security and compatibility constraints. Reuse settled decisions.
 
-### Research flow
+## Coding policy
 
-The goal is *verified, context-lean* findings: pull only what a decision needs, never a page
-dump. In order:
+Identify the concrete problem the proposed rule solves. Distinguish a binding project requirement from a design heuristic or preference. A convention must reduce development or reader effort without silently trading away required behavior, security, or runtime performance.
 
-1. **Search, then extract**. Search to find sources (returns URL/title/description),
-   then pull clean markdown from the relevant hits. This is the native equivalent of
-   "search then read"; do it yourself, in-session.
-2. **Browser for interaction**: when a page needs real navigation (a flow, a click-through, a
-   dynamic render, or extraction is blocked), drive the browser instead.
-3. **Delegate long research**. For a broad or multi-source question that would flood your context,
-   hand it to a subagent in an isolated context with the research result contract below; verify and consume its findings directly. This
-   is what `wayfinder` research tickets do. See the `wayfinder` skill.
-4. **Compression is built-in**: clean page content comes back directly (truncation and large-page spill to disk are handled for you); rely on that instead of pasting raw HTML into context.
+Use the canonical owner only for the question being decided:
 
-## Agent result
+- Types and public signatures: [Type System Discipline](../principle-type-system-discipline/SKILL.md).
+- Validation and security boundaries: [Boundary Discipline](../principle-boundary-discipline/SKILL.md).
+- Readability, comments, and complexity: [Minimize Reader Load](../principle-minimize-reader-load/SKILL.md).
+- Replacing an internal API: [Migrate Callers Then Delete Legacy APIs](../principle-migrate-callers-then-delete-legacy-apis/SKILL.md).
 
-For research returned to another skill, load [evidence/1](../investigation/references/result-contract.md) and pass it to any research worker. Keep verified versions, API behavior, sources, and uncertainty in the payload. A worker assigned a review axis uses that review's result contract instead.
+For a mechanically decidable rule, use [Build the Lever](../principle-build-the-lever/SKILL.md) to select existing enforcement before proposing new tooling. Record the rule in its authoritative configuration or policy, not a second checklist. Tooling changes require approved scope; an uncovered rule does not authorize installation.
 
-## Version & API Lookup (Mandatory)
+## Dependencies and APIs
 
-* NEVER answer lib versions, API signatures, or breaking changes from memory.
-* ALWAYS verify against current docs or changelog first, using the research flow above
-  (search → extract, browser if needed, delegate for breadth).
-* Cite what you found (URL or source), so the user can trust the version without re-checking.
+Prefer the standard library or an existing dependency. An addition needs a substantial capability, performance, or complexity benefit that the existing stack cannot provide reasonably.
 
-## Dependency Management
+For version, API, maintenance, security, or license facts, use [investigation](../investigation/SKILL.md) and consume its verified sources and limits. Reuse current evidence; never select versions or assert API behavior from memory. Choose widely used, actively maintained dependencies that fit the project. Check security advisories, prefer a disclosure policy, and run applicable audits. Verify license compatibility with the distribution model; flag copyleft implications and unavailable evidence.
 
-* Prefer stdlib over external deps.
-* Add dep only if massive benefit (perf, complexity) stdlib can't handle.
-* Must be widely used, actively maintained, consistent with project.
-* Security: check CVE history, run audit (`npm audit`, `cargo audit`, `govulncheck`). Prefer deps with security disclosure policy.
-* License: verify compatible with distribution model. Flag copyleft (GPL).
+Compare viable options against the approved constraints, including migration and runtime costs. Recommend one option with its rationale and unresolved risks. Return scope, public compatibility, and security-policy changes to the caller for the user's decision before adopting them.
 
-## Coding Philosophy
+## Result
 
-* **TyDD:** Encode constraints into type system. Make invalid states unrepresentable.
-* **No backward compatibility:** modify structures/APIs destructively. No legacy fields or methods.
-* **Refactor fearlessly:** prioritize correctness of current version.
-* **Visibility:** default private. Expose publicly only if strictly needed.
-* **Flattened hierarchy:** private submodules + explicit re-exports in parent.
-* Write comment-free code: express intent through names, types, and structure. Keep decision rationale in documentation. Required tool directives and legal notices are exempt.
-* DRY, modern idioms, zero-cost abstractions.
-* **Style serves outcomes:** conventions should reduce development effort and reader/context load without sacrificing runtime performance. Correctness, security, and required behavior remain constraints; make performance tradeoffs explicit and evidence-based.
-* **Low cognitive complexity:** minimize branching, nesting, and hidden control flow. Decompose by domain responsibility, not merely to satisfy complexity metrics.
-* **Fail fast:** missing required config = unrecoverable error. Crash early.
-* **Secure defaults:** insecure = explicit opt-in, never opt-out.
-* **Validate once, then trust:** convert untrusted input into types that enforce their intrinsic invariants at the earliest entry point. Internal code trusts those types and never repeats validation or recomputes established facts. Context-dependent rules remain with the code that owns the required state and decisions.
-* **Least privilege:** request only minimum permissions needed.
-* **Secrets hygiene:** never in logs, errors, traces, comments. Hardcoded secret = build-breaking bug.
+For an agent-facing return, use [evidence/1](../investigation/references/result-contract.md). Distinguish verified facts from the recommendation and retain unresolved approval or evidence gaps. A recommendation is not authorization to change project policy or dependencies.
+
+Completion: the caller can identify the proposed choice, its evidence and tradeoffs, the authoritative owner, and any decision that still requires approval.

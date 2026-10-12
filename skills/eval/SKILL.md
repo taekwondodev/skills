@@ -31,7 +31,7 @@ Run the existing structural checks and relevant runner tests for changed skill c
 | Do workflow text, skill names, and references satisfy the approved contract? | `scripts/validate_dev_cycle.py` |
 | Does the model select the current-phase procedure and preserve the next user-owned gate? | `scripts/run_dev_cycle_behavior.py` |
 | Do bounded reviewers and investigators classify supported claims correctly? | `scripts/run_subagent_behavior.py` |
-| Do coding-policy decisions match the approved cases? | `scripts/run_coding_standards_behavior.py` |
+| Do canonical coding principles preserve the approved design behaviors? | `scripts/run_coding_principles_behavior.py` |
 | Do workers actually execute the required tools and produce artifacts? | `scripts/run_tool_use_behavior.py` |
 
 For the structural gate, run `python3 skills/eval/scripts/validate_dev_cycle.py --baseline-ref HEAD` from the repository root. A routing prediction is not evidence of tool execution or context placement. For a load-distribution change, inspect returned bodies, dedup stubs, reload boundaries, and parent versus worker contexts in representative traces.

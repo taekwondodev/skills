@@ -16,14 +16,14 @@ DEV_RUNNER = importlib.util.module_from_spec(DEV_SPEC)
 DEV_SPEC.loader.exec_module(DEV_RUNNER)
 sys.modules["run_dev_cycle_behavior"] = DEV_RUNNER
 
-SCRIPT = SCRIPTS / "run_coding_standards_behavior.py"
-SPEC = importlib.util.spec_from_file_location("run_coding_standards_behavior", SCRIPT)
+SCRIPT = SCRIPTS / "run_coding_principles_behavior.py"
+SPEC = importlib.util.spec_from_file_location("run_coding_principles_behavior", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 RUNNER = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(RUNNER)
 
 
-class CodingStandardsBehaviorRunnerTests(unittest.TestCase):
+class CodingPrinciplesBehaviorRunnerTests(unittest.TestCase):
     def test_compare_accepts_exact_expected_behavior(self) -> None:
         expectation = {
             "validate_intrinsic_at_entry": True,
@@ -100,6 +100,24 @@ class CodingStandardsBehaviorRunnerTests(unittest.TestCase):
 
         failures = RUNNER.compare(matrix, [observed])["complexity"]
         self.assertIn("recompute_established_facts must be boolean or null", failures)
+
+    def test_prompt_and_digest_cover_each_canonical_owner(self) -> None:
+        policies = {path: f"policy:{path}" for path in RUNNER.POLICY_FILES}
+        prompt = RUNNER.build_prompt({"scenarios": []}, policies.__getitem__)
+        digest = RUNNER.policy_sha256(policies.__getitem__)
+
+        self.assertEqual(
+            set(policies),
+            {
+                "principle-type-system-discipline/SKILL.md",
+                "principle-boundary-discipline/SKILL.md",
+                "principle-minimize-reader-load/SKILL.md",
+            },
+        )
+        for path, content in policies.items():
+            self.assertIn(content, prompt)
+            changed = {**policies, path: "changed policy"}
+            self.assertNotEqual(digest, RUNNER.policy_sha256(changed.__getitem__))
 
     def test_identical_policy_bundles_share_one_decision(self) -> None:
         matrix = {"scenarios": []}

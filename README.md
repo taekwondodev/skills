@@ -9,7 +9,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | Skill | Description |
 | --- | --- |
 | [dev-cycle](skills/dev-cycle/SKILL.md) | Route development tasks through the right skills and verification steps. |
-| [dev-cycle-setup](skills/dev-cycle-setup/SKILL.md) | Configure project instructions, issue tracking, delivery, verification, labels, and domain docs. |
+| [dev-cycle-setup](skills/dev-cycle-setup/SKILL.md) | Configure project instructions, issue tracking, delivery, labels, and domain docs. |
 
 ## Planning and requirements
 
@@ -35,7 +35,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | Skill | Description |
 | --- | --- |
 | [implement](skills/implement/SKILL.md) | Implement an agreed change against its specification and acceptance criteria. |
-| [coding-standards](skills/coding-standards/SKILL.md) | Apply coding conventions, type-driven design, and dependency guidance. |
+| [coding-standards](skills/coding-standards/SKILL.md) | Resolve coding-policy, dependency, and API choices from verified evidence. |
 | [testing](skills/testing/SKILL.md) | Choose test boundaries, structure, and expected behavior; audit existing tests. |
 | [code-review](skills/code-review/SKILL.md) | Review changes for coding standards, specification compliance, and hidden risks. |
 | [interrogate](skills/interrogate/SKILL.md) | Challenge designs and diffs through adversarial review. |
@@ -83,7 +83,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | Skill | Description |
 | --- | --- |
 | [principle-boundary-discipline](skills/principle-boundary-discipline/SKILL.md) | Validate at system boundaries and keep business logic independent of adapters. |
-| [principle-build-the-lever](skills/principle-build-the-lever/SKILL.md) | Build reusable tools that perform or verify non-trivial work. |
+| [principle-build-the-lever](skills/principle-build-the-lever/SKILL.md) | Reuse or build tools for mechanical work and reserve agent effort for judgment. |
 | [principle-encode-lessons-in-structure](skills/principle-encode-lessons-in-structure/SKILL.md) | Turn recurring corrections into checks, metadata, or scripts. |
 | [principle-exhaust-the-design-space](skills/principle-exhaust-the-design-space/SKILL.md) | Compare distinct prototypes before committing to a novel design. |
 | [principle-experience-first](skills/principle-experience-first/SKILL.md) | Favor a polished user experience over implementation convenience. |

@@ -9,7 +9,11 @@ from typing import Any, Callable
 from run_dev_cycle_behavior import baseline_reader, current_reader, run_hermes
 
 
-POLICY_FILE = "coding-standards/SKILL.md"
+POLICY_FILES = [
+    "principle-type-system-discipline/SKILL.md",
+    "principle-boundary-discipline/SKILL.md",
+    "principle-minimize-reader-load/SKILL.md",
+]
 EXPECTED_MATRIX_SHA256 = "912e3872671b0b2a9adf2a1bbe4e1ce0e77d34a491f4920a84f5d6330869d6a5"
 RESULT_FIELDS = {
     "validate_intrinsic_at_entry",
@@ -24,8 +28,8 @@ RESULT_FIELDS = {
 
 
 def policy_sha256(read: Callable[[str], str]) -> str:
-    content = read(POLICY_FILE)
-    return hashlib.sha256(f"{POLICY_FILE}\0{content}\0".encode()).hexdigest()
+    material = "".join(f"{path}\0{read(path)}\0" for path in POLICY_FILES)
+    return hashlib.sha256(material.encode()).hexdigest()
 
 
 def build_prompt(matrix: dict[str, Any], read: Callable[[str], str]) -> str:
@@ -33,7 +37,10 @@ def build_prompt(matrix: dict[str, Any], read: Callable[[str], str]) -> str:
         {"id": scenario["id"], "prompt": scenario["prompt"]}
         for scenario in matrix["scenarios"]
     ]
-    return f'''Apply the supplied coding standards to each scenario and state the concrete implementation behavior. This is a behavior decision exercise: do not modify files or call tools.
+    policies = "\n".join(
+        f'<policy path="{path}">\n{read(path)}\n</policy>' for path in POLICY_FILES
+    )
+    return f'''Apply the supplied coding principles to each scenario and state the concrete implementation behavior. This is a behavior decision exercise: do not modify files or call tools.
 
 Return exactly one object per scenario inside <eval-json> and </eval-json>. The content between those tags must be a JSON array with no markdown fences.
 
@@ -57,9 +64,9 @@ Use null only when a field is genuinely not applicable to the scenario. `context
 {json.dumps(scenarios, indent=2)}
 </scenarios>
 
-<policy path="{POLICY_FILE}">
-{read(POLICY_FILE)}
-</policy>
+<policy-bundle>
+{policies}
+</policy-bundle>
 '''
 
 
@@ -189,10 +196,10 @@ def main() -> int:
     skills_root = repo / "skills"
     matrix_path = (
         args.matrix
-        or script_path.parent.parent / "references/coding-standards-scenarios.json"
+        or script_path.parent.parent / "references/coding-principles-scenarios.json"
     )
     output_path = (
-        args.output or repo / ".hermes/evals/coding-standards-behavior.json"
+        args.output or repo / ".hermes/evals/coding-principles-behavior.json"
     )
     matrix = json.loads(matrix_path.read_text())
     matrix_digest = hashlib.sha256(matrix_path.read_bytes()).hexdigest()

@@ -1,63 +1,63 @@
 ---
 name: code-review
-description: Review a diff on Standards, Spec, and Adversarial axes.
+description: Review design, contract fidelity, and adversarial risks without repeating verified mechanical checks.
 ---
 
 # Code Review
 
-Review one completed unit against a fixed point on three separate axes:
+Review one completed unit against a fixed point. Keep three reporting axes:
 
-- **Standards**: conformity to project conventions, the selected architecture contract, and test quality.
+- **Standards**: uncovered project obligations, the selected design, maintainability, and test quality.
 - **Spec**: fidelity to the approved behavior, scope, and acceptance criteria.
 - **Adversarial**: unsafe assumptions, missed consumers, and unproven safety or runtime claims.
 
-`implement` requests this gate before committing a completed unit. Direct requests may review a branch, ticket, PR, or working tree. This skill owns review scope and re-review; it does not restart implementation or architecture workflows.
+Tools supply mechanical evidence; reviewers evaluate what that evidence cannot establish. `implement` requests this gate before committing a completed unit. Direct requests may review a branch, ticket, PR, or working tree.
 
 ## Result contract
 
-Before dispatching or returning results, load [result-contract.md](references/result-contract.md). Reviewers return `review/1` JSON for their assigned axes; the coordinator verifies and merges it for the caller. Human-facing requests receive a concise rendering unless structured output was requested.
+Before dispatching or returning results, load [result-contract.md](references/result-contract.md). Reviewers return `review/1` JSON for their assigned axes; the coordinator verifies and merges it. Human-facing requests receive a concise rendering unless structured output was requested.
 
 ## Scope
 
-- **Small change**: review inline in the same three groups. Read the applicable standards for this review. Escalate when an unresolved hard finding requires independent review.
-- **Medium or large change**: run available axes as **parallel sub-agents** with isolated contexts, once after the unit's checks pass. A dependent ticket chain earns one full review at its boundary, not one per intermediate slice.
-- **Re-review**: rerun only affected axes, checking the listed fixes and regressions they introduce. After two full rounds without convergence, show the remaining findings to the user.
-- Review shipped code, tests, and contracts. Note disposable scripts and evidence artifacts; review them when requested or when they are themselves the deliverable.
+- **Small change**: review inline in the same three groups. Escalate when an unresolved hard finding requires independent review.
+- **Medium or large change**: run an independent semantic reviewer for Standards and Spec, and a separate Adversarial worker, in parallel isolated contexts after the unit's checks pass. Split the semantic assignment only when scope or expertise warrants another worker. A dependent ticket chain earns one full review at its boundary.
+- **Re-review**: rerun only affected axes, checking fixes and regressions. After two full rounds without convergence, show the remaining findings to the user.
+- Review shipped code, tests, and contracts. Review disposable scripts and evidence artifacts when requested or when they are themselves the deliverable.
 
 ## 1. Pin the inputs
 
 Use the supplied fixed point, or the implementation unit's recorded starting commit. Ask when neither exists. Verify it with `git rev-parse`, resolve `git merge-base <fixed-point> HEAD`, and capture `git diff <merge-base>`, `git status --short`, and `git log <fixed-point>..HEAD --oneline`.
 
-This diff includes committed, staged, and unstaged changes. Include untracked paths separately; an empty tracked diff with new files is still reviewable. Stop on an invalid base or genuinely empty review scope.
+Include committed, staged, unstaged, and untracked changes. Stop on an invalid base or genuinely empty scope.
 
-Find the approved contract from the supplied spec, ticket, agreed-change artifact, or originating issue. Retrieve issue material through `docs/agents/issue-tracker.md` when using the tracker. If no contract is discoverable, ask; if none exists, skip Spec and report that limitation.
+Find the approved contract from the supplied spec, ticket, agreed-change artifact, or originating issue. Retrieve tracker material through `docs/agents/issue-tracker.md`. If no contract is discoverable, ask; if none exists, skip Spec and report that limitation.
 
-## 2. Dispatch only what each reviewer needs
+Inspect supplied check commands, outcomes, scope, and retrievable logs. Treat a mechanical rule as covered only while its evidence matches the reviewed code, inputs, configuration, and toolchain. Do not repeat covered checks. For missing, stale, or failed evidence, obtain the relevant check or retain the gap under the result contract's coverage gates. The presence of a tool alone proves nothing. Review relevant check-configuration changes and the claims the tools do not establish.
 
-Give each reviewer the resolved base, diff command, untracked paths, commit list, scope, accessible source paths, assigned axis, and result-contract reference. Each worker loads the result contract in its own context. Require reviewers to read their own sources and inspect the actual changes. When a worker cannot access a source, supply its necessary contents or report the missing capability. The parent does not preload or paste the full standards corpus merely to delegate it.
+## 2. Assign judgments, not checklists
 
-Reuse current `blast-radius` evidence. If consumer impact is unsettled, assign that investigation to the relevant reviewer; send confirmed cross-axis findings to other reviewers when needed.
+Give each reviewer the resolved base, diff command, untracked paths, commit list, assigned axes, approved contract, check evidence, accessible source paths, and result-contract reference. Require reviewers to read their own sources and inspect the actual changes. The parent does not preload or paste the full standards corpus; provide necessary excerpts only when a source is inaccessible.
+
+Reuse current `blast-radius` evidence. Assign unsettled consumer impact to the relevant reviewer and share confirmed cross-axis findings when needed. If independent delegation is unavailable, report the limitation; an inline pass is not an independent review.
 
 ### Standards
 
-Provide paths to `coding-standards`, the project's conventions, the approved architecture sketch or ADRs, and [the smell baseline](references/standards-review.md). When tests change, include `testing`. The reviewer reads applicable principle bodies only where they affect a concrete decision in the diff.
+Provide project conventions and the approved architecture sketch or ADRs. When tests change, include `testing`. For a concrete type, boundary, migration, or readability concern, select its canonical owner through [the principle index](../dev-cycle/references/principles.md) and read that body, not the entire corpus. Use [the smell baseline](references/standards-review.md) only for a relevant design concern.
 
-Review the selected components and ownership, not a universal layer taxonomy. An unresolved architecture contract is a finding, not permission to execute `architect` inside review. Use [mechanical-check evidence](../implement/references/mechanical-checks.md) to distinguish enforced rules from coverage gaps. Separate hard violations from smell heuristics and cite the rule plus file/hunk. Check implementation-coupled, tautological, and self-graded tests against their approved expected behavior.
+Judge components, ownership, abstractions, and comprehensibility against the actual project. An unresolved architecture contract is a finding, not permission to execute `architect` inside review. Inspect whether tests prove the approved behavior rather than the implementation's own assumptions. A hard violation requires an applicable binding rule and a concrete file/hunk; smells and preferences remain judgment calls, not automatic scope expansion.
 
 ### Spec
 
-Provide the approved contract. Report missing or partial requirements, unrequested behavior, and incorrect implementations. For a refactoring, check the pinned behavior and selected target-shape contract. Cite the requirement and the relevant change or omission.
+Report missing or partial requirements, unrequested behavior, and incorrect implementations. For a refactoring, check pinned behavior and the selected target-shape contract. Cite the requirement and the relevant change or omission.
 
 ### Adversarial
 
-Provide the `interrogate` path, contract, and available impact evidence. The reviewer acts as the bounded adversarial worker, without spawning another review tree. Challenge consumers, migrations, security, runtime effects, and whether checks prove the claims. Categorize findings as act on, consider, noted, or dismissed. Keep stylistic conformity with Standards.
-
-Each reviewer returns only its contracted JSON with evidenced findings and coverage limits. If independent delegation is unavailable, report the limitation; an inline pass is not an independent review.
+Provide `interrogate`, the contract, and available impact evidence. The worker challenges consumers, migrations, security, compatibility, runtime effects, and whether checks prove the claims, without spawning another review tree. Keep stylistic conformity with Standards.
 
 ## 3. Resolve and report
 
-Inspect the cited evidence before accepting findings. Keep **Standards**, **Spec**, and **Adversarial** separate in the merged result and apply the result contract's coverage and gate rules. Return the payload directly to the caller without a second prose report. Do not merge or rerank the axes into one score.
+Inspect cited evidence before accepting findings. Keep **Standards**, **Spec**, and **Adversarial** separate even when one worker covers multiple axes, and apply the result contract's coverage and gate rules. Return the payload directly to the caller without a second prose report. Do not merge or rerank the axes into one score.
 
-Return blocking actions to the implementer, then rerun affected axes. Preserve unresolved coverage and user-owned judgment calls rather than treating them as a pass or automatic scope expansion.
+Return blocking actions to the implementer, then rerun affected axes. Preserve unresolved coverage and user-owned judgment calls rather than treating them as a pass.
 
-Completion: every available axis covered the unit, unavailable coverage is explicit, and blocking findings are resolved before the caller commits.
+Completion: every required axis covered the unit, unavailable coverage is explicit, and blocking findings are resolved before the caller commits.

@@ -7,8 +7,6 @@ description: Route development work through principles, capabilities, and verifi
 
 `dev-cycle` is the normal entrypoint for development work. Size the task, select the current mode, and activate only the procedure needed for the next result. A planned route is not a preload list.
 
-For a new project or missing workflow configuration, suggest the user-invoked [dev-cycle-setup](../dev-cycle-setup/SKILL.md). Continue work that does not depend on unresolved setup decisions.
-
 ## Task state and context
 
 Stay active for the current task across turns. `continue` resumes it; `new task` resets classification. A direct skill invocation overrides the current step without silently changing the task's scope. For work spanning turns, keep the current mode, decisions, evidence, and next completion criterion in the todo or handoff.
@@ -16,7 +14,7 @@ Stay active for the current task across turns. `continue` resumes it; `new task`
 - Reuse a skill body already available and unchanged in this context. Reload when it was lost through compression or pruning, its file changed, or a new worker needs it. Names in a handoff do not substitute for the bodies.
 - Reuse grounded evidence and approved artifacts while they remain current. A dependency consumes their result; it does not restart completed work merely because another phase references it.
 - Load a principle when it governs a concrete current decision. Use [the principle index](references/principles.md) when selecting its canonical owner; record the choice it changed, not an inventory of every principle.
-- Keep safety, acceptance criteria, and selected contracts available to the implementer. Full coding-conformance criteria belong to the reviewer. A skill loaded inline shares the current context; isolation requires a separate worker or session.
+- Keep safety, acceptance criteria, and selected contracts available to the implementer. Tools enforce covered mechanical rules; review supplies semantic judgment and checks uncovered obligations. A skill loaded inline shares the current context; isolation requires a separate worker or session.
 
 ## Size before routing
 

@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "expected_scenario_count": 17,
   "forbidden_capabilities": [
     "test-driven-development"
@@ -724,7 +724,7 @@
       "id": "single-source-no-comments",
       "checks": [
         {
-          "file": "coding-standards/SKILL.md",
+          "file": "principle-minimize-reader-load/SKILL.md",
           "contains": [
             "Write comment-free code: express intent through names, types, and structure.",
             "Keep decision rationale in documentation.",

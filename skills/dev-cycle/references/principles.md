@@ -12,7 +12,7 @@ Consult this index when choosing the principle that governs a current decision. 
 - **Outcome-Oriented Execution**. Planned rewrites and migrations converge on the target architecture instead of preserving throwaway compatibility states.
 - **Experience First**. Choose user delight over implementation convenience; ship fewer polished features over more rough ones.
 - **Exhaust the Design Space**. A novel interaction or architectural decision gets 2-3 competing prototypes before commitment.
-- **Build the Lever**. For non-trivial work, build the tool that does or proves it instead of working by hand.
+- **Build the Lever**. Reuse or build tools for non-trivial mechanical work; reserve agent effort for judgment.
 
 ### Architecture
 
