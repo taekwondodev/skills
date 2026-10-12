@@ -1,6 +1,6 @@
 ---
 name: dev-cycle-setup
-description: Configure portable project context, tracking, delivery, and domain documentation for dev-cycle.
+description: Configure project context, tracking, delivery, verification, and domain documentation for dev-cycle.
 disable-model-invocation: true
 ---
 
@@ -11,6 +11,7 @@ Scaffold the per-repo configuration that `/capture-issue`, `/to-spec`, `/to-tick
 - **Issue tracker**: where issues and tickets live
 - **Issue labels**: category, readiness, and activity
 - **Delivery**: the default direct or PR route and its target refs
+- **Verification**: the project's check commands, coverage, and required gates
 - **Domain docs**: where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
 - **Project context**: one portable `AGENTS.md` at the repo root, produced from whatever agent-rule sources already exist
 
@@ -33,6 +34,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 - `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
 - `docs/adr/` and any `src/*/docs/adr/` directories
 - `docs/agents/`: does this skill's prior output already exist?
+- Existing checks and stack: follow [verification baseline](references/verification.md) to identify current coverage and suitable additions.
 - Monorepo signals: a workspace manifest, or a populated `packages/*`/`crates/*` with its own `src/`. Present only in a genuinely large multi-package repo; their absence means single-context, which is almost every repo.
 - **Existing agent-rule sources**, searched across Git-tracked files at the repo root and at the conventional per-agent config directories, plus an explicit existence check for each known conventional path even when Git ignores it: `AGENTS.md` and `CLAUDE.md` at the repo root; `CLAUDE.md` in `.claude/`; `GEMINI.md` in `.gemini/`; `.hermes.md` and `HERMES.md` in `.hermes/`; `.cursorrules` and rules under `.cursor/rules/` only when they carry no path-scoped frontmatter; `.github/copilot-instructions.md`. Record each hit's path and read its full content. Treat a hit as repo-global only when its location gives it repository-wide scope. A rule file nested inside a package, subproject, or other subdirectory whose scope is that subtree only is directory-scoped: report it in the findings but exclude it from the merge, because broadening it to root would change its meaning. Never treat `AGENTS.override.md` as a merge source, and exclude every path-specific instruction file (any rules file whose frontmatter, name, or declared scope applies to selected paths rather than the whole repository). For each repo-global source found, check whether it already carries a `## Dev cycle` section; if it carries domain terms or architectural decisions beyond operational rules and pointers, flag it as a migration candidate for Section D.
 
@@ -77,6 +79,8 @@ Offer **multi-context** only when exploration found monorepo signals: a root `CO
 
 Draft `docs/agents/delivery.md` from [delivery.md](./delivery.md), replacing its placeholders with the chosen mode, integration target, PR base, source-remote policy, and required verification gates.
 
+**Section C2: Verification.** Resolve open choices in the verification baseline from Explore. Include proposed tooling changes in the setup draft and carry the selected gates into the delivery policy.
+
 **Section D: Existing rule-file content.** Only runs if Explore flagged a migration candidate; skip entirely otherwise.
 
 Section D runs when a flagged source contains a domain term or a possible decision record. Classify it before creating files. Reuse an existing authoritative target where sufficient, and create only missing qualifying content. Every pointer in the draft must resolve to an existing or newly written target.
@@ -97,6 +101,7 @@ Show the user a draft of:
 
 - The generated `AGENTS.md`
 - The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/triage-labels.md`, and `docs/agents/delivery.md`
+- Proposed verification dependencies, configuration changes, commands, and remaining coverage gaps
 - If Section D ran: each section's selected home, reused targets, and the content of any justified new records or glossary entries
 - If any conflicts were found in Section A0: each conflict, both excerpts, and the user's recorded decision
 
@@ -139,4 +144,6 @@ Then write the docs files using the seed templates in this skill folder as a sta
 - [delivery.md](./delivery.md): delivery defaults and verification gates
 - [domain.md](./domain.md): domain doc consumer rules + layout
 
-For a human-facing return, tell the user the base setup is complete and which skills will now read from these files. Mention they can edit `docs/agents/*.md` and `AGENTS.md` directly later. For an agent-facing return, use the receipt instead. Re-running this skill is only necessary if they want to switch issue trackers, redo the context merge, or restart from scratch.
+Apply and verify the confirmed baseline using the verification reference before reporting setup complete.
+
+For a human-facing return, report which parts of setup are complete, any pending checks, and which skills will now consume the configuration. Mention they can edit `docs/agents/*.md` and `AGENTS.md` directly later. For an agent-facing return, use the receipt instead. Re-run only for requested changes to setup choices; routine work uses the recorded configuration.

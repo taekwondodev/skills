@@ -54,6 +54,7 @@ For research returned to another skill, load [evidence/1](../investigation/refer
 * **Flattened hierarchy:** private submodules + explicit re-exports in parent.
 * Write comment-free code: express intent through names, types, and structure. Keep decision rationale in documentation. Required tool directives and legal notices are exempt.
 * DRY, modern idioms, zero-cost abstractions.
+* **Style serves outcomes:** conventions should reduce development effort and reader/context load without sacrificing runtime performance. Correctness, security, and required behavior remain constraints; make performance tradeoffs explicit and evidence-based.
 * **Low cognitive complexity:** minimize branching, nesting, and hidden control flow. Decompose by domain responsibility, not merely to satisfy complexity metrics.
 * **Fail fast:** missing required config = unrecoverable error. Crash early.
 * **Secure defaults:** insecure = explicit opt-in, never opt-out.

@@ -9,7 +9,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | Skill | Description |
 | --- | --- |
 | [dev-cycle](skills/dev-cycle/SKILL.md) | Route development tasks through the right skills and verification steps. |
-| [dev-cycle-setup](skills/dev-cycle-setup/SKILL.md) | Configure project instructions, issue tracking, delivery, labels, and domain docs. |
+| [dev-cycle-setup](skills/dev-cycle-setup/SKILL.md) | Configure project instructions, issue tracking, delivery, verification, labels, and domain docs. |
 
 ## Planning and requirements
 

@@ -7,6 +7,8 @@ description: Route development work through principles, capabilities, and verifi
 
 `dev-cycle` is the normal entrypoint for development work. Size the task, select the current mode, and activate only the procedure needed for the next result. A planned route is not a preload list.
 
+For a new project or missing workflow configuration, suggest the user-invoked [dev-cycle-setup](../dev-cycle-setup/SKILL.md). Continue work that does not depend on unresolved setup decisions.
+
 ## Task state and context
 
 Stay active for the current task across turns. `continue` resumes it; `new task` resets classification. A direct skill invocation overrides the current step without silently changing the task's scope. For work spanning turns, keep the current mode, decisions, evidence, and next completion criterion in the todo or handoff.

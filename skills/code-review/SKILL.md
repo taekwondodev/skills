@@ -42,7 +42,7 @@ Reuse current `blast-radius` evidence. If consumer impact is unsettled, assign t
 
 Provide paths to `coding-standards`, the project's conventions, the approved architecture sketch or ADRs, and [the smell baseline](references/standards-review.md). When tests change, include `testing`. The reviewer reads applicable principle bodies only where they affect a concrete decision in the diff.
 
-Review the selected components and ownership, not a universal layer taxonomy. An unresolved architecture contract is a finding, not permission to execute `architect` inside review. Skip rules already enforced by tooling. Separate hard violations from smell heuristics and cite the rule plus file/hunk. Check implementation-coupled, tautological, and self-graded tests against their approved expected behavior.
+Review the selected components and ownership, not a universal layer taxonomy. An unresolved architecture contract is a finding, not permission to execute `architect` inside review. Use [mechanical-check evidence](../implement/references/mechanical-checks.md) to distinguish enforced rules from coverage gaps. Separate hard violations from smell heuristics and cite the rule plus file/hunk. Check implementation-coupled, tautological, and self-graded tests against their approved expected behavior.
 
 ### Spec
 

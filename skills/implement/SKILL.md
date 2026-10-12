@@ -17,6 +17,8 @@ Record the starting commit and the review unit. One independent ticket is one un
 
 ## Build and verify
 
+Before review, use [mechanical checks](references/mechanical-checks.md) to select project checks and pass their evidence to reviewers.
+
 1. Write tests at the agreed seams using `testing` when adding or changing tests. Expected values come from the approved contract, not the implementation. For a bug fix, use `principle-fix-root-causes` to guide reproduction and the causal check. Run the regression test red before fixing the owning cause when following the small-change path without a spec or ticket.
 2. Implement within the selected boundaries. Preserve required authorization, validation, secure defaults, and secrets handling while coding; these are not deferred to review.
 3. Load a specialist only for an unresolved need in this step: `investigation` for an unknown cause, `blast-radius` for uncertain consumer impact, `architect` for an unsettled shape or boundary, or `coding-standards` for a dependency or API decision. Consume each specialist's declared result contract and inspect its evidence without requesting a second report. Return scope, contract, and security changes to the user before choosing them.
