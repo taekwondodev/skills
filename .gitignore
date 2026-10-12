@@ -6,3 +6,5 @@ __pycache__/
 .env.*
 .hermes/
 skills/eval/reports/
+
+HANDOFF.md
