@@ -87,7 +87,7 @@ A list of implementation decisions that were made. This can include:
 - Schema changes
 - API contracts
 - Specific interactions
-- Dependency additions, if any, with the `/coding-standards` justification for each
+- Dependency additions, if any, with the settled decision and its verified rationale. Use `coding-standards` only when that choice remains unresolved.
 
 Guideline: at most 8 bullets, one decision each. Keep the rationale here or link its existing authoritative record. Before creating a separate ADR, read [ADR-FORMAT.md](../domain-modeling/ADR-FORMAT.md) and apply its necessity gate.
 

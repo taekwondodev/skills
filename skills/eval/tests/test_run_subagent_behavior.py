@@ -77,10 +77,10 @@ def passing_observed() -> dict[str, object]:
 
 
 class SubagentBehaviorRunnerTests(unittest.TestCase):
-    def test_v2_matrix_hash_matches_embedded_contract(self) -> None:
+    def test_v3_matrix_hash_matches_embedded_contract(self) -> None:
         matrix = json.loads(MATRIX.read_text())
 
-        self.assertEqual(matrix["version"], 2)
+        self.assertEqual(matrix["version"], 3)
         self.assertEqual(matrix["expected_scenario_count"], 5)
         self.assertEqual(len(matrix["scenarios"]), 5)
         self.assertEqual(
@@ -94,7 +94,8 @@ class SubagentBehaviorRunnerTests(unittest.TestCase):
         policy_files = set(standards["policy_files"])
 
         self.assertIn("code-review/references/standards-review.md", policy_files)
-        self.assertIn("coding-standards/SKILL.md", policy_files)
+        self.assertIn("principle-boundary-discipline/SKILL.md", policy_files)
+        self.assertNotIn("coding-standards/SKILL.md", policy_files)
         self.assertIn("testing/SKILL.md", policy_files)
         self.assertNotIn("architect/SKILL.md", policy_files)
         for relative in policy_files:

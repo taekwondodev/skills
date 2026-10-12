@@ -14,7 +14,7 @@ Stay active for the current task across turns. `continue` resumes it; `new task`
 - Reuse a skill body already available and unchanged in this context. Reload when it was lost through compression or pruning, its file changed, or a new worker needs it. Names in a handoff do not substitute for the bodies.
 - Reuse grounded evidence and approved artifacts while they remain current. A dependency consumes their result; it does not restart completed work merely because another phase references it.
 - Load a principle when it governs a concrete current decision. Use [the principle index](references/principles.md) when selecting its canonical owner; record the choice it changed, not an inventory of every principle.
-- Keep safety, acceptance criteria, and selected contracts available to the implementer. Full coding-conformance criteria belong to the reviewer. A skill loaded inline shares the current context; isolation requires a separate worker or session.
+- Keep safety, acceptance criteria, and selected contracts available to the implementer. Tools enforce covered mechanical rules; review supplies semantic judgment and checks uncovered obligations. A skill loaded inline shares the current context; isolation requires a separate worker or session.
 
 ## Size before routing
 

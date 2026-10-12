@@ -25,10 +25,10 @@ class DevCycleBehaviorRunnerTests(unittest.TestCase):
         self.assertNotIn("baseline", prompt)
         self.assertNotIn("candidate", prompt)
 
-    def test_v3_matrix_hash_matches_embedded_contract(self) -> None:
+    def test_v4_matrix_hash_matches_embedded_contract(self) -> None:
         matrix = json.loads(MATRIX.read_text())
 
-        self.assertEqual(matrix["version"], 3)
+        self.assertEqual(matrix["version"], 4)
         self.assertEqual(matrix["expected_scenario_count"], 17)
         self.assertEqual(len(matrix["scenarios"]), 17)
         self.assertEqual(

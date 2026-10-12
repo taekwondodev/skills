@@ -33,6 +33,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 - `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
 - `docs/adr/` and any `src/*/docs/adr/` directories
 - `docs/agents/`: does this skill's prior output already exist?
+- Existing build commands, check configuration, and CI: what do they enforce, and which gates are required? Preserve native project tooling; record gaps without making setup a prerequisite for unrelated work.
 - Monorepo signals: a workspace manifest, or a populated `packages/*`/`crates/*` with its own `src/`. Present only in a genuinely large multi-package repo; their absence means single-context, which is almost every repo.
 - **Existing agent-rule sources**, searched across Git-tracked files at the repo root and at the conventional per-agent config directories, plus an explicit existence check for each known conventional path even when Git ignores it: `AGENTS.md` and `CLAUDE.md` at the repo root; `CLAUDE.md` in `.claude/`; `GEMINI.md` in `.gemini/`; `.hermes.md` and `HERMES.md` in `.hermes/`; `.cursorrules` and rules under `.cursor/rules/` only when they carry no path-scoped frontmatter; `.github/copilot-instructions.md`. Record each hit's path and read its full content. Treat a hit as repo-global only when its location gives it repository-wide scope. A rule file nested inside a package, subproject, or other subdirectory whose scope is that subtree only is directory-scoped: report it in the findings but exclude it from the merge, because broadening it to root would change its meaning. Never treat `AGENTS.override.md` as a merge source, and exclude every path-specific instruction file (any rules file whose frontmatter, name, or declared scope applies to selected paths rather than the whole repository). For each repo-global source found, check whether it already carries a `## Dev cycle` section; if it carries domain terms or architectural decisions beyond operational rules and pointers, flag it as a migration candidate for Section D.
 
@@ -75,7 +76,7 @@ Offer **multi-context** only when exploration found monorepo signals: a root `CO
 
 **Section C1: Delivery.** Preserve an existing explicit delivery policy. Otherwise ask for the repository default: `direct` or `pr`. Present discovered integration and PR base refs and ask only about unresolved targets.
 
-Draft `docs/agents/delivery.md` from [delivery.md](./delivery.md), replacing its placeholders with the chosen mode, integration target, PR base, source-remote policy, and required verification gates.
+Draft `docs/agents/delivery.md` from [delivery.md](./delivery.md), replacing its placeholders with the chosen mode, integration target, PR base, source-remote policy, and required verification gates. Point gates to native project commands rather than copying a command inventory. If this setup includes a tooling gap, propose the smallest justified configuration change here and include it in the confirmation draft; use `coding-standards` only for an unresolved rule or dependency choice.
 
 **Section D: Existing rule-file content.** Only runs if Explore flagged a migration candidate; skip entirely otherwise.
 
@@ -97,6 +98,7 @@ Show the user a draft of:
 
 - The generated `AGENTS.md`
 - The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, `docs/agents/triage-labels.md`, and `docs/agents/delivery.md`
+- If tooling changes are proposed: each dependency or configuration change, its commands and affected gates, and remaining coverage gaps. Obtain explicit user confirmation of these changes before applying them.
 - If Section D ran: each section's selected home, reused targets, and the content of any justified new records or glossary entries
 - If any conflicts were found in Section A0: each conflict, both excerpts, and the user's recorded decision
 
@@ -132,6 +134,8 @@ The block contains pointers only, never the content itself:
 [one-line summary of layout: "single-context" or "multi-context"]. See `docs/agents/domain.md`.
 ```
 
+Apply only the tooling changes explicitly confirmed by the user. Exercise any changed check with a passing case and an invalid case that must fail its configured gate. Record failures, unrun checks, and remaining coverage gaps before reporting completion.
+
 Then write the docs files using the seed templates in this skill folder as a starting point:
 
 - [issue-tracker-github.md](./issue-tracker-github.md): GitHub issue tracker, including the operations `/wayfinder` needs
@@ -139,4 +143,4 @@ Then write the docs files using the seed templates in this skill folder as a sta
 - [delivery.md](./delivery.md): delivery defaults and verification gates
 - [domain.md](./domain.md): domain doc consumer rules + layout
 
-For a human-facing return, tell the user the base setup is complete and which skills will now read from these files. Mention they can edit `docs/agents/*.md` and `AGENTS.md` directly later. For an agent-facing return, use the receipt instead. Re-running this skill is only necessary if they want to switch issue trackers, redo the context merge, or restart from scratch.
+For a human-facing return, report the configured parts, verified gates, unresolved gaps, and consuming skills. Report setup complete only when the confirmed work has been verified. Mention that `docs/agents/*.md` and `AGENTS.md` remain editable. For an agent-facing return, use the receipt instead. Re-run only for requested changes to setup choices, not routine implementation.

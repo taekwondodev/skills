@@ -8,7 +8,7 @@ Run `python3 skills/eval/scripts/validate_agent_results.py` from the repository 
 
 ## Dev-cycle contract
 
-`references/dev-cycle-scenarios.json` is the fixed v3, 17-scenario contract for current-phase routing in the integrated development workflow.
+`references/dev-cycle-scenarios.json` defines the contract for current-phase routing in the integrated development workflow.
 
 - `scripts/validate_dev_cycle.py` is the structural gate. It checks required workflow text, skill isolation, skill existence, and reference links against a git baseline and the working tree. It does not prove model routing behavior.
 - `scripts/run_dev_cycle_behavior.py` is the routing-decision oracle. Fresh Hermes processes predict the current-phase procedure and preserve the next user-owned gate for the same scenario prompts with each unique baseline or candidate policy bundle. Capabilities and principles describe only the current phase; at a checkpoint, stop without assuming approval or including later-phase procedures. Review axes are expected only when `code-review` is the current phase. Identical policy hashes share one fresh decision and the candidate is recorded as an alias, preventing a no-op comparison from becoming a sampling regression. Shared failures remain comparative evidence but do not block an unchanged candidate; failures from a fresh candidate policy remain blocking. The model prompt is variant-neutral; baseline and candidate attribution is recorded in report metadata. The runner records modes, current-phase capabilities and principles, checkpoints, questions before evidence, testing methods, architecture styles, review axes, and structured verification intentions. It rejects unknown, forbidden, and scenario-unexpected skills, validates every declared route field strictly so malformed output is a deterministic failure, and records hashes for the runner, matrix, and policy bundles. The matrix itself is an immutable contract: the runner fails the run if the candidate scenario matrix no longer matches an embedded SHA-256. This routing prediction does not prove skill loading, context placement, tool execution, or slash-command dispatch.
@@ -21,15 +21,15 @@ Run the structural gate with `python3 skills/eval/scripts/validate_dev_cycle.py 
 
 ## Subagent contract
 
-`references/subagent-scenarios.json` is the fixed v2 behavior contract for bounded work delegated to DeepSeek. It covers Standards, Spec, and Adversarial review, read-only investigation, and blast-radius analysis. It excludes routing, implementation, checkpoints, and other responsibilities owned by the main model.
+`references/subagent-scenarios.json` defines the behavior contract for bounded work delegated to DeepSeek. It covers Standards, Spec, and Adversarial review, read-only investigation, and blast-radius analysis. It excludes routing, implementation, checkpoints, and other responsibilities owned by the main model.
 
 `scripts/run_subagent_behavior.py` runs each scenario independently through `deepseek-v4-flash` on `opencode-go`. Each scenario includes supported claims and distractors, while the expected classification remains outside the model prompt. The runner requires exact evidence anchors, strict JSON, read-only behavior, no further delegation, and a complete partition of candidate claims. It repeats every scenario three times by default. Parse and transport failures receive one retry; semantic failures are never retried. Any candidate failure is blocking, including a failure shared with an identical baseline policy.
 
 Run the blocking gate with `python3 skills/eval/scripts/run_subagent_behavior.py --baseline-ref HEAD`. Use `--repetitions 1` only for local runner debugging, never as release evidence.
 
-## Coding-standards contract
+## Coding-principles contract
 
-`references/coding-standards-scenarios.json` fixes the behavior contract for cognitive complexity, validated types, contextual rules, trusted internal values, established facts, and architecture-neutral input handling. `scripts/run_coding_standards_behavior.py` compares `coding-standards/SKILL.md` at the git baseline and in the working tree, rejects malformed decisions, and embeds the immutable matrix hash. Run it with `python3 skills/eval/scripts/run_coding_standards_behavior.py --baseline-ref HEAD` whenever coding philosophy or validation behavior changes.
+`references/coding-principles-scenarios.json` defines the behavior contract for cognitive complexity, validated types, contextual rules, trusted internal values, established facts, and architecture-neutral input handling. `scripts/run_coding_principles_behavior.py` compares the canonical principle bundle at the git baseline and in the working tree, rejects malformed decisions, and pins the scenario matrix hash. Run `python3 skills/eval/scripts/run_coding_principles_behavior.py --baseline-ref HEAD` when these policies change. This evaluates the supplied principle bundle, not routing or actual skill loading.
 
 ## Tool-execution contract
 

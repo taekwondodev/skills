@@ -34,11 +34,7 @@ PRIMARY_MODES = [
     "large_work",
 ]
 
-# Immutable approved v3 17-scenario contract. The runner refuses to evaluate a
-# candidate matrix whose SHA-256 differs, so the expected set of scenarios,
-# current-phase capabilities, and checkpoints cannot be silently weakened.
-# Changing scenarios deliberately requires updating this hash in the same commit.
-EXPECTED_MATRIX_SHA256 = "4c436f2122bc4aec6ebebcca6e11eafedce935e9dfd93871f97d4c145d85aad0"
+EXPECTED_MATRIX_SHA256 = "0cbe97e81848e6ab5300cbe1f48b562491236c3c92cfa3afe361ad6d207be2df"
 
 def git(repo: Path, *args: str) -> subprocess.CompletedProcess[str]:
     return subprocess.run(

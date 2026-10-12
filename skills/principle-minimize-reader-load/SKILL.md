@@ -1,6 +1,6 @@
 ---
 name: principle-minimize-reader-load
-description: "Apply when reviewing or shaping code that is hard to trace."
+description: "Apply when shaping or reviewing code for readability, comments, or unnecessary complexity."
 ---
 
 # Minimize Reader Load
@@ -9,8 +9,9 @@ Maintainability is the work a reader must do to understand code. Track two axes:
 1. **Layers to trace.** How many indirections sit between the question and the answer.
 2. **State to hold.** How much hidden or mutable context the reader must keep in their head.
 
-LOC, cyclomatic complexity, and "clean architecture" are proxies. Reader load is the thing that matters. The two axes are independent. A flat file with 50 globals can be as hard to reason about as a 6-layer adapter stack. Guard both. This is the human analog of [Guard the Context Window](../principle-guard-the-context-window/SKILL.md): working memory is finite for readers too.
+LOC, cyclomatic complexity, and "clean architecture" are proxies. Decompose by domain responsibility, not merely to satisfy a complexity threshold. Reader load is the thing that matters. The two axes are independent. A flat file with 50 globals can be as hard to reason about as a 6-layer adapter stack. Guard both. This is the human analog of [Guard the Context Window](../principle-guard-the-context-window/SKILL.md): working memory is finite for readers too.
 
+- Write comment-free code: express intent through names, types, and structure. Keep decision rationale in documentation. Required tool directives and legal notices are exempt.
 - **Collapse layers** that cost more than they save: wrappers with one caller, adapters with no second implementation, speculative indirection that was never needed. Inline them.
 - **Make adjacent layers change the abstraction.** A layer that repeats the same methods and arguments adds reader load without compression. Collapse pass-through layers.
 - **Demand interface compression.** A broad interface that hides little complexity makes readers learn both the surface and the implementation. Prefer boundaries that hide meaningful decisions.
