@@ -40,7 +40,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | [code-review](skills/code-review/SKILL.md) | Review changes for coding standards, specification compliance, and hidden risks. |
 | [interrogate](skills/interrogate/SKILL.md) | Challenge designs and diffs through adversarial review. |
 | [blast-radius](skills/blast-radius/SKILL.md) | Trace affected callers and contracts beyond the immediate diff. |
-| [eval](skills/eval/SKILL.md) | Evaluate skill routing and agent behavior against fixed scenarios. |
+| [eval](skills/eval/SKILL.md) | Test a skill change blind with organic tasks, parallel candidates, and one judge. |
 
 ## Git and delivery
 
