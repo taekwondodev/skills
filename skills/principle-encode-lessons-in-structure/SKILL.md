@@ -5,21 +5,12 @@ description: "Apply when writing the same instruction a second time or noticing 
 
 # Encode Lessons in Structure
 
-Encode recurring fixes in mechanisms (tools, code, metadata, automation) instead of textual instructions. Every error, human correction, and unexpected outcome is a learning signal. Capture it, route it, and close the loop.
+Encode recurring fixes in mechanisms rather than repeated instructions.
 
-Textual instructions are easy to miss. Structural mechanisms enforce the rule without cooperation.
-
-**Pattern:**
-When you catch yourself writing the same instruction a second time:
-1. Ask: can this be a lint rule, a metadata flag, a runtime check, or a script?
-2. If yes, encode it. Delete the instruction
+1. Check whether a tool, type, lint rule, metadata flag, runtime check, or script can enforce the lesson.
+2. If it can, implement the mechanism and remove the redundant instruction.
 3. If it requires judgment, make the instruction more prominent and add an example of the failure mode.
 
 **Pick the strongest mechanism.** When more than one mechanism would work, choose the strongest the situation allows (an unrepresentable state that cannot compile, then a lint or banned API that fails CI, then a canonical helper, then a runtime check), because agents copy whatever the surrounding code already does and a weaker guard becomes the next template.
 
-**Feedback loop:** When the human intervenes or tests fail, classify and route the correction: one-off -> brain note, recurring fix -> skill or lint rule, systemic issue -> principle. Close the loop: apply now or create a concrete todo.
-
-**Anti-patterns:**
-- Acknowledging without recording ("I'll keep that in mind" does not persist)
-- Recording without routing (a brain note about a lint rule that should exist is wasted unless the lint rule gets implemented)
-- Fixing without generalizing (fixing one instance while leaving the recurring pattern intact)
+**Feedback loop:** When the human intervenes or tests fail, classify and route the correction: one-off -> brain note, recurring fix -> skill or lint rule, systemic issue -> principle. Address the recurring pattern, not only the observed instance. Close the loop: apply now or create a concrete todo.

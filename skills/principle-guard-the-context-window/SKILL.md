@@ -5,12 +5,7 @@ description: "Apply when context is filling up: large outputs, long files, repea
 
 # Guard the Context Window
 
-The context window is finite. Load only the material needed for the task.
-
-**Why:** Context overflow degrades reasoning quality, creates compression artifacts, and halts progress.
-
-**Pattern:**
-- **Isolate large payloads.** Route verbose outputs, screenshots, and large documents to subagents. The main context gets summaries, not raw data.
-- **Don't read what you won't use.** Read selectively based on relevance. If a file isn't needed for the current task, skip it.
-- **Keep frequently used content inline.** Templates and references used on every invocation belong in the skill file, not in separate files that cost a read each time.
-- **Size phases and cap scope.** Limit files per phase, set turn budgets, account for mechanism costs.
+- **Isolate large payloads.** Route verbose outputs, screenshots, and large documents to subagents; return summaries to the main context.
+- **Load selectively.** Read only sources needed for the current task.
+- **Inline shared needs.** Keep material needed on every invocation in the skill; disclose branch-specific material on demand.
+- **Bound phases.** Limit files per phase, set turn budgets, and account for mechanism costs.
