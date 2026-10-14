@@ -25,7 +25,7 @@ Every finding contains nonempty strings `class`, `at`, `claim`, `evidence`, and 
 | `spec` | `missing`, `partial`, `unrequested`, `incorrect` | all |
 | `adversarial` | `act_on`, `consider`, `noted`, `dismissed` | `act_on` |
 
-`act_on` means "act on". Smells and `consider` require human judgment, not automatic scope expansion. Retain `noted` or `dismissed` only to answer an assigned concern or prevent repeating a decision; put the reason in `evidence`.
+`act_on` means "act on". The implementer resolves each smell without the user: apply its action within the reviewed scope, or dismiss it when [Style Serves Outcomes](../../principle-style-serves-outcomes/SKILL.md) rejects the action, recording the reason with the review disposition. A smell whose action would change scope, a public contract, or security goes to the user. An action that encodes a rule in an already-configured tool is within the reviewed scope: add the rule, show that it fails on the violating hunk and passes after the fix, and fix the existing violations it reports, using the tool's autofix where available. Installing a new tool or dependency, and existing violations outside the reviewed scope that the tool cannot autofix, go to the user. `consider` requires human judgment, not automatic scope expansion. Retain `noted` or `dismissed` only to answer an assigned concern or prevent repeating a decision; put the reason in `evidence`.
 
 ## Coverage and gates
 
@@ -39,7 +39,7 @@ Blocking classes block the caller's gate. Partial or unavailable coverage requir
 
 1. Pin scope and revision; give workers their axes and this reference. Retain assignment metadata at the caller.
 2. Check shape and inspect evidence before accepting findings. Keep unverified claims as limits. Merge by axis, deduplicating within an axis without collapsing different obligations. Preserve every decision-relevant finding.
-3. Consume or return the merged payload directly. Route blocking actions to the implementer and judgment calls to the user. Rerun affected axes after fixes; retain other results only while their evidence remains valid. Render concise prose only at a human-facing boundary unless structured output was requested.
+3. Consume or return the merged payload directly. Route blocking actions and smells to the implementer, and remaining judgment calls to the user. Rerun affected axes after fixes; retain other results only while their evidence remains valid. Render concise prose only at a human-facing boundary unless structured output was requested.
 
 Completion: every assigned axis is represented, accepted findings are grounded, and fixes, user decisions, and coverage gaps remain distinguishable.
 
