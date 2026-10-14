@@ -9,7 +9,7 @@ Consult this index when choosing the principle that governs a current decision. 
 - **Redesign from First Principles**. Redesign as if the requirement had been foundational from day one.
 - **Subtract Before You Add**. Remove dead weight, redundant validators, and stub references first, then build on the simpler base.
 - **Minimize Reader Load**. Count layers between question and answer, and hidden state in the reader's head; collapse one-caller wrappers and shrink mutable scope.
-- **Style Serves Outcomes**. Style reduces effort and reader load; on conflict with evidenced runtime cost, performance wins. Prefer zero-cost abstractions and modern idioms.
+- **Style Serves Outcomes**. When style, idioms, or abstractions could change runtime cost.
 - **Outcome-Oriented Execution**. Planned rewrites and migrations converge on the target architecture instead of preserving throwaway compatibility states.
 - **Experience First**. Choose user delight over implementation convenience; ship fewer polished features over more rough ones.
 - **Exhaust the Design Space**. A novel interaction or architectural decision gets 2-3 competing prototypes before commitment.

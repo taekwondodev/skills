@@ -27,7 +27,7 @@ Pass current check evidence and applicable project rules to review. Tools own co
 
 ## Agent result
 
-For an agent-facing return, load [delivery/1](references/result-contract.md). Locate the changed artifact or commit and retain the actual checks, review disposition, and unresolved limits. Keep review evidence accessible instead of repeating every finding.
+For an agent-facing return, load [delivery/1](references/result-contract.md). Locate the changed artifact or commit and retain the actual checks, review disposition, and unresolved limits. Keep review evidence accessible instead of repeating every finding. For each dismissed smell, add one `delivery/1` check with `outcome: skipped`; its `evidence` identifies the original review artifact and finding, the applicable rule, and the reason. Keep the original review unchanged.
 
 ## Complete the unit
 
