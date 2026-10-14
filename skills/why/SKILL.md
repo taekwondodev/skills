@@ -22,7 +22,7 @@ Use `how` first when the current behavior is not understood. Use `architect` whe
 ## Procedure
 
 1. State the exact decision or behavior whose rationale is needed.
-2. Inspect current code, `CONTEXT.md`, ADRs, README documents, issue bodies and comments, and relevant git history.
+2. Inspect current code, `GLOSSARY.md`, ADRs, README documents, issue bodies and comments, and relevant git history.
 3. Separate explicit rationale from inference. Cite the source for each claim.
 4. Check whether later changes invalidated the original rationale.
 5. Report the strongest supported explanation, competing explanations, and remaining uncertainty.

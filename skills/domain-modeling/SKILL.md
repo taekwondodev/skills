@@ -5,23 +5,23 @@ description: Build and sharpen a project's domain model. Use when the user wants
 
 # Domain Modeling
 
-Actively build and sharpen the project's domain model as you design. This is the *active* discipline: challenge terms, invent edge-case scenarios, and write the glossary and decisions down the moment they crystallise. (Merely *reading* `CONTEXT.md` for vocabulary is not this skill. That's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
+Actively build and sharpen the project's domain model as you design. This is the *active* discipline: challenge terms, invent edge-case scenarios, and write the glossary and decisions down the moment they crystallise. (Merely *reading* `GLOSSARY.md` for vocabulary is not this skill. That's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
 
-Read `writing-for-agents` before writing `CONTEXT.md` entries or ADRs. Its general writing rules govern those documents; the context and ADR formats below add only domain-specific structure.
+Read `writing-for-agents` before writing `GLOSSARY.md` entries or ADRs. Its general writing rules govern those documents; the context and ADR formats below add only domain-specific structure.
 
-`AGENTS.md` holds concise rules needed across repository work and conditional pointers; `CONTEXT.md` holds the glossary. Separate decision records must earn their place through the ADR gate below.
+`AGENTS.md` holds concise rules needed across repository work and conditional pointers; `GLOSSARY.md` holds the glossary. Separate decision records must earn their place through the ADR gate below.
 
 ## File structure
 
-`dev-cycle-setup` decided the layout for this repo once already: single-context (`CONTEXT.md` + `docs/adr/` at the root) or multi-context (`CONTEXT-MAP.md` fanning out to one `CONTEXT.md`/`docs/adr/` pair per bounded context). See `docs/agents/domain.md` for the diagram; this skill just writes into whichever layout is already there, never re-decides it.
+`dev-cycle-setup` decided the layout for this repo once already: single-context (`GLOSSARY.md` + `docs/adr/` at the root) or multi-context (`GLOSSARY-MAP.md` fanning out to one `GLOSSARY.md`/`docs/adr/` pair per bounded context). See `docs/agents/domain.md` for the diagram; this skill just writes into whichever layout is already there, never re-decides it.
 
-Create files lazily, only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
+Create files lazily, only when you have something to write. If no `GLOSSARY.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
 
 ## During the session
 
 ### Challenge against the glossary
 
-When the user uses a term that conflicts with the existing language in `CONTEXT.md`, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
+When the user uses a term that conflicts with the existing language in `GLOSSARY.md`, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
 
 ### Sharpen fuzzy language
 
@@ -35,11 +35,11 @@ When domain relationships are being discussed, stress-test them with specific sc
 
 When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible. Which is right?" Locate the component that owns the rule in the project's selected architecture. Consume an existing sketch or ADR; use `architect` only if ownership is genuinely unsettled.
 
-### Update CONTEXT.md inline
+### Update GLOSSARY.md inline
 
-When a term is resolved, update `CONTEXT.md` right there. Don't batch these up. Capture them as they happen. Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).
+When a term is resolved, update `GLOSSARY.md` right there. Don't batch these up. Capture them as they happen. Use the format in [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md).
 
-`CONTEXT.md` should be totally devoid of implementation details. Do not treat `CONTEXT.md` as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
+`GLOSSARY.md` should be totally devoid of implementation details. Do not treat `GLOSSARY.md` as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
 
 ### Offer ADRs sparingly
 

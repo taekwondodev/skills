@@ -11,7 +11,7 @@ Scaffold the per-repo configuration that `/capture-issue`, `/to-spec`, `/to-tick
 - **Issue tracker**: where issues and tickets live
 - **Issue labels**: category, readiness, and activity
 - **Delivery**: the default direct or PR route and its target refs
-- **Domain docs**: where `CONTEXT.md` and ADRs live, and the consumer rules for reading them
+- **Domain docs**: where `GLOSSARY.md` and ADRs live, and the consumer rules for reading them
 - **Project context**: one portable `AGENTS.md` at the repo root, produced from whatever agent-rule sources already exist
 
 Read `writing-for-agents` before drafting the generated project context, domain, and tracker documents. Its general writing rules govern those documents; this skill adds only setup-specific structure.
@@ -30,7 +30,7 @@ Look at the current repo to understand its starting state. Read whatever exists;
 
 - `git remote -v`: is this a GitHub repo? Which one?
 - Current branch, remote default branch, contribution rules, branch protection, PR templates, and any existing `docs/agents/delivery.md`: which delivery choices are already explicit? Inspect accessible configuration; report unavailable rules rather than infer permission from missing evidence.
-- `CONTEXT.md` and `CONTEXT-MAP.md` at the repo root
+- `GLOSSARY.md` and `GLOSSARY-MAP.md` at the repo root
 - `docs/adr/` and any `src/*/docs/adr/` directories
 - `docs/agents/`: does this skill's prior output already exist?
 - Existing build commands, check configuration, and CI: what do they enforce, and which gates are required? Preserve native project tooling; record gaps without making setup a prerequisite for unrelated work.
@@ -54,7 +54,7 @@ Take these steps before the other sections, because their output feeds Sections 
 1. Classify each repo-global source's content using Section D's placement rules: repository-wide rules, domain terms, and decision rationale.
 2. Merge the operational content: deduplicate instructions that say the same thing in equivalent words, keep genuinely distinct rules side by side, and normalize Claude-specific references (`CLAUDE.md`, "Claude") to harness-neutral wording naming `AGENTS.md` or "the agent".
 3. Surface every contradiction, whether it sits between two sources or inside one source (an old rule contradicting a newer one in the same file). Never pick by filename precedence or position. Show both excerpts and ask one focused question per conflict; retain the resolution in the content's selected authoritative home.
-4. Apply Section D's placement rules before moving content. Keep concise repository-wide rules in `AGENTS.md`; route glossary entries to `CONTEXT.md` and only qualifying decisions to ADRs. Use conditional pointers for content moved or already recorded elsewhere.
+4. Apply Section D's placement rules before moving content. Keep concise repository-wide rules in `AGENTS.md`; route glossary entries to `GLOSSARY.md` and only qualifying decisions to ADRs. Use conditional pointers for content moved or already recorded elsewhere.
 5. Draft `AGENTS.md` with concise repository-wide rules and a `## Dev cycle` block per the template below. Add conditional pointers only to existing or justified new targets.
 6. Carry the draft into Confirm and edit below; resolve its targets before writing it.
 
@@ -70,9 +70,9 @@ Record the choice in `docs/agents/issue-tracker.md`, seeded from [issue-tracker-
 
 Copy [triage-labels.md](./triage-labels.md) to `docs/agents/triage-labels.md`.
 
-**Section C: Domain docs.** Default to the **single-context** layout: `CONTEXT.md` + `docs/adr/` at the repo root. Record this convention without asking; create content files only when a resolved term or a decision passing Section D's gate needs one.
+**Section C: Domain docs.** Default to the **single-context** layout: `GLOSSARY.md` + `docs/adr/` at the repo root. Record this convention without asking; create content files only when a resolved term or a decision passing Section D's gate needs one.
 
-Offer **multi-context** only when exploration found monorepo signals: a root `CONTEXT-MAP.md` pointing to per-context `CONTEXT.md` files. Then confirm which layout they want.
+Offer **multi-context** only when exploration found monorepo signals: a root `GLOSSARY-MAP.md` pointing to per-context `GLOSSARY.md` files. Then confirm which layout they want.
 
 **Section C1: Delivery.** Preserve an existing explicit delivery policy. Otherwise ask for the repository default: `direct` or `pr`. Present discovered integration and PR base refs and ask only about unresolved targets.
 
@@ -88,7 +88,7 @@ Read each flagged source in full and sort each section into one of three buckets
 
 - **Repository-wide rule**: keep the concise instruction and necessary reason in `AGENTS.md`. Task-specific procedures and setup details belong behind conditional pointers.
 - **Decision rationale**: read [ADR-FORMAT.md](../domain-modeling/ADR-FORMAT.md) and apply its placement, necessity, and completion checks to select an existing or new record.
-- **Domain term**: a project-specific concept given a definition. Becomes a `CONTEXT.md` entry per CONTEXT-FORMAT.md.
+- **Domain term**: a project-specific concept given a definition. Becomes a `GLOSSARY.md` entry per GLOSSARY-FORMAT.md.
 
 For remaining content, apply `writing-for-agents`' information hierarchy to select its home and reading trigger.
 
@@ -110,7 +110,7 @@ Write `AGENTS.md` at the repo root. If an `AGENTS.md` already existed there, pre
 
 Add `HANDOFF.md` to the repository `.gitignore` when it is not already ignored.
 
-If Section D ran: resolve reused targets and write any justified new ADR files or `CONTEXT.md` entries before composing `AGENTS.md`. Keep concise repository-wide rules inline and use conditional pointers for disclosed content, per `writing-for-agents`. Verify every pointer's target and reading trigger.
+If Section D ran: resolve reused targets and write any justified new ADR files or `GLOSSARY.md` entries before composing `AGENTS.md`. Keep concise repository-wide rules inline and use conditional pointers for disclosed content, per `writing-for-agents`. Verify every pointer's target and reading trigger.
 
 The block contains pointers only, never the content itself:
 
