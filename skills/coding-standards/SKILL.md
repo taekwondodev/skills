@@ -9,13 +9,14 @@ Resolve an explicit coding-policy, dependency, or API choice. Start from the pro
 
 ## Coding policy
 
-Identify the concrete problem the proposed rule solves. Distinguish a binding project requirement from a design heuristic or preference. A convention must reduce development or reader effort without silently trading away required behavior, security, or runtime performance.
+Identify the concrete problem the proposed rule solves. Distinguish a binding project requirement from a design heuristic or preference. A convention must reduce development or reader effort without trading away required behavior or security.
 
 Use the canonical owner only for the question being decided:
 
 - Types and public signatures: [Type System Discipline](../principle-type-system-discipline/SKILL.md).
 - Validation and security boundaries: [Boundary Discipline](../principle-boundary-discipline/SKILL.md).
 - Readability, comments, and complexity: [Minimize Reader Load](../principle-minimize-reader-load/SKILL.md).
+- Style versus runtime cost, abstractions, and idioms: [Style Serves Outcomes](../principle-style-serves-outcomes/SKILL.md).
 - Replacing an internal API: [Migrate Callers Then Delete Legacy APIs](../principle-migrate-callers-then-delete-legacy-apis/SKILL.md).
 
 For a mechanically decidable rule, use [Build the Lever](../principle-build-the-lever/SKILL.md) to select existing enforcement before proposing new tooling. Record the rule in its authoritative configuration or policy, not a second checklist. Tooling changes require approved scope; an uncovered rule does not authorize installation.

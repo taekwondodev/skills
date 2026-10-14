@@ -42,9 +42,9 @@ Reuse current `blast-radius` evidence. Assign unsettled consumer impact to the r
 
 ### Standards
 
-Provide project conventions and the approved architecture sketch or ADRs. When tests change, include `testing`. For a concrete type, boundary, migration, or readability concern, select its canonical owner through [the principle index](../dev-cycle/references/principles.md) and read that body, not the entire corpus. Use [the smell baseline](references/standards-review.md) only for a relevant design concern.
+Provide project conventions and the approved architecture sketch or ADRs. When tests change, include `testing`. For a concrete type, boundary, migration, readability, or runtime-cost concern, select its canonical owner through [the principle index](../dev-cycle/references/principles.md) and read that body, not the entire corpus. Use [the smell baseline](references/standards-review.md) only for a relevant design concern.
 
-Judge components, ownership, abstractions, and comprehensibility against the actual project. An unresolved architecture contract is a finding, not permission to execute `architect` inside review. Inspect whether tests prove the approved behavior rather than the implementation's own assumptions. A hard violation requires an applicable binding rule and a concrete file/hunk; smells and preferences remain judgment calls, not automatic scope expansion.
+Judge components, ownership, abstractions, and comprehensibility against the actual project. An unresolved architecture contract is a finding, not permission to execute `architect` inside review. Inspect whether tests prove the approved behavior rather than the implementation's own assumptions. A hard violation requires an applicable binding rule and a concrete file/hunk. Report other principle and smell-baseline violations in the changed code as smells. Give each smell an action that [Style Serves Outcomes](../principle-style-serves-outcomes/SKILL.md) accepts. When a hard or smell finding is mechanically decidable, extend its action to encode the rule in a tool the project already runs, choosing the mechanism through [Encode Lessons in Structure](../principle-encode-lessons-in-structure/SKILL.md) and naming the tool, rule, and configuration file.
 
 ### Spec
 
@@ -58,6 +58,6 @@ Provide `interrogate`, the contract, and available impact evidence. The worker c
 
 Inspect cited evidence before accepting findings. Keep **Standards**, **Spec**, and **Adversarial** separate even when one worker covers multiple axes, and apply the result contract's coverage and gate rules. Return the payload directly to the caller without a second prose report. Do not merge or rerank the axes into one score.
 
-Return blocking actions to the implementer, then rerun affected axes. Preserve unresolved coverage and user-owned judgment calls rather than treating them as a pass.
+Return blocking actions to the implementer, then rerun affected axes. Route smells under the result contract. Preserve unresolved coverage and user-owned judgment calls rather than treating them as a pass.
 
 Completion: every required axis covered the unit, unavailable coverage is explicit, and blocking findings are resolved before the caller commits.

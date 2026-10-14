@@ -102,5 +102,6 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | [principle-redesign-from-first-principles](skills/principle-redesign-from-first-principles/SKILL.md) | Integrate new requirements as foundational parts of the design. |
 | [principle-separate-before-serializing-shared-state](skills/principle-separate-before-serializing-shared-state/SKILL.md) | Eliminate shared mutable state before adding synchronization. |
 | [principle-sequence-verifiable-units](skills/principle-sequence-verifiable-units/SKILL.md) | Break work into small units that each end in a verified state. |
+| [principle-style-serves-outcomes](skills/principle-style-serves-outcomes/SKILL.md) | Resolve tradeoffs between style and runtime cost. |
 | [principle-subtract-before-you-add](skills/principle-subtract-before-you-add/SKILL.md) | Remove unnecessary complexity before building on top of it. |
 | [principle-type-system-discipline](skills/principle-type-system-discipline/SKILL.md) | Use types to rule out invalid states and enforce domain contracts. |
