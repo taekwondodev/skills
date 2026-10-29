@@ -59,7 +59,7 @@ A prototype, benchmark, or internal ownership change alone is not promotion. Bef
 
 ## Delegation and delivery
 
-Keep one coordinator responsible for synthesis, external effects, and verification. Delegate independent research or artifacts in separate contexts, with explicit scope, accessible source paths, write boundaries, and completion criteria. Reviewers load their own standards. Supply source contents only when the worker cannot retrieve them. Use worktrees for concurrent repository writers.
+Keep one coordinator responsible for synthesis, external effects, and verification. Delegate independent research or artifacts in separate contexts, with the user's goal, explicit scope, accessible source paths, write boundaries, and completion criteria. Reviewers load their own standards. Supply source contents only when the worker cannot retrieve them. Use worktrees for concurrent repository writers.
 
 `code-review` owns the review gate once per completed unit, including a dependent ticket chain, and reruns only affected axes after fixes. When consuming its result directly, load the [review result contract](../code-review/references/result-contract.md) and apply its gates to the payload without an intermediate prose report. Resolve delivery intent and branch preparation through [the shared delivery reference](../implement/references/delivery.md) before implementation. `commit` owns requested local commits and authorized direct delivery; `pr` owns requested PR publication. Report unavailable independence instead of simulating it, and verify artifacts rather than trusting a worker's self-report.
 
