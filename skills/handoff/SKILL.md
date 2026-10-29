@@ -39,7 +39,7 @@ Use the agreed artifact path, otherwise `HANDOFF.md` at the repository root. Use
 Put the continuation contract first:
 
 - `task`: stable task reference when available and a concise goal.
-- `workspace`: working location.
+- `workspace`: absolute path of the working copy holding the work, with its workspace identifier when available.
 - `snapshot`: observation time with timezone and relevant state identifiers; for Git, include branch, HEAD, and uncommitted state.
 - `phase`: current procedure and its owning skill.
 - `authorization`: recorded permissions, limits, and unresolved approval gates, with their source. Mark unknown permissions explicitly.
@@ -64,7 +64,7 @@ List subsequent obligations in dependency order, with their acceptance sources. 
 
 List later inputs with the condition that requires reading them; keep immediate inputs in `required_inputs`. When an existing `show-me-your-work` log contains needed evidence, reference it. If a required source may be unavailable to the next agent, retain its essential context in the checkpoint.
 
-Redact secrets, API keys, and PII. `Resume` is the single continuation instruction; the return carries the artifact's locator.
+Redact secrets, API keys, and PII. `Resume` is the single continuation instruction; the return carries the artifact's absolute locator, resolvable from any working directory.
 
 ## 4. Check the consumer boundary
 
