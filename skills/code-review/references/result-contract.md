@@ -75,7 +75,7 @@ Risk-gate skip (fictional evidence):
 Pending independent assignment (fictional evidence):
 
 ```json
-{"format":"review/1","axes":{"adversarial":{"coverage":"partial","findings":[],"limits":["lease.ts:42 adds a writer absent from Lease.tla. The recorded model pass does not cover current ownership. Independently inspect overlapping acquisition and replay any violating sequence against the implementation."]}}}
+{"format":"review/1","axes":{"adversarial":{"coverage":"partial","findings":[],"limits":["store.ts:42 adds a write path absent from the model recorded at head123. Its pass describes earlier code, and current checks never reach the new path. Independently exercise that path and replay any violating sequence against the implementation."]}}}
 ```
 
 Permitted omission:
