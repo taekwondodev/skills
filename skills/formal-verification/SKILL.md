@@ -37,6 +37,17 @@ Find maintained checks in `docs/agents/delivery.md`, load their project-local ve
 
 Completion: each check is in sync, updated, a confirmed bug, or blocked, with commands and evidence. An updated check may expose a bug. Report stale-model passes explicitly.
 
-## Return
+## Agent result
 
-For a review recommendation, use the caller's `review/1` finding action or coverage limit. For artifact creation or upkeep, load and return [delivery/1](../implement/references/result-contract.md), locating the project-local instructions and checks. Include observed outcomes, bounds, assumptions, correspondence evidence, failure demonstrations, and remaining risks through its artifacts, checks, and limits. Human-facing returns explain the property, result, rerun command, and exclusions plainly.
+Within code-review, return the recommendation as a `review/1` finding action or coverage limit.
+
+For a method selection or an unauthorized recommendation, load [decision/1](../arena/references/result-contract.md). The `choice` is the method, `alternatives` are the compared methods, and `limits` carry open claims and needed approvals.
+
+For construction or upkeep, load [delivery/1](../implement/references/result-contract.md), with one `checks` entry per verification:
+
+- **In sync:** `pass`, citing the rerun. When every check is in sync and nothing changed, `outcome` says so.
+- **Updated:** `pass`, citing the rerun and the repeated failure demonstration; `artifacts` list the changed model, record, and registry entry.
+- **Confirmed bug:** `fail`, citing the counterexample replayed on the code and the commit that introduced it.
+- **Blocked or inconclusive:** `unrun`, citing any partial run. Use `status: partial`, or `blocked` when no check could proceed; `limits` state the cause and what resolves it.
+
+For a human-facing return, explain the property, result, rerun command, and exclusions plainly.
