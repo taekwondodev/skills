@@ -52,19 +52,19 @@ Report missing or partial requirements, unrequested behavior, and incorrect impl
 
 ### Risk gate
 
-The semantic reviewer reads [risk-gate.md](references/risk-gate.md), assesses residual risk from the actual changes and current evidence, and returns the Adversarial disposition alongside Standards and Spec. For medium or large changes, the implementer supplies evidence and the independent semantic reviewer decides the gate. Small changes retain inline assessment with its lack of independence stated. No separate risk-assessment worker is needed.
+The semantic reviewer reads [risk-gate.md](references/risk-gate.md) and returns the Adversarial disposition alongside Standards and Spec. The implementer supplies evidence, not the decision.
 
 When the disposition requires independent review, give the Adversarial worker `interrogate`, the named risks, the contract, and available impact and verification evidence. It challenges those claims without spawning another review tree. Keep stylistic conformity with Standards.
 
 ### Reusable verification
 
-When a finding warrants a reusable check, name the property and the evidence missing from existing checks. If the method is unsettled, read [verification selection](../formal-verification/references/selection.md) and use its comparison to choose the cheapest adequate check. Read [formal-verification](../formal-verification/SKILL.md) only when a formal method is selected or an existing formal check needs upkeep; it owns code correspondence, failure demonstration, and maintenance.
+When a finding warrants a reusable check, name the property and the evidence missing from existing checks. If the method is unsettled, read [verification selection](../formal-verification/references/selection.md) and use its comparison to choose the cheapest adequate check. Read [formal-verification](../formal-verification/SKILL.md) only when a formal method is selected or an existing formal check needs upkeep.
 
-Return the proposed check in the finding's action, not as an extra report. Review identifies the obligation; implementation adds the check within approved scope. New tooling or a maintained model needs explicit approval. An optional improvement is not a blocker by itself; an unproven safety claim remains a coverage gap until adequate evidence or an explicit user decision resolves it.
+Return the proposed check in the finding's action, not as an extra report. Review identifies the obligation; implementation adds the check within approved scope. An optional improvement is not a blocker by itself; an unproven safety claim remains a coverage gap until adequate evidence or an explicit user decision resolves it.
 
 ## 3. Resolve and report
 
-Inspect cited evidence before accepting findings or a risk-gate skip. Replace a pending Adversarial disposition with the independent worker's verified result when required. Keep **Standards**, **Spec**, and **Adversarial** separate even when one worker covers multiple axes, and apply the result contract's coverage and gate rules. Return the payload directly to the caller without a second prose report. Do not merge or rerank the axes into one score.
+Inspect cited evidence before accepting findings. Keep **Standards**, **Spec**, and **Adversarial** separate even when one worker covers multiple axes, and apply the result contract's coverage and gate rules. Return the payload directly to the caller without a second prose report. Do not merge or rerank the axes into one score.
 
 Return blocking actions to the implementer, then rerun affected axes. Route smells under the result contract. Preserve unresolved coverage and user-owned judgment calls rather than treating them as a pass.
 

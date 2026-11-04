@@ -25,7 +25,7 @@ Compare the cheapest plausible method with the next stronger option. Name the ad
 - **One known failure, broader behavior already covered.** A regression that fails on the broken implementation can close the gap. A new model does not automatically add useful evidence.
 - **Every case in a declared finite domain must satisfy a property.** Sampling does not establish that claim. Compare exhaustive execution on the implementation with bounded verification; prefer the implementation when both are practical and adequate.
 - **The claim applies beyond every tested bound.** Increasing sample counts or model bounds does not establish it. Compare a proof under explicit assumptions with the cost of leaving the claim unproven. Narrowing an approved claim requires a user decision.
-- **A passing model describes an older implementation.** First establish correspondence or replace the stale result with adequate evidence. More exploration of the old model does not resolve the gap.
+- **A passing model describes an older implementation.** First establish correspondence or replace the stale result with adequate evidence. More exploration of the old model does not resolve the gap. Repair the model only when the approved contract requires that maintained check; otherwise adequate replacement evidence suffices and the stale result stays unused.
 
 ## Decision
 

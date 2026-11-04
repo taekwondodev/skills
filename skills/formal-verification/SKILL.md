@@ -24,8 +24,6 @@ Completion: property, code scope, tool, bounds, assumptions, and uncovered risks
 5. Leave one reproducible command and a project-local verification entry point using the project's existing conventions. Read [writing-for-agents](../writing-for-agents/SKILL.md) if writing a skill or agent instructions. Register the command, covered code, and coverage record under maintained verification in `docs/agents/delivery.md`, so later implementation and review can find it. If that policy file is absent, report the check as undiscoverable and propose where to register it.
 6. Record the property, covered files and functions, mapping, tool version, bounds, assumptions, failure demonstration, and last revision confirmed to match the code. Include a diff or content identity for uncommitted covered changes; a HEAD identifier alone does not describe a dirty tree.
 
-If a statechart helps explain a counterexample, generate it from the checked model and disclose hidden transitions; the diagram does not establish code correspondence.
-
 Completion: the project-local entry point runs end to end, catches the intended broken variant, identifies its covered code, and lets the next agent distinguish a pass from incomplete checking or stale correspondence. An unrun entry point is a draft.
 
 ## Maintain correspondence
@@ -35,7 +33,7 @@ Find maintained checks in `docs/agents/delivery.md`, load their project-local ve
 1. Run the existing check and record the result before editing. A pass on an old description is not evidence about changed code.
 2. Classify changes as no effect, model or harness drift, an explicitly approved contract change, or a possible product bug. Update from the code, not from what makes the checker pass. Change a property only with an explicitly approved contract change. A reduced bound, omitted transition, or changed assumption that weakens coverage leaves the affected claim inconclusive until adequate replacement evidence or explicit user approval resolves it; disclosure alone is insufficient.
 3. For changed verification, repeat the failure demonstration and original rerun. Replay counterexamples against the implementation. Keep product fixes separate unless implementation was authorized.
-4. Update the coverage mapping, its registry entry, and the sync revision, including the diff or content identity of uncommitted covered changes, only after confirming correspondence and resolving any reduction in coverage. Leave blocked checks at their prior sync point with the unresolved changes recorded.
+4. Update the coverage record and its registry entry only after confirming correspondence and resolving any reduction in coverage. Leave blocked checks at their prior sync point with the unresolved changes recorded.
 
 Completion: each check is in sync, updated, a confirmed bug, or blocked, with commands and evidence. An updated check may expose a bug. Report stale-model passes explicitly.
 

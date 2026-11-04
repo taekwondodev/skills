@@ -1,6 +1,6 @@
 # Residual-risk gate
 
-The semantic reviewer decides whether independent Adversarial review is needed after inspecting the diff, contract, consumers, and current check evidence. Each decision rests on the signals below: what a failure would cause and what current evidence covers. Read the contrasting decisions when a signal alone does not settle it. For small changes this assessment may be inline; for medium or large changes the semantic reviewer is independent. A direct request for adversarial review requires that review.
+The semantic reviewer decides whether independent Adversarial review is needed after inspecting the diff, contract, consumers, and current check evidence. Each decision rests on the signals below: what a failure would cause and what current evidence covers. Read the contrasting decisions when a signal alone does not settle it. A direct request for adversarial review requires that review.
 
 ## Decide
 
@@ -9,10 +9,10 @@ The semantic reviewer decides whether independent Adversarial review is needed a
    - **Persistence:** whether the wrong result outlives the run that produced it.
    - **Reversibility:** whether correcting the code undoes the effect, or the effect itself needs repair.
    - **Detection:** whether current checks or normal use would expose the failure before it causes harm.
-2. Match each failure to evidence, including maintained verification listed in `docs/agents/delivery.md` whose covered code the change touches. Evidence counts only when it exercises the condition the change introduces: the inputs, ordering, failures or interruptions, environment, or consumers it affects. Record the checked revision, a diff or content identity for uncommitted changes, and relevant inputs, assumptions, bounds, and consumers. A check that passes without exercising that condition covers nothing about it. For a separate model, confirm correspondence with the current code, including atomic steps and all readers or writers that affect the modeled property. Code or model drift invalidates affected proof until reconciled.
+2. Match each failure to evidence, including maintained verification listed in `docs/agents/delivery.md` whose covered code the change touches. Evidence counts only when it exercises the condition the change introduces: the inputs, ordering, failures or interruptions, environment, or consumers it affects. Record the relevant inputs, assumptions, bounds, and consumers. A check that passes without exercising that condition covers nothing about it. A maintained check counts only while it corresponds to the current code; [formal-verification](../../formal-verification/SKILL.md#maintain-correspondence) owns that judgment.
 3. A failure is significant unless its reach is limited, it is reversible, and it is detectable. Require independent Adversarial review for a significant failure without adequate evidence, or whose consequences cannot be established. Name the claims and missing evidence in the pending disposition. Permit a skip only when each significant failure has adequate current evidence. Cite the concrete evidence and its boundaries.
 
-A skip saves a worker, not the assessment. Keep Standards and Spec review. New findings can reopen the gate. A passing formal check can discharge its modeled property, not unrelated obligations. A stale model does not make model repair mandatory: adequate cheaper evidence may resolve the risk while the stale result remains explicitly unused. Require repair only when the approved contract requires that maintained check.
+A skip saves a worker, not the assessment. Keep Standards and Spec review.
 
 ## Contrasting decisions
 
@@ -31,9 +31,9 @@ A skip saves a worker, not the assessment. Keep Standards and Spec review. New f
 
 ## Return
 
-Use the existing `review/1` Adversarial axis alongside the semantic axes. The coordinator retains the assignment role to distinguish a semantic gate disposition from an Adversarial worker's review:
+Return the `review/1` Adversarial axis alongside the semantic axes:
 
 - **Skip:** `coverage: skipped`, empty findings, and limits stating who assessed the gate, why no independent pass is required, the checked revision plus a diff or content identity for any uncommitted changes, supporting evidence, and what remains outside it. An inline skip explicitly says it is self-assessed, not independent.
-- **Dispatch:** `coverage: partial`, empty findings, and limits naming the residual risks and required independent investigation. If missing or inaccessible evidence prevents a decision, use this disposition and name the evidence gap; uncertainty never permits a skip. Keep semantic findings on their own axes. The coordinator replaces this pending disposition with the worker's result before delivery.
+- **Dispatch:** `coverage: partial`, empty findings, and limits naming the residual risks and required independent investigation. If missing or inaccessible evidence prevents a decision, use this disposition and name the evidence gap; uncertainty never permits a skip. Keep semantic findings on their own axes.
 
-Completion: the coordinator can either justify the skip from retrievable evidence or dispatch a bounded independent assignment. Missing evidence is never reported as a clean review.
+Completion: the coordinator can either justify the skip from retrievable evidence or dispatch a bounded independent assignment.
