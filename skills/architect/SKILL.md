@@ -25,6 +25,8 @@ Naming a file is not grounding. Consume the traced model `how` prescribes. If th
 
 Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.
 
+For a costly invariant involving concurrency, retries, recovery, or ownership, use [formal-verification](../formal-verification/SKILL.md) to select an adequate check before implementation locks in the protocol. Consume its property, bounds, assumptions, and unresolved risks in the sketch. Creating new verification tooling or a maintained model remains an explicit approval decision.
+
 ## Phase B: Sketch
 
 Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt.

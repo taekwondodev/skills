@@ -19,9 +19,9 @@ Before dispatching or returning results, load [result-contract.md](references/re
 
 ## Scope
 
-- **Small change**: review inline in the same three groups. Escalate when an unresolved hard finding requires independent review.
-- **Medium or large change**: run an independent semantic reviewer for Standards and Spec, and a separate Adversarial worker, in parallel isolated contexts after the unit's checks pass. Split the semantic assignment only when scope or expertise warrants another worker. A dependent ticket chain earns one full review at its boundary.
-- **Re-review**: rerun only affected axes, checking fixes and regressions. After two full rounds without convergence, show the remaining findings to the user.
+- **Small change**: review inline. The risk gate can still require independent Adversarial review. Escalate unresolved hard findings that need an independent judgment.
+- **Medium or large change**: run an independent semantic reviewer for Standards and Spec after the unit's checks pass. That reviewer also owns the risk gate; dispatch a separate Adversarial worker only when it requires one. Split the semantic assignment only when scope or expertise warrants another worker. A dependent ticket chain earns one full review at its boundary.
+- **Re-review**: rerun only affected axes, checking fixes and regressions. Apply the result contract's skip-invalidation rule before retaining an earlier risk-gate decision. After two full rounds without convergence, show the remaining findings to the user.
 - Review shipped code, tests, and contracts. Review disposable scripts and evidence artifacts when requested or when they are themselves the deliverable.
 
 ## 1. Pin the inputs
@@ -50,13 +50,21 @@ Judge components, ownership, abstractions, and comprehensibility against the act
 
 Report missing or partial requirements, unrequested behavior, and incorrect implementations. For a refactoring, check pinned behavior and the selected target-shape contract. Cite the requirement and the relevant change or omission.
 
-### Adversarial
+### Risk gate
 
-Provide `interrogate`, the contract, and available impact evidence. The worker challenges consumers, migrations, security, compatibility, runtime effects, and whether checks prove the claims, without spawning another review tree. Keep stylistic conformity with Standards.
+The semantic reviewer reads [risk-gate.md](references/risk-gate.md), assesses residual risk from the actual changes and current evidence, and returns the Adversarial disposition alongside Standards and Spec. For medium or large changes, the implementer supplies evidence and the independent semantic reviewer decides the gate. Small changes retain inline assessment with its lack of independence stated. No separate risk-assessment worker is needed.
+
+When the disposition requires independent review, give the Adversarial worker `interrogate`, the named risks, the contract, and available impact and verification evidence. It challenges those claims without spawning another review tree. Keep stylistic conformity with Standards.
+
+### Reusable verification
+
+When a finding exposes a recurring or costly behavioral risk, name the property and the cheapest adequate reusable check: regression test for a concrete failure, generated inputs for input-space properties, or formal verification for properties that need stronger coverage. Read [formal-verification](../formal-verification/SKILL.md) when selecting or maintaining a model checker, code verifier, or proof. It owns tool selection, code correspondence, failure demonstration, and upkeep.
+
+Return the proposed check in the finding's action, not as an extra report. Review identifies the obligation; implementation adds the check within approved scope. New tooling or a maintained model needs explicit approval. An optional improvement is not a blocker by itself; an unproven safety claim remains a coverage gap until adequate evidence or an explicit user decision resolves it.
 
 ## 3. Resolve and report
 
-Inspect cited evidence before accepting findings. Keep **Standards**, **Spec**, and **Adversarial** separate even when one worker covers multiple axes, and apply the result contract's coverage and gate rules. Return the payload directly to the caller without a second prose report. Do not merge or rerank the axes into one score.
+Inspect cited evidence before accepting findings or a risk-gate skip. Replace a pending Adversarial disposition with the independent worker's verified result when required. Keep **Standards**, **Spec**, and **Adversarial** separate even when one worker covers multiple axes, and apply the result contract's coverage and gate rules. Return the payload directly to the caller without a second prose report. Do not merge or rerank the axes into one score.
 
 Return blocking actions to the implementer, then rerun affected axes. Route smells under the result contract. Preserve unresolved coverage and user-owned judgment calls rather than treating them as a pass.
 

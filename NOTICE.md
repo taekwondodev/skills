@@ -17,6 +17,7 @@ The following skills are copies or adaptations of pstack skills:
 - benchmark-checklist
 - blast-radius
 - eval
+- formal-verification (adapts create-formal-verification-skill, maintain-formal-verification-skill, and statechart guidance)
 - hillclimb
 - how
 - interrogate
