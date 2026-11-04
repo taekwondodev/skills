@@ -39,15 +39,13 @@ Completion: each check is in sync, updated, a confirmed bug, or blocked, with co
 
 ## Agent result
 
-Within code-review, return the recommendation as a `review/1` finding action or coverage limit.
-
-For a method selection or an unauthorized recommendation, load [decision/1](../arena/references/result-contract.md). The `choice` is the method, `alternatives` are the compared methods, and `limits` carry open claims and needed approvals.
+For a method selection or an unauthorized recommendation, load [decision/1](../arena/references/result-contract.md); the `choice` is the method, and open claims and needed approvals are its limits.
 
 For construction or upkeep, load [delivery/1](../implement/references/result-contract.md), with one `checks` entry per verification:
 
-- **In sync:** `pass`, citing the rerun. When every check is in sync and nothing changed, `outcome` says so.
+- **In sync:** `pass`, citing the rerun.
 - **Updated:** `pass`, citing the rerun and the repeated failure demonstration; `artifacts` list the changed model, record, and registry entry.
-- **Confirmed bug:** `fail`, citing the counterexample replayed on the code and the commit that introduced it.
-- **Blocked or inconclusive:** `unrun`, citing any partial run. Use `status: partial`, or `blocked` when no check could proceed; `limits` state the cause and what resolves it.
+- **Confirmed bug:** `fail`, citing the counterexample replayed on the code.
+- **Blocked or inconclusive:** `unrun`, citing any partial run.
 
 For a human-facing return, explain the property, result, rerun command, and exclusions plainly.
