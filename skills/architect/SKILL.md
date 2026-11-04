@@ -25,7 +25,7 @@ Naming a file is not grounding. Consume the traced model `how` prescribes. If th
 
 Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.
 
-For a costly invariant involving concurrency, retries, recovery, or ownership, use [formal-verification](../formal-verification/SKILL.md) to select an adequate check before implementation locks in the protocol. Consume its property, bounds, assumptions, and unresolved risks in the sketch. Creating new verification tooling or a maintained model remains an explicit approval decision.
+When the evidence needed to establish a design claim is unsettled, read [verification selection](../formal-verification/references/selection.md). Use the comparison to choose the check before the design depends on an unproven claim; retain its scope, assumptions, limits, and required approvals in the sketch.
 
 ## Phase B: Sketch
 

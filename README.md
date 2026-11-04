@@ -39,7 +39,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | [testing](skills/testing/SKILL.md) | Choose test boundaries, structure, and expected behavior; audit existing tests. |
 | [code-review](skills/code-review/SKILL.md) | Review changes for coding standards, specification compliance, and hidden risks. |
 | [interrogate](skills/interrogate/SKILL.md) | Challenge designs and diffs through adversarial review. |
-| [formal-verification](skills/formal-verification/SKILL.md) | Build and maintain reusable checks for critical properties beyond ordinary tests. |
+| [formal-verification](skills/formal-verification/SKILL.md) | Build and maintain formal checks for a selected property and proof scope. |
 | [blast-radius](skills/blast-radius/SKILL.md) | Trace affected callers and contracts beyond the immediate diff. |
 | [eval](skills/eval/SKILL.md) | Test a skill change blind with organic tasks, parallel candidates, and one judge. |
 

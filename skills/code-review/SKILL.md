@@ -58,7 +58,7 @@ When the disposition requires independent review, give the Adversarial worker `i
 
 ### Reusable verification
 
-When a finding exposes a recurring or costly behavioral risk, name the property and the cheapest adequate reusable check: regression test for a concrete failure, generated inputs for input-space properties, or formal verification for properties that need stronger coverage. Read [formal-verification](../formal-verification/SKILL.md) when selecting or maintaining a model checker, code verifier, or proof. It owns tool selection, code correspondence, failure demonstration, and upkeep.
+When a finding warrants a reusable check, name the property and the evidence missing from existing checks. If the method is unsettled, read [verification selection](../formal-verification/references/selection.md) and use its comparison to choose the cheapest adequate check. Read [formal-verification](../formal-verification/SKILL.md) only when a formal method is selected or an existing formal check needs upkeep; it owns code correspondence, failure demonstration, and maintenance.
 
 Return the proposed check in the finding's action, not as an extra report. Review identifies the obligation; implementation adds the check within approved scope. New tooling or a maintained model needs explicit approval. An optional improvement is not a blocker by itself; an unproven safety claim remains a coverage gap until adequate evidence or an explicit user decision resolves it.
 

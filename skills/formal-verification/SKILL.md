@@ -1,29 +1,23 @@
 ---
 name: formal-verification
-description: Select, build, or maintain reusable verification for critical invariants, concurrency, retries, and state transitions beyond ordinary tests.
+description: Build or maintain a formal check after selecting the required proof.
 ---
 
 # Formal Verification
 
-Turn a costly property into a rerunnable check. Start from a named risk or the code's most consequential poorly covered promise, not from a preferred tool. A review request selects the property and proposes the check; it does not authorize implementation. Building new tooling, creating a maintained model, or expanding verification coverage requires explicit approval. Rerunning and restoring correspondence of existing approved checks is within the implementation's scope, including modeling new readers or writers of state they already guard. Expansion means a new property, newly guarded state, or a new tool, not merely an updated file list.
+Build a rerunnable check for the selected property and proof scope. A review request selects the property and proposes the check; it does not authorize implementation. Building new tooling, creating a maintained model, or expanding verification coverage requires explicit approval. Rerunning and restoring correspondence of existing approved checks is within the implementation's scope, including modeling new readers or writers of state they already guard. Expansion means a new property, newly guarded state, or a new tool, not merely an updated file list.
 
 ## Select the proof
 
-State the property and the harm from breaking it in one plain sentence each. Trace it to the contract and the code that owns it, including all writers and external assumptions. Choose the cheapest adequate check:
+Consume the selected property, method, scope, and assumptions. When any is unsettled, read [verification selection](references/selection.md) and return its comparison before proceeding. A comparison that selects an ordinary check ends this procedure with that recommendation.
 
-- A concrete failure usually needs a regression test.
-- Input-space properties may need generated inputs or fuzzing on real code. These are tests, not exhaustive proofs.
-- Event ordering, concurrency, retries, and recovery often suit a small model checked with TLA+ and TLC.
-- Memory safety, overflow, or data-structure properties may suit a verifier that checks the code directly.
-- A claim for every size, beyond a finite bound, may need a proof assistant or another unbounded proof technique.
-
-Prefer tools the project can run and maintain. Verify current commands and supported language features from official documentation before adding an integration. If no suitable verifier supports the language, say so and propose checks on the real code rather than a hand model of a pure function. Use proportional proof from [prove-it-works](../principle-prove-it-works/SKILL.md) when choosing the investment.
+For a selected formal method, prefer tools the project can run and maintain. Verify current commands and supported language features from official documentation before adding an integration.
 
 Completion: property, code scope, tool, bounds, assumptions, and uncovered risks are explicit. If construction is not authorized, return the recommendation and approval needed without creating the apparatus.
 
 ## Build a reusable check
 
-1. Map each model action or proof obligation to retrievable code. Treat a step as atomic only when the implementation guarantees it. Include relevant failure, restart, cancellation, and retry transitions. For a design without code, label the result design-only and defer implementation claims until correspondence is checked.
+1. Map each model action or proof obligation to retrievable code. Treat a step as atomic only when the implementation guarantees it. Include the transitions and environmental behavior that can affect the property. For a design without code, label the result design-only and defer implementation claims until correspondence is checked.
 2. State safety and progress properties separately, including fairness assumptions where needed. Record finite domains, exploration bounds, excluded behavior, and tool version. An incomplete exploration, timeout, or unchecked property is inconclusive, not a pass.
 3. Run the check. Keep failures as findings; change a property only when the approved contract changes, with the authorization recorded. Replay model counterexamples against real code as a reproduction or regression test. If replay fails, investigate model error first; until resolved, report a model violation rather than a proven product bug.
 4. Show each property failing on a scratch broken variant of the code it protects. For a separate model, follow the same code-to-model update procedure a future change will use, then confirm the corresponding violation. Merely breaking the model does not demonstrate protection of code changes. Drop the scratch break and rerun the original check, preserving any genuine existing failure.
