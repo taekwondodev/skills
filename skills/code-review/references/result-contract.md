@@ -4,13 +4,13 @@ Load before dispatching, returning, or consuming `code-review` or `interrogate` 
 
 ## Shape: review/1
 
-Root fields: `format` (literal `review/1`) and `axes` (object). Axis keys are `standards`, `spec`, and `adversarial`. Workers return assigned axes only; full code-review includes all three; standalone interrogate includes only `adversarial`.
+Root fields: `format` (literal `review/1`) and `axes` (object). Axis keys are `standards`, `spec`, and `adversarial`. Workers return assigned axes only; full code-review includes all three; standalone interrogate includes only `adversarial`. The semantic reviewer also returns the risk gate's `adversarial` disposition as defined below.
 
 Every axis contains:
 
 - `coverage`: `complete`, `partial`, `unavailable`, or `skipped`.
 - `findings`: array of findings; empty means none supported, not necessarily reviewed.
-- `limits`: string array of coverage gaps, their consequences, and what resolves them; empty means none known.
+- `limits`: string array of coverage gaps, their consequences, and what resolves them; for permitted skips, the permission, rationale, evidence, and boundaries. Empty means none known.
 
 Every finding contains nonempty strings `class`, `at`, `claim`, `evidence`, and optional `action`. No other fields are defined.
 
@@ -31,7 +31,9 @@ Every finding contains nonempty strings `class`, `at`, `claim`, `evidence`, and 
 
 `complete` means assigned scope and required method were covered. Gaps require `partial`; no review performed means `unavailable`. An inline review is complete only when independence was not required. Every non-complete state requires nonempty limits.
 
-`skipped` requires permission from the owning procedure: code-review permits skipping Spec when no approved contract exists after prerequisite handling. Inaccessible existing contracts are unavailable, not skipped. Unavailable and skipped axes have empty findings.
+`skipped` requires permission from the owning procedure: code-review permits skipping Spec when no approved contract exists after prerequisite handling, and Adversarial when its [risk gate](risk-gate.md) finds no significant uncovered or uncertain risk. Inaccessible existing contracts are unavailable, not skipped. Unavailable and skipped axes have empty findings.
+
+For the risk gate, the semantic reviewer returns `adversarial` as `skipped` or as a pending `partial`, with contents defined in [its Return section](risk-gate.md#return). A pending `partial` is an assignment, not completed Adversarial review. Distinguish it by the caller's retained assignment role. The coordinator verifies the rationale and replaces it with the required worker's result. If that worker cannot run, report `unavailable`. Only a reviewer assigned the Adversarial review itself can return `complete`.
 
 Blocking classes block the caller's gate. Partial or unavailable coverage requires resolution or an explicit user decision before proceeding. Permitted skips remain visible, never labeled passed. Malformed payloads, unknown versions, missing assigned axes, or unsupported evidence are incomplete results, never clean reviews.
 
@@ -39,7 +41,8 @@ Blocking classes block the caller's gate. Partial or unavailable coverage requir
 
 1. Pin scope and revision; give workers their axes and this reference. Retain assignment metadata at the caller.
 2. Check shape and inspect evidence before accepting findings. Keep unverified claims as limits. Merge by axis, deduplicating within an axis without collapsing different obligations. Preserve every decision-relevant finding.
-3. Consume or return the merged payload directly. Route blocking actions and smells to the implementer, and remaining judgment calls to the user. Rerun affected axes after fixes; retain other results only while their evidence remains valid. Render concise prose only at a human-facing boundary unless structured output was requested.
+3. Recheck a risk-gate skip when the diff, contract, or supporting evidence changes. A previous skip does not cover new risks.
+4. Consume or return the merged payload directly. Route blocking actions and smells to the implementer, and remaining judgment calls to the user. Rerun affected axes after fixes; retain other results only while their evidence remains valid. Render concise prose only at a human-facing boundary unless structured output was requested.
 
 Completion: every assigned axis is represented, accepted findings are grounded, and fixes, user decisions, and coverage gaps remain distinguishable.
 
@@ -61,6 +64,18 @@ Missing coverage:
 
 ```json
 {"format":"review/1","axes":{"adversarial":{"coverage":"unavailable","findings":[],"limits":["Independent worker unavailable; scope unreviewed. Obtain review or an explicit user decision."]}}}
+```
+
+Risk-gate skip (fictional evidence):
+
+```json
+{"format":"review/1","axes":{"adversarial":{"coverage":"skipped","findings":[],"limits":["Self-assessed inline gate; independent review not required. Checked HEAD head456 plus ui/title.ts:8 replacement of Workspace with Project, the entire dirty diff from head456. Inspected callers use a separate stable identifier; render check confirms the new text. This covers the label, not unrelated UI behavior."]}}}
+```
+
+Pending independent assignment (fictional evidence):
+
+```json
+{"format":"review/1","axes":{"adversarial":{"coverage":"partial","findings":[],"limits":["store.ts:42 adds a write path absent from the model recorded at head123. Its pass describes earlier code, and current checks never reach the new path. Independently exercise that path and replay any violating sequence against the implementation."]}}}
 ```
 
 Permitted omission:

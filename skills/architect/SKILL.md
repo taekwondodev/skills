@@ -25,6 +25,8 @@ Naming a file is not grounding. Consume the traced model `how` prescribes. If th
 
 Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.
 
+When the evidence needed to establish a design claim is unsettled, read [verification selection](../formal-verification/references/selection.md). Use the comparison to choose the check before the design depends on an unproven claim; retain its scope, assumptions, limits, and required approvals in the sketch.
+
 ## Phase B: Sketch
 
 Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt.

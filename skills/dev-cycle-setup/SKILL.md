@@ -76,7 +76,7 @@ Offer **multi-context** only when exploration found monorepo signals: a root `GL
 
 **Section C1: Delivery.** Preserve an existing explicit delivery policy. Otherwise ask for the repository default: `direct` or `pr`. Present discovered integration and PR base refs and ask only about unresolved targets.
 
-Draft `docs/agents/delivery.md` from [delivery.md](./delivery.md), replacing its placeholders with the chosen mode, integration target, PR base, source-remote policy, and required verification gates. Point gates to native project commands rather than copying a command inventory. If this setup includes a tooling gap, propose the smallest justified configuration change here and include it in the confirmation draft; use `coding-standards` only for an unresolved rule or dependency choice.
+Draft `docs/agents/delivery.md` from [delivery.md](./delivery.md), replacing its placeholders with the chosen mode, integration target, PR base, source-remote policy, required verification gates, and any maintained verification found during exploration. Point gates to native project commands rather than copying a command inventory. If this setup includes a tooling gap, propose the smallest justified configuration change here and include it in the confirmation draft; use `coding-standards` only for an unresolved rule or dependency choice.
 
 **Section D: Existing rule-file content.** Only runs if Explore flagged a migration candidate; skip entirely otherwise.
 
