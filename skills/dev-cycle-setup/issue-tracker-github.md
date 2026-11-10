@@ -32,7 +32,7 @@ When `/to-spec` completes an existing issue, update its body in place with `gh-a
 
 Used by `/wayfinder`. Read its "Ticket Types" section when choosing child-ticket labels.
 
-- **Map**: create one issue with `gh-axi issue create --label wayfinder:map`, using the map body from `/wayfinder`.
+- **Map**: create one issue with `gh-axi issue create --title "..." --body-file <path> --label wayfinder:map`, with the map body from `/wayfinder` in `<path>`.
 - **Child ticket**: an issue linked to the map as a GitHub sub-issue with `gh-axi issue subissue add <map> <child>`. Where sub-issues aren't enabled, add the child to a task list in the map body and put `Part of #<map>` at the top of the child body. Once claimed, the ticket is assigned to the driving dev.
 - **Blocking**: GitHub's **native issue dependencies**, the canonical, UI-visible representation. Add an edge with `gh-axi api POST /repos/<owner>/<repo>/issues/<child>/dependencies/blocked_by --field issue_id=<blocker-db-id>`, where `<blocker-db-id>` is the blocker's numeric **database id** (`gh-axi api /repos/<owner>/<repo>/issues/<n> --jq .id`, not the `#number` or `node_id`). Read the child's live open-blocker count with `gh-axi api /repos/<owner>/<repo>/issues/<child> --jq .issue_dependencies_summary.blocked_by`. Where dependencies aren't available, fall back to a `Blocked by: #<n>, #<n>` line at the top of the child body. A ticket is unblocked when every blocker is closed.
 - **Frontier query**: list the map's children with `gh-axi issue subissue list <map>`, or read its task list when using the fallback. Keep only open children, then drop any with an open blocker (`issue_dependencies_summary.blocked_by > 0`, or an open issue in the `Blocked by` line) or an assignee; first in map order wins.

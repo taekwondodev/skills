@@ -4,10 +4,10 @@ Load this reference when the user chooses to land a published PR: squash and mer
 
 ## 1. Read the PR state
 
-Re-read the PR with `gh-axi api /repos/<owner>/<repo>/pulls/<number> --full` and its checks with `gh-axi pr checks`.
+Re-read the PR with `gh-axi pr view <number> --repo <owner>/<repo> --fields state,isDraft,mergeable,baseRefName,headRefOid,mergeCommit,title` and its checks with `gh-axi pr checks <number> --repo <owner>/<repo>`. A non-zero exit from `pr checks` reports check state (1: a check failed or none are reported; 8: a check is pending), not a command failure.
 
-- Already merged: record `merge_commit_sha` and continue from step 3 with the steps still missing.
-- Open, not a draft, mergeable, head SHA equal to the locally verified revision, required checks passing or none configured: continue with step 2.
+- Already merged (`state: MERGED`): record `mergeCommit.oid` and continue from step 3 with the steps still missing.
+- Open, not a draft, `mergeable: MERGEABLE`, `headRefOid` equal to the locally verified revision, required checks passing or none configured: continue with step 2.
 - Any other state: report it and stop; nothing was merged.
 
 Completion: the PR lifecycle, head SHA, base ref, merge commit when present, and check state are recorded.
@@ -22,9 +22,9 @@ gh-axi api PUT /repos/<owner>/<repo>/pulls/<number>/merge --input <body.json>
 
 with body `{"merge_method":"squash","sha":"<verified head>","commit_title":"<PR title> (#N)","commit_message":""}`.
 
-Read the PR back and record `merged`, `merge_commit_sha`, and the merged head. Perform no local change before this readback.
+Read the PR back with the same `pr view` command and record `state`, `mergeCommit.oid`, and `headRefOid`. Perform no local change before this readback.
 
-Completion: the readback shows `merged: true` with the merge commit SHA recorded.
+Completion: the readback shows `state: MERGED` with the merge commit SHA recorded.
 
 ## 3. Update the base checkout
 

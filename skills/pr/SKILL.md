@@ -14,7 +14,7 @@ Load [delivery mode and branch preparation](../implement/references/delivery.md)
 
 Inspect remotes and authenticated GitHub access. Read the associated issues and native development links through `docs/agents/issue-tracker.md`, repository PR templates, and any supplied PR. Resolve the target repository, head repository and branch, and base branch explicitly.
 
-Query PRs for that source, including open, closed, and merged states, using `gh-axi pr list --state all`. Use the API readback in step 4 to match repository identities as well as head and base branches. Reuse the same open PR on repeated requests. If multiple matches exist, or the relevant PR is closed or merged, ask before choosing a different PR or lifecycle. A lookup failure is not evidence that no PR exists.
+Query PRs for that source, including open, closed, and merged states, using `gh-axi pr list --state all`. Use the readback in step 4 to match repository identities as well as head and base branches. Reuse the same open PR on repeated requests. If multiple matches exist, or the relevant PR is closed or merged, ask before choosing a different PR or lifecycle. A lookup failure is not evidence that no PR exists.
 
 For a description-only request, inspect the named PR's published base and head without switching branches, committing, or pushing. Substitute that head for local HEAD below. Stop at the saved draft unless publication was requested.
 
@@ -48,11 +48,11 @@ For a new PR, use `gh-axi pr create --repo <target> --head <qualified-head> --ba
 
 For an update, compare the current body with the last-published draft when available and preserve human edits. Ask when edits conflict or ownership is unclear. Re-read immediately before `gh-axi pr edit <number> --repo <target> --body-file <path>` to reconcile intervening changes, and preserve unrelated metadata. On partial failure, report the pushed ref or created PR that exists and resume only missing authorized operations.
 
-Read back the exact PR with `gh-axi api /repos/<owner>/<repo>/pulls/<number> --full`. Verify its URL, lifecycle and draft state, base and head repository/ref pair, head SHA, title, and complete body against the intended PR and saved description. Save the published body for the next update's comparison. An unexpected head change invalidates the old verification claim.
+Read back the exact PR with `gh-axi pr view <number> --repo <target> --fields url,state,isDraft,baseRefName,headRefName,headRefOid,headRepository,title,body`; `url` identifies the base repository and `headRepository.nameWithOwner` the head repository. Verify its URL, lifecycle and draft state, base and head repository/ref pair, head SHA, title, and complete body against the intended PR and saved description. Save the published body for the next update's comparison. An unexpected head change invalidates the old verification claim.
 
 Read back the complete native closing-issue set through the tracker adapter and match it to the expected set, including an empty set. Verify non-closing references in the published body separately. Report unavailable association checks as unverified.
 
-Query checks for that head with `gh-axi pr checks` and match them to the repository's required gates. Distinguish passing, failing, pending, unavailable, and no configured checks. Keep local test evidence separate from remote CI.
+Query checks for that head with `gh-axi pr checks <number> --repo <target>`; its exit code reports check state (1: a check failed or none are reported; 8: a check is pending), not a command failure. Match the reported checks to the repository's required gates. Distinguish passing, failing, pending, unavailable, and no configured checks. Keep local test evidence separate from remote CI.
 
 Completion: the intended PR and body are read back, the head revision matches, and actual check states and remaining gates are recorded. Publication never merges, enables auto-merge, or closes an issue directly.
 
