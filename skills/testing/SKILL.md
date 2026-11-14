@@ -3,7 +3,7 @@ name: testing
 description: >
   Testing strategy guidelines. Invoke when user asks to write tests, add a test suite, mentions
   unit tests, integration tests, coverage, test file structure, or which layer to test, or asks
-  to audit, prune, or sweep existing tests.
+  to audit, prune, or sweep existing tests, or when a test is flaky.
 ---
 
 ## Scope & Exclusions
@@ -56,6 +56,11 @@ Scripts, harnesses, and evidence collectors that do not ship with the product re
 * **Overpromising name**: the name claims more than the assertions check, such as a test named for a full result that asserts only the exit code. Assert the promised output or rename the test.
 * **Negative control for the wrong reason**: a refusal test that passes because a different guard rejected first, or because it builds a state production never builds. Reach the guard under test through the production path.
 * **Mock that implements the behavior**: the fake supplies the ordering, result, or acknowledgement the owner should produce, so the assertion checks the fake.
+* **Flaky**: the outcome depends on an input the test does not control: elapsed wall-clock time, a fixed sleep standing in for a condition, scheduling or iteration order, two timestamps in one clock tick, a shared port, path, or environment, or load from other suites. Tell: a slower or busier run exists where unchanged code fails, or where the assertion passes before the behavior could happen. Control the input: inject the clock, wait on the observable condition within a bound, make the inputs distinct, own the resource. When elapsed time is the contract, drive the clock or place the bound far from both the correct duration and the regression it catches. A named mechanism is a defect before its first failure; green reruns do not clear it.
+
+## Flaky tests
+
+When a test's outcome changes between runs of unchanged code, load [flaky.md](references/flaky.md) before rerunning it: what to keep from the failure, how to name the mechanism, whether the test or the product owns it, and the proof that closes it.
 
 ## Auditing existing tests
 
