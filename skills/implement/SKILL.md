@@ -31,7 +31,7 @@ For an agent-facing return, load [delivery/1](references/result-contract.md). Lo
 
 ## Complete the unit
 
-Use `code-review` once at the completed unit boundary, against its recorded starting commit and approved contract. Load its [result contract](../code-review/references/result-contract.md) when consuming the review. Use the returned axes, finding actions, and coverage limits directly; apply its gates without expanding the payload into another report. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings, resolve smells as the result contract directs, and rerun only affected review axes.
+Use `code-review` once at the completed unit boundary, against its recorded starting commit and approved contract. Load its [result contract](../code-review/references/result-contract.md) when consuming the review. Use the returned axes, finding actions, and coverage limits directly; apply its gates without expanding the payload into another report. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings, resolve smells as the result contract directs, and verify the fixes with code-review's one closing pass.
 
 Stop with the reviewed changes uncommitted. When the user requests a commit, load `commit` with the reviewed scope, verification evidence, issue reference, resolved delivery context, and approved actions. If the user requests PR publication, load `pr` with the same evidence. Ask before dispatching another unit.
 

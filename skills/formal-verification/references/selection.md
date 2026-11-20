@@ -1,6 +1,6 @@
 # Verification selection
 
-Read when the evidence needed for a claim is unclear or several verification methods could fit. Compare methods against the claim, not against the subject of the change. These are comparison points, not automatic routes.
+Read when the evidence needed for a claim is unclear, several verification methods could fit, or code-review requires a reusable check. Compare methods against the claim, not against the subject of the change. These are comparison points, not automatic routes.
 
 ## Establish the required evidence
 
@@ -25,13 +25,14 @@ Compare the cheapest plausible method with the next stronger option. Name the ad
 - **One known failure, broader behavior already covered.** A regression that fails on the broken implementation can close the gap. A new model does not automatically add useful evidence.
 - **Every case in a declared finite domain must satisfy a property.** Sampling does not establish that claim. Compare exhaustive execution on the implementation with bounded verification; prefer the implementation when both are practical and adequate.
 - **The claim applies beyond every tested bound.** Increasing sample counts or model bounds does not establish it. Compare a proof under explicit assumptions with the cost of leaving the claim unproven. Narrowing an approved claim requires a user decision.
+- **Review keeps finding counterexamples to one property of a parser, matcher, or state machine.** Each patch closes one case and reading finds the next. Generate inputs or enumerate the bounded states against the implementation, asserting the property, and keep each counterexample as a named regression case.
 - **A passing model describes an older implementation.** First establish correspondence or replace the stale result with adequate evidence. More exploration of the old model does not resolve the gap. Repair the model only when the approved contract requires that maintained check; otherwise adequate replacement evidence suffices and the stale result stays unused.
 
 ## Decision
 
 If a verifier cannot analyze the implementation, say so. Prefer checks on the real code to a hand model of directly executable logic when those checks provide the required evidence; otherwise keep the proof gap explicit.
 
-Record the property, chosen method, coverage gained, assumptions and exclusions, and why a cheaper check is insufficient or already enough. State any approval needed for new tooling or maintained verification. If no available method supplies the required evidence, keep the claim unproven rather than silently narrowing it.
+Record the property, chosen method, coverage gained, assumptions and exclusions, and why a cheaper check is insufficient or already enough. A check that runs on the project's existing test runner with no new dependency is ordinary test work within the implementation's scope. State the approval that [formal-verification](../SKILL.md) requires for new tooling or a maintained model. If no available method supplies the required evidence, keep the claim unproven rather than silently narrowing it.
 
 Return the decision through the calling procedure's existing result contract. When a formal method is selected and construction or upkeep is authorized, read [formal-verification](../SKILL.md) to produce the check and its correspondence evidence.
 

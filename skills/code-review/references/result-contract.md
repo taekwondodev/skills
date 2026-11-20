@@ -25,15 +25,22 @@ Every finding contains nonempty strings `class`, `at`, `claim`, `evidence`, and 
 | `spec` | `missing`, `partial`, `unrequested`, `incorrect` | all |
 | `adversarial` | `act_on`, `consider`, `noted`, `dismissed` | `act_on` |
 
-`act_on` means "act on". The implementer resolves each smell without the user: apply its action within the reviewed scope, or dismiss it when [Style Serves Outcomes](../../principle-style-serves-outcomes/SKILL.md) rejects the action. Record dismissals through [Implement's agent result](../../implement/SKILL.md#agent-result). A smell whose action would change scope, a public contract, or security goes to the user. An action that encodes a rule in an already-configured tool is within the reviewed scope: add the rule, show that it fails on the violating hunk and passes after the fix, and fix the existing violations it reports, using the tool's autofix where available. Installing a new tool or dependency, and existing violations outside the reviewed scope that the tool cannot autofix, go to the user. `consider` requires human judgment, not automatic scope expansion. Retain `noted` or `dismissed` only to answer an assigned concern or prevent repeating a decision; put the reason in `evidence`.
+`act_on` means "act on". The implementer resolves each smell without the user: apply its action within the reviewed scope, or dismiss it when [Style Serves Outcomes](../../principle-style-serves-outcomes/SKILL.md) rejects the action. Record dismissals through [Implement's agent result](../../implement/SKILL.md#agent-result). A smell whose action would change scope, a public contract, or security goes to the user. An action that encodes a rule in an already-configured tool is within the reviewed scope: add the rule, show that it fails on the violating hunk and passes after the fix, and fix the existing violations it reports, using the tool's autofix where available. Installing a new tool or dependency, and existing violations outside the reviewed scope that the tool cannot autofix, go to the user. `consider` requires human judgment, not automatic scope expansion. Use `noted` for a finding below the blocking threshold. Use `dismissed` only to answer an assigned concern or prevent repeating a decision; put the reason in `evidence`.
+
+## Blocking threshold
+
+A finding takes a blocking class only when it meets its axis threshold.
+
+- **Adversarial:** `act_on` states the trigger, an input or sequence starting from a real entry point, and a consequence the [risk gate](risk-gate.md#decide) sorts as significant. A finding below that is `noted`, with each field one sentence and no action.
+- **Spec:** a finding cites a requirement or scope limit written in the approved contract and a case inside it, one the contract names or one normal use reaches. A constructed case outside the contract is a candidate failure for the risk gate, not a Spec finding. A general quality rule is a Standards source, not a contract.
 
 ## Coverage and gates
 
-`complete` means assigned scope and required method were covered. Gaps require `partial`; no review performed means `unavailable`. An inline review is complete only when independence was not required. Every non-complete state requires nonempty limits.
+`complete` means assigned scope and required method were covered. `partial` means assigned scope was left unread or an assigned claim was left open; a probe outside the assignment that was not run is not a gap. No review performed means `unavailable`. An inline review is complete only when independence was not required. Every non-complete state requires nonempty limits.
 
 `skipped` requires permission from the owning procedure: code-review permits skipping Spec when no approved contract exists after prerequisite handling, and Adversarial when its [risk gate](risk-gate.md) finds no significant uncovered or uncertain risk. Inaccessible existing contracts are unavailable, not skipped. Unavailable and skipped axes have empty findings.
 
-For the risk gate, the semantic reviewer returns `adversarial` as `skipped` or as a pending `partial`, with contents defined in [its Return section](risk-gate.md#return). A pending `partial` is an assignment, not completed Adversarial review. Distinguish it by the caller's retained assignment role. The coordinator verifies the rationale and replaces it with the required worker's result. If that worker cannot run, report `unavailable`. Only a reviewer assigned the Adversarial review itself can return `complete`.
+For the risk gate, the semantic reviewer returns `adversarial` as `skipped` or as a pending `partial`, with contents defined in [its Return section](risk-gate.md#return). A pending `partial` is an assignment, not completed Adversarial review. Distinguish it by the caller's retained assignment role. The coordinator verifies the rationale, then resolves each limit by the means it names: run a named probe and record its outcome, route a named property check to the implementer, and dispatch the remaining claims to an Adversarial worker. Each limit stays open until its own evidence or a user decision closes it; the worker's result settles only the claims it was assigned. When probes and checks close every limit without a worker, record `skipped` with their outcomes as evidence. If a required worker cannot run, report `unavailable`. Only a reviewer assigned the Adversarial review itself can return `complete`.
 
 Blocking classes block the caller's gate. Partial or unavailable coverage requires resolution or an explicit user decision before proceeding. Permitted skips remain visible, never labeled passed. Malformed payloads, unknown versions, missing assigned axes, or unsupported evidence are incomplete results, never clean reviews.
 
@@ -41,8 +48,8 @@ Blocking classes block the caller's gate. Partial or unavailable coverage requir
 
 1. Pin scope and revision; give workers their axes and this reference. Retain assignment metadata at the caller.
 2. Check shape and inspect evidence before accepting findings. Keep unverified claims as limits. Merge by axis, deduplicating within an axis without collapsing different obligations. Preserve every decision-relevant finding.
-3. Recheck a risk-gate skip when the diff, contract, or supporting evidence changes. A previous skip does not cover new risks.
-4. Consume or return the merged payload directly. Route blocking actions and smells to the implementer, and remaining judgment calls to the user. Rerun affected axes after fixes; retain other results only while their evidence remains valid. Render concise prose only at a human-facing boundary unless structured output was requested.
+3. Recheck a risk-gate skip when the contract or its supporting evidence changes. For a later diff, apply the gate only to the conditions that diff introduces; the earlier disposition stands for the rest.
+4. Consume or return the merged payload directly. Route blocking actions and smells to the implementer, and remaining judgment calls to the user. After fixes, code-review's [closing pass](closing-pass.md) replaces another review; retain other results only while their evidence remains valid. Render concise prose only at a human-facing boundary unless structured output was requested.
 
 Completion: every assigned axis is represented, accepted findings are grounded, and fixes, user decisions, and coverage gaps remain distinguishable.
 
@@ -75,7 +82,7 @@ Risk-gate skip (fictional evidence):
 Pending independent assignment (fictional evidence):
 
 ```json
-{"format":"review/1","axes":{"adversarial":{"coverage":"partial","findings":[],"limits":["store.ts:42 adds a write path absent from the model recorded at head123. Its pass describes earlier code, and current checks never reach the new path. Independently exercise that path and replay any violating sequence against the implementation."]}}}
+{"format":"review/1","axes":{"adversarial":{"coverage":"partial","findings":[],"limits":["export.ts:42 reorders the fields of the file every export writes; the file persists and tools outside the repository import it. No current check reads an exported file through an importer. Claim to challenge: each importer listed in docs/consumers.md reads fields by name, not position. Closed by reading each importer's parser."]}}}
 ```
 
 Permitted omission:
