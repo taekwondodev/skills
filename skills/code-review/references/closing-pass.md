@@ -1,16 +1,12 @@
 # Closing pass
 
-Load after the implementer has fixed the blocking findings of a unit's full review. A unit gets one full review and one closing pass. The closing pass verifies those fixes against a closed list; it is not a second review. A small change reviewed inline closes inline by the same rules.
+Each unit gets one full review and, if fixes change the reviewed artifact, one closing pass. The pass checks the full review's blocking findings and the fix diff. A unit reviewed inline closes inline. Fixes stay in the same unit; newly requested behavior starts a new unit.
 
 ## Assign
 
-Give one worker:
+Record the unit, the reviewed revision and any uncommitted changes, and when each pass starts and is verified. Carry that record into handoffs so a later session resumes rather than restarts a pass.
 
-- the closed list: every blocking finding from the full review, as returned;
-- the fix diff, from the reviewed revision to the current one;
-- this reference and the [result contract](result-contract.md).
-
-Write each pass in the task record when it starts and again when its result is verified, and carry that into any handoff, so a later session continues the count instead of restarting it. Fixes for findings stay in this unit. Newly requested behavior is a new unit with its own review.
+Give the closing reviewer the original blocking findings, the diff from the reviewed snapshot to the fixed snapshot, and this reference and the [result contract](result-contract.md).
 
 ## Verify
 
@@ -19,18 +15,20 @@ Decide each listed finding closed or open:
 - **Spec and Adversarial:** closed when the recorded case or trigger no longer produces the recorded consequence.
 - **Standards:** closed when the cited rule holds on the cited hunk.
 
-A different trigger or case is a new finding, not evidence that a listed one is open. A listed finding whose code only moved keeps its identity. Admit a new finding only on lines the fix diff changed, and only when it meets the [blocking threshold](result-contract.md#blocking-threshold). Code the full review covered and the fix left unchanged stays closed; report a problem noticed there in one limit for the user to judge.
+A different trigger or case is a new finding. Moving the affected code does not close the original finding. Admit a new finding only on lines the fix changed and only if it meets the [blocking threshold](result-contract.md#blocking-threshold). Note a new issue in unchanged, already reviewed code as a nonblocking limit for the user.
 
-The full review's Adversarial result stands. Apply the [risk gate](risk-gate.md) only to a condition the fix diff introduces, and return a pending disposition only when that condition is significant. An Adversarial worker dispatched for it settles that condition alone.
+Run the [risk gate](risk-gate.md) only for conditions the fixes introduce. Resolve its [pending claims](risk-gate.md#resolve-pending-claims) within this pass. Report any invalidated prior coverage as a gap.
 
-Return `review/1` with the axes of the listed findings. `findings` holds each listed finding still open, restated with the observation that shows its trigger still producing its consequence, and each admitted new finding. Empty findings with `complete` coverage means every listed finding is closed.
+Return `review/1` for the axes checked. Report open findings with current evidence and omit closed findings. Merge the gate's disposition under the [result contract](result-contract.md#consumer).
 
 ## After the pass
 
-The closing pass, with any Adversarial worker its pending disposition required, ends the unit's review; another review needs a direct user request. The implementer fixes each finding still open and proves the fix with a check that fails before it and passes after. Take a finding that such a check cannot close to the user with one recommendation: fix further, accept it as a recorded limit, or revert the change that introduced it.
+Once the closing pass ends, another review of the unit needs a direct user request. Prove any later fix with a check that fails before it and passes after. If that evidence cannot close a finding, show the user what remains and recommend one action: fix further, accept the limit, or revert the change.
+
+For delivery, retain the review record, any checks run after the pass, and user decisions. Match that evidence to the final diff and flag gaps before claiming readiness.
 
 ## Repeated counterexample
 
-When a second counterexample to the property a fix is meant to establish is confirmed, whether while fixing, in the pass, or after it, stop patching cases. A counterexample below the blocking threshold is `noted` and does not count. State the property, then choose between a design that makes it hold by construction and a generated or exhaustive check on the real code, through [verification selection](../../formal-verification/references/selection.md). When neither fits, the user decides between a recorded limit and a revert.
+At any stage, stop fixing individual cases when a second blocking counterexample to the same property is confirmed. State the property and use [verification selection](../../formal-verification/references/selection.md) to choose evidence for a design that enforces it or a generated or exhaustive check on the real code. If you add the check, retain confirmed counterexamples as named regressions. If neither approach is adequate, ask the user to accept the limit or revert.
 
-Completion: every listed finding is closed by the pass, closed by a failing-then-passing check, or decided by the user, and the task record shows both passes verified.
+Completion: each blocker is closed by verified evidence or decided by the user, and the task record identifies the passes that ran and the final revision they and any later checks cover.

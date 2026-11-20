@@ -10,7 +10,7 @@ Every axis contains:
 
 - `coverage`: `complete`, `partial`, `unavailable`, or `skipped`.
 - `findings`: array of findings; empty means none supported, not necessarily reviewed.
-- `limits`: string array of coverage gaps, their consequences, and what resolves them; for permitted skips, the permission, rationale, evidence, and boundaries. Empty means none known.
+- `limits`: string array. Record coverage gaps, their consequences, and what resolves them. Record the rationale, evidence, and boundaries for skips. A closing pass can also record a nonblocking note here. An empty array means there are no known limits.
 
 Every finding contains nonempty strings `class`, `at`, `claim`, `evidence`, and optional `action`. No other fields are defined.
 
@@ -25,31 +25,31 @@ Every finding contains nonempty strings `class`, `at`, `claim`, `evidence`, and 
 | `spec` | `missing`, `partial`, `unrequested`, `incorrect` | all |
 | `adversarial` | `act_on`, `consider`, `noted`, `dismissed` | `act_on` |
 
-`act_on` means "act on". The implementer resolves each smell without the user: apply its action within the reviewed scope, or dismiss it when [Style Serves Outcomes](../../principle-style-serves-outcomes/SKILL.md) rejects the action. Record dismissals through [Implement's agent result](../../implement/SKILL.md#agent-result). A smell whose action would change scope, a public contract, or security goes to the user. An action that encodes a rule in an already-configured tool is within the reviewed scope: add the rule, show that it fails on the violating hunk and passes after the fix, and fix the existing violations it reports, using the tool's autofix where available. Installing a new tool or dependency, and existing violations outside the reviewed scope that the tool cannot autofix, go to the user. `consider` requires human judgment, not automatic scope expansion. Use `noted` for a finding below the blocking threshold. Use `dismissed` only to answer an assigned concern or prevent repeating a decision; put the reason in `evidence`.
+The implementer resolves each smell without the user: apply its action within the reviewed scope, or dismiss it when [Style Serves Outcomes](../../principle-style-serves-outcomes/SKILL.md) rejects the action. Record dismissals through [Implement's agent result](../../implement/SKILL.md#agent-result). A smell whose action would change scope, a public contract, or security goes to the user. An action that encodes a rule in an already-configured tool is within the reviewed scope: add the rule, show that it fails on the violating hunk and passes after the fix, and fix the existing violations it reports, using the tool's autofix where available. Installing a new tool or dependency, and existing violations outside the reviewed scope that the tool cannot autofix, go to the user. `consider` requires human judgment, not automatic scope expansion. Use `dismissed` only to answer an assigned concern or prevent repeating a decision; put the reason in `evidence`.
 
 ## Blocking threshold
 
 A finding takes a blocking class only when it meets its axis threshold.
 
-- **Adversarial:** `act_on` states the trigger, an input or sequence starting from a real entry point, and a consequence the [risk gate](risk-gate.md#decide) sorts as significant. A finding below that is `noted`, with each field one sentence and no action.
-- **Spec:** a finding cites a requirement or scope limit written in the approved contract and a case inside it, one the contract names or one normal use reaches. A constructed case outside the contract is a candidate failure for the risk gate, not a Spec finding. A general quality rule is a Standards source, not a contract.
+- **Adversarial:** `act_on` states the trigger, an input or sequence starting from a real entry point, and a consequence the [risk gate](risk-gate.md#decide) sorts as significant. Record a concrete failure below that threshold as `noted`, with each field one sentence and no action.
+- **Spec:** cite a written requirement or scope limit in the approved contract and show how the change violates it. Use a case the contract names or that normal use reaches. Send constructed cases outside the contract to the risk gate as candidate failures. Apply general quality rules under Standards.
 
 ## Coverage and gates
 
 `complete` means assigned scope and required method were covered. `partial` means assigned scope was left unread or an assigned claim was left open; a probe outside the assignment that was not run is not a gap. No review performed means `unavailable`. An inline review is complete only when independence was not required. Every non-complete state requires nonempty limits.
 
-`skipped` requires permission from the owning procedure: code-review permits skipping Spec when no approved contract exists after prerequisite handling, and Adversarial when its [risk gate](risk-gate.md) finds no significant uncovered or uncertain risk. Inaccessible existing contracts are unavailable, not skipped. Unavailable and skipped axes have empty findings.
+`skipped` requires permission from [code-review](../SKILL.md#1-pin-the-inputs) for Spec or the [risk gate](risk-gate.md#decide) for Adversarial. An inaccessible existing contract is `unavailable`, not `skipped`. Unavailable and skipped axes have empty findings.
 
-For the risk gate, the semantic reviewer returns `adversarial` as `skipped` or as a pending `partial`, with contents defined in [its Return section](risk-gate.md#return). A pending `partial` is an assignment, not completed Adversarial review. Distinguish it by the caller's retained assignment role. The coordinator verifies the rationale, then resolves each limit by the means it names: run a named probe and record its outcome, route a named property check to the implementer, and dispatch the remaining claims to an Adversarial worker. Each limit stays open until its own evidence or a user decision closes it; the worker's result settles only the claims it was assigned. When probes and checks close every limit without a worker, record `skipped` with their outcomes as evidence. If a required worker cannot run, report `unavailable`. Only a reviewer assigned the Adversarial review itself can return `complete`.
+A [pending risk-gate disposition](risk-gate.md#return) uses `partial` to record work still needed, not completed Adversarial review. Distinguish it from a review result by the retained assignment role and follow the gate's [resolution procedure](risk-gate.md#resolve-pending-claims).
 
 Blocking classes block the caller's gate. Partial or unavailable coverage requires resolution or an explicit user decision before proceeding. Permitted skips remain visible, never labeled passed. Malformed payloads, unknown versions, missing assigned axes, or unsupported evidence are incomplete results, never clean reviews.
 
 ## Consumer
 
 1. Pin scope and revision; give workers their axes and this reference. Retain assignment metadata at the caller.
-2. Check shape and inspect evidence before accepting findings. Keep unverified claims as limits. Merge by axis, deduplicating within an axis without collapsing different obligations. Preserve every decision-relevant finding.
-3. Recheck a risk-gate skip when the contract or its supporting evidence changes. For a later diff, apply the gate only to the conditions that diff introduces; the earlier disposition stands for the rest.
-4. Consume or return the merged payload directly. Route blocking actions and smells to the implementer, and remaining judgment calls to the user. After fixes, code-review's [closing pass](closing-pass.md) replaces another review; retain other results only while their evidence remains valid. Render concise prose only at a human-facing boundary unless structured output was requested.
+2. Check shape and inspect evidence before accepting findings. Merge by axis and deduplicate without collapsing different obligations. Keep open claims as limits alongside supported findings. When combining scopes on one axis, a scoped skip does not replace other coverage or findings. If a required part was not reviewed but another part was, report `partial` and name the gap.
+3. Retain results only while the contract and supporting evidence still apply. For review fixes, follow the [closing procedure](closing-pass.md).
+4. Consume or return the merged payload directly. Route blocking actions and smells to the implementer, and remaining judgment calls to the user. Render concise prose only at a human-facing boundary unless structured output was requested.
 
 Completion: every assigned axis is represented, accepted findings are grounded, and fixes, user decisions, and coverage gaps remain distinguishable.
 
@@ -64,7 +64,7 @@ Clean worker:
 Blocker (fictional evidence):
 
 ```json
-{"format":"review/1","axes":{"spec":{"coverage":"complete","findings":[{"class":"missing","at":"src/parse.ts:18","claim":"Zero is accepted.","evidence":"spec.md#inputs requires > 0; the guard rejects only < 0.","action":"Reject zero and test the boundary."}],"limits":[]}}}
+{"format":"review/1","axes":{"spec":{"coverage":"complete","findings":[{"class":"incorrect","at":"src/parse.ts:18","claim":"Zero is accepted.","evidence":"spec.md#inputs requires > 0; the guard rejects only < 0.","action":"Reject zero and test the boundary."}],"limits":[]}}}
 ```
 
 Missing coverage:

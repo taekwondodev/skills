@@ -13,7 +13,7 @@ Read the approved behavior, acceptance criteria, selected architecture or sketch
 
 For a small change without a spec, record the **expected line**: observed behavior from the reproduction and required behavior after the change. An explicit, unambiguous user request already confirms the required behavior; ask only about a missing or conflicting expectation. Preserve the line in the issue or another durable task artifact before implementation.
 
-Record the starting commit and the review unit. One independent ticket is one unit; a dependent ticket chain shares its starting commit and one final review. Resolve the task's delivery route and prepare its branch before editing through [delivery mode and branch preparation](references/delivery.md).
+Record the starting commit and the review unit. One independent ticket is one unit; a dependent ticket chain is one unit with a shared starting commit. Resolve the task's delivery route and prepare its branch before editing through [delivery mode and branch preparation](references/delivery.md).
 
 ## Build and verify
 
@@ -31,7 +31,7 @@ For an agent-facing return, load [delivery/1](references/result-contract.md). Lo
 
 ## Complete the unit
 
-Use `code-review` once at the completed unit boundary, against its recorded starting commit and approved contract. Load its [result contract](../code-review/references/result-contract.md) when consuming the review. Use the returned axes, finding actions, and coverage limits directly; apply its gates without expanding the payload into another report. Intermediate dependent slices retain their checks and defer the full review to the unit boundary. Fix blocking findings, resolve smells as the result contract directs, and verify the fixes with code-review's one closing pass.
+Retain check evidence from intermediate slices of a dependent chain. At the completed unit boundary, use `code-review` against the recorded starting commit and approved contract. Load its [result contract](../code-review/references/result-contract.md) to consume the axes, route findings, and apply the gates. For review fixes, follow the [closing procedure](../code-review/references/closing-pass.md).
 
 Stop with the reviewed changes uncommitted. When the user requests a commit, load `commit` with the reviewed scope, verification evidence, issue reference, resolved delivery context, and approved actions. If the user requests PR publication, load `pr` with the same evidence. Ask before dispatching another unit.
 

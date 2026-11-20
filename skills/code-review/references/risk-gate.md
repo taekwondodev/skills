@@ -12,25 +12,23 @@ The semantic reviewer decides whether independent Adversarial review is needed a
    - **Detection:** whether current checks or normal use would expose the failure before it causes harm.
 2. Sort each failure:
    - **Significant:** normal use reaches it, and its effect reaches stored data or systems outside the repository, outlives the run, or needs repair beyond correcting the code. A security breach or irreversible data loss is significant under any trigger.
-   - **Local:** every other failure, whatever its detection, including a wrong result that a person only sees and that ends with the run. It needs no Adversarial review; the unit's ordinary tests are its cover.
-3. Match each significant failure to evidence, including maintained verification listed in `docs/agents/delivery.md` whose covered code the change touches. Evidence counts only when it exercises the condition the change introduces: the inputs, ordering, failures or interruptions, environment, or consumers it affects. Record the relevant inputs, assumptions, bounds, and consumers. A check that passes without exercising that condition covers nothing about it. A maintained check counts only while it corresponds to the current code; [formal-verification](../../formal-verification/SKILL.md#maintain-correspondence) owns that judgment.
+   - **Not significant:** every other failure, even without a check that detects it. It does not require Adversarial review.
+3. Match each significant failure to evidence, including maintained verification listed in `docs/agents/delivery.md` whose covered code the change touches. Evidence counts only when it covers the condition the change introduces, such as affected inputs, ordering, interruptions, environment, or consumers. Record the relevant inputs, assumptions, bounds, and consumers. A passing check does not count if its scope misses the changed condition. A maintained check counts only while it corresponds to the current code; [formal-verification](../../formal-verification/SKILL.md#maintain-correspondence) owns that judgment.
 4. Choose the cheapest means that closes each significant failure:
    - **Current evidence covers it.** Cite the evidence and its boundaries.
-   - **A runnable probe would settle it.** Name the probe and the outcome that permits a skip. The coordinator runs it.
-   - **It is a property over a domain, not a named case:** every input a parser or matcher accepts, every state of a state machine, every ordering of events. Name the property and require a generated or exhaustive check on the real code, chosen through [verification selection](../../formal-verification/references/selection.md). Reading for further counterexamples does not establish such a property.
+   - **An open property over a domain**, such as parser inputs, reachable states, or event orderings. Require a generated or exhaustive check on the real code.
+   - **A runnable probe would settle the claim.** Name the probe and the result that would close it.
    - **Otherwise,** require independent Adversarial review. Name each claim to challenge and the evidence that would close it.
 
-Permit a skip when no failure is significant, or when current evidence covers each significant one. A skip saves a worker, not the assessment. Keep Standards and Spec review.
+Skip independent Adversarial review when no failure is significant or current evidence covers every significant failure. Keep Standards and Spec review.
 
 ## Contrasting decisions
 
-- **Changed output with no consumer beyond its display, and a check on the new output.** Signal: nothing persisted, immediately visible. Skip with the consumer search and check as evidence.
+- **A wrong label that only affects the display and clears when the run ends.** Skip Adversarial review. Cite the consumer search; a missing test for approved behavior belongs to Standards.
 - **A failure that needs a hand-built input or a crash at one instant, with an effect confined to the run.** Signal: constructed trigger, local effect. Skip.
-- **A defect normal use reaches, that correcting the code undoes, with no check on it.** Signal: local, whatever its detection. Skip. A missing test for approved behavior belongs to Standards.
-- **A significant failure whose passing checks never reach the condition the change introduces.** Signal: the evidence does not exercise the new condition, however small the diff. Name a probe that reaches it, or dispatch.
-- **A result other systems or stored data depend on, with no evidence about those consumers.** Signal: reach outside the repository, effect outlives the run. Dispatch unless consumer evidence covers it.
-- **A permission check that only a crafted request bypasses.** Signal: security, significant under any trigger. Dispatch unless evidence exercises the crafted request.
-- **A matcher that must reject everything outside its grammar, after review produced one counterexample.** Signal: a property over a domain. Require the generated or exhaustive check.
+- **A field changes position in a file that external tools import.** If the claim is that the named importers read by field name, run a probe with them if available. Otherwise ask an independent reviewer to inspect their parsers.
+- **A permissions failure that requires a crafted request.** Treat it as significant despite the trigger. Count only evidence that covers that condition.
+- **An import parser can corrupt stored records, and the claim concerns every input the parser accepts.** Require a property check, not a search for another example.
 - **A large change with pinned-behavior evidence across its consumers.** Signal: wide diff, but equivalence shown on the affected inputs. Skip can be justified.
 - **A passing proof that describes an earlier version of the code.** Signal: evidence exists but no longer corresponds. Treat as uncertain until correspondence or replacement evidence is established.
 
@@ -48,4 +46,14 @@ Return the `review/1` Adversarial axis alongside the semantic axes:
 - **Skip:** `coverage: skipped`, empty findings, and limits stating who assessed the gate, why no independent pass is required, the checked revision plus a diff or content identity for any uncommitted changes, supporting evidence, and what remains outside it. An inline skip explicitly says it is self-assessed, not independent.
 - **Pending:** `coverage: partial`, empty findings, and one limit per significant failure that current evidence leaves open: its trigger and consequence, the claim to challenge, and the probe, property check, or independent investigation that closes it. If missing or inaccessible evidence prevents a decision about a significant failure, use this disposition and name the gap; that uncertainty never permits a skip. Keep semantic findings on their own axes.
 
-Completion: the coordinator can justify the skip from retrievable evidence, or can run each named probe, route each named property check, and dispatch a bounded assignment whose claims each name their closing evidence.
+## Resolve pending claims
+
+The coordinator checks the rationale, then uses the method named for each claim:
+
+- Run the probe and record its result. If it does not settle the claim, reassess what evidence would.
+- Use [verification selection](../../formal-verification/references/selection.md) to choose an adequate property check and give the implementer the property and missing evidence. If the check cannot be run or cannot establish the claim, keep the limit open.
+- Give `interrogate` only the claims that require independent judgment, the evidence that would close each, the contract, and current impact and check evidence.
+
+Keep each claim open until evidence or a user decision settles it. If a required worker cannot run, record that scope as unavailable under the [result contract](result-contract.md#coverage-and-gates). Merge independent results only for assigned claims. For the scope of this gate, record a skip with check results if checks settle every claim without an independent review.
+
+Completion: the disposition is backed by retrievable evidence, and each remaining gap names the claim and the decision or evidence needed to close it.
