@@ -92,17 +92,8 @@ After confirmation and any required browser closure, give the user only the reco
 
 Do not start any other skill automatically. The user invokes the next step.
 
+Completion: the frontier is empty, every question asked was a user-owned decision, hypotheses are marked confirmed, rejected, or unresolved, and the handoff names the next completion criterion.
+
 ## Agent result
 
 For a return to another skill, load [decision/1](../arena/references/result-contract.md). Carry settled decisions and the next completion criterion; unresolved user choices remain limits.
-
-## Verification
-
-Before handing off, confirm:
-
-- every question asked was a genuine user-owned decision;
-- every investigated fact has a source or reproducible observation;
-- hypotheses are marked confirmed, rejected, or unresolved;
-- the frontier is empty;
-- no silent product, scope, architecture, or security choice remains;
-- the handoff names the next completion criterion.

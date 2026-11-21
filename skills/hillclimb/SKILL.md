@@ -25,4 +25,4 @@ For an agent-facing return, load [measurement/1](../perf-issue/references/result
 
 ## Verification
 
-Every attempt has a recorded result and verdict. Accepted changes have conclusive measurements, clear noise, and preserve correctness. Rejected changes are fully reverted. The result includes baseline, final metric, and remaining ideas; derive the delta from those measurements when rendering a human-facing report.
+Every attempt has a recorded result and verdict. Accepted changes meet the `keep` gate in [measurement/1](../perf-issue/references/result-contract.md). Rejected changes are fully reverted. The result includes baseline, final metric, and remaining ideas; derive the delta from those measurements when rendering a human-facing report.

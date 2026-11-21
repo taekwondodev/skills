@@ -14,7 +14,7 @@ Stay active for the current task across turns. `continue` resumes it; `new task`
 - Reuse a skill body already available and unchanged in this context. Reload when it was lost through compression or pruning, its file changed, or a new worker needs it. Names in a handoff do not substitute for the bodies.
 - Reuse grounded evidence and approved artifacts while they remain current. A dependency consumes their result; it does not restart completed work merely because another phase references it.
 - Load a principle when it governs a concrete current decision. Use [the principle index](references/principles.md) when selecting its canonical owner; record the choice it changed, not an inventory of every principle.
-- Keep safety, acceptance criteria, and selected contracts available to the implementer. Tools enforce covered mechanical rules; review supplies semantic judgment and checks uncovered obligations. A skill loaded inline shares the current context; isolation requires a separate worker or session.
+- Keep safety, acceptance criteria, and selected contracts available to the implementer. A skill loaded inline shares the current context; isolation requires a separate worker or session.
 
 ## Size before routing
 
@@ -26,9 +26,9 @@ Default to **small** and move up only on evidence. Ceremony follows size. Read [
 | **Medium** | one feature or fix across modules, or a repository-internal contract | `grilling` on open decisions, checkpoint, `to-spec`, `implement`, one `code-review` per completed unit |
 | **Large** | new bounded context, persisted format, security boundary, or multi-session work | user's explicit agreement to the size, then `wayfinder` into the approved spec and implementation route |
 
-For a small change, an explicit user request can already establish the expected behavior; ask only about missing or conflicting expectations. Add the smallest regression proof, run the relevant existing suite and build, and retain the user's manual check where required by the task.
+For a small change, record the expected line per `testing`. Add the smallest regression proof, run the relevant existing suite and build, and retain the user's manual check where required by the task.
 
-`principle-prove-it-works` owns proportional proof. A verification apparatus larger than the change needs the user's explicit request. Do not add a test methodology the task does not require.
+`principle-prove-it-works` owns proportional proof and the approval rule for verification apparatus. Do not add a test methodology the task does not require.
 
 ## Select the current mode
 
@@ -39,7 +39,7 @@ For a small change, an explicit user request can already establish the expected 
 | **Bug fix** | Reproduce, trace the root cause, add regression proof, fix, and review. An error-handling change stays a bug fix at small size unless it changes a persisted format, security boundary, or shared contract. |
 | **Refactoring** | Pin behavior, identify affected consumers with `blast-radius` when uncertain, subtract dead weight, migrate callers, and verify equivalence. Promote when behavior changes. |
 | **Performance issue** | `perf-issue`: realistic baseline, mechanism-based hypothesis, one change through `implement`, before/after measurement. |
-| **Hillclimb** | `hillclimb`: frozen harness, hypotheses, keep/revert iterations through `implement`, explicit stop predicate or documented plateau. |
+| **Hillclimb** | `hillclimb`: frozen harness, hypotheses, keep/revert iterations through `implement`, its stop criteria. |
 | **Architecture** | Activate `architect` for an unsettled shape, ownership model, dependency direction, or boundary. Consume an approved sketch directly when the design is settled. |
 | **Large work** | `wayfinder` owns map and decision tickets. Use `handoff` and `session-pickup` at real context boundaries; `show-me-your-work` when an unattended run needs a decision trail. |
 
@@ -47,7 +47,7 @@ Use secondary capabilities only when the current mode needs their result. Before
 
 ## Decisions and promotion
 
-Separate facts, hypotheses, and user-owned decisions. Investigate observable facts before asking questions. Present genuine choices through the available structured user-question capability.
+Separate facts, hypotheses, and user-owned decisions per [Never Block on the Human](../principle-never-block-on-the-human/SKILL.md). Present genuine choices through the available structured user-question capability.
 
 Preserve the human checkpoint after grilling. Planning approval does not silently authorize implementation: the user requests the next phase, directly or by approving the proposed transition. The phase retains its own publication and execution gates.
 
@@ -61,7 +61,7 @@ A prototype, benchmark, or internal ownership change alone is not promotion. Bef
 
 Keep one coordinator responsible for synthesis, external effects, and verification. Delegate independent research or artifacts in separate contexts, with the user's goal, explicit scope, accessible source paths, write boundaries, and completion criteria. Reviewers load their own standards. Supply source contents only when the worker cannot retrieve them. Use worktrees for concurrent repository writers.
 
-Use `code-review` for the completed unit and follow its [closing procedure](../code-review/references/closing-pass.md) for fixes. When consuming its result directly, load the [review result contract](../code-review/references/result-contract.md) and apply its gates to the payload without an intermediate prose report. Resolve delivery intent and branch preparation through [the shared delivery reference](../implement/references/delivery.md) before implementation. `commit` owns requested local commits and authorized direct delivery; `pr` owns requested PR publication. Report unavailable independence instead of simulating it, and verify artifacts rather than trusting a worker's self-report.
+Use `code-review` for the completed unit and follow its [closing procedure](../code-review/references/closing-pass.md) for fixes. When consuming its result directly, load the [review result contract](../code-review/references/result-contract.md) and apply its gates to the payload without an intermediate prose report. Resolve delivery intent and branch preparation through [the shared delivery reference](../implement/references/delivery.md) before implementation. `commit` owns requested local commits and authorized direct delivery; `pr` owns requested PR publication. Report unavailable independence instead of simulating it, and verify worker artifacts per `principle-prove-it-works`.
 
 For an agent-facing return, consume and forward the active phase's declared result contract without wrapping it in another report. Preserve that procedure's pending decisions and next checkpoint. If no phase result exists yet, continue the current interaction rather than fabricating a completed payload.
 

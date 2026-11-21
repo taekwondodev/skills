@@ -8,7 +8,7 @@ Inspect the complete commit range and the repository's merge policy. Base the re
 - **Preserve meaningful commits:** retain independently meaningful steps that help review and later investigation, using a merge method allowed by repository policy.
 - **Branch cleanup:** distinguish a branch rewrite from squash at merge when the user needs the source history reorganized before review. Account for collaborators and dependent branches when explaining its consequences.
 
-Merging, rewriting history, and changing repository settings require separate authorization and are outside this skill's execution scope.
+Merging, rewriting history, and changing repository settings require separate authorization and are outside this recommendation's scope. Landing follows [landing guidance](landing.md) once authorized.
 
 ## Final message
 

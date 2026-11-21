@@ -5,7 +5,7 @@ description: Diagnose a supplied profile, trace, heap snapshot, or spindump.
 
 # Trace Forensics
 
-Diagnose a problem from an existing profiling or tracing artifact. Read the supplied dataset instead of substituting a fresh run. Use for CPU profiles, traces, heap snapshots, and spindumps.
+Diagnose a problem from an existing profiling or tracing artifact. Read the supplied dataset instead of substituting a fresh run.
 
 ## Procedure
 
@@ -15,7 +15,7 @@ Diagnose a problem from an existing profiling or tracing artifact. Read the supp
 4. Attribute the finding to source file, symbol, and line.
 5. Compare a paired capture when available.
 6. State whether the result is confirmed or only the strongest artifact-supported hypothesis.
-7. Return the diagnosis to `grilling`, then route to `perf-issue` or bug-fix if a fix is requested.
+7. Return the diagnosis to the caller. A fix needs a separate request, routed by `dev-cycle`.
 
 ## Agent result
 
@@ -23,4 +23,4 @@ For an agent-facing return, load [evidence/1](../investigation/references/result
 
 ## Verification
 
-The original artifact, reduced finding, source mapping, and confidence level are recorded. No claim is based on a proxy or an unexamined self-report.
+The original artifact, reduced finding, source mapping, and confidence level are recorded.

@@ -41,7 +41,7 @@ First decide whether the approved spec describes one independently implementable
 
 Start with the fewest tickets that preserve independently verifiable outcomes. Justify each additional split with a distinct deliverable, an evidenced size limit, or a necessary technical boundary. Different files, tools, or adapters alone do not justify separate tickets.
 
-Judge the breakdown by scope coverage, justified boundaries, and real dependencies, not by ticket count. Merge tickets when combining them preserves a coherent, verifiable outcome and no evidenced size or dependency constraint requires separation.
+Judge the breakdown by scope coverage, justified boundaries, and real dependencies, not by ticket count.
 
 Write concise acceptance criteria, each describing an observable behavior. Their count does not determine ticket boundaries; express independent checks as separate criteria within the same ticket.
 

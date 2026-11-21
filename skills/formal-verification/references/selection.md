@@ -18,7 +18,7 @@ Reuse an adequate existing check. When stronger evidence is needed, compare its 
 | Exhaustive bounded exploration | The property holds throughout the explored finite scope, if exploration completes | Bounds and abstractions limit the conclusion; a separate model needs code correspondence |
 | Code-level verification or deductive proof | The stated obligations hold under the verifier's semantics and assumptions | Unchecked obligations, unsupported features, and abstraction gaps remain outside the proof |
 
-Compare the cheapest plausible method with the next stronger option. Name the additional claim the stronger option would establish and whether the task needs it. A formal method may be appropriate for an ordinary-looking change; a consequential topic may already have adequate executable evidence.
+Compare the cheapest plausible method with the next stronger option. Name the additional claim the stronger option would establish and whether the task needs it.
 
 ## Contrasting decisions
 

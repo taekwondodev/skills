@@ -58,7 +58,7 @@ Settle answered questions when opening the next round or the confirmation, not i
 
 In that same call, settle answered questions with their reasons and supply the complete new questions whose prerequisites are settled. For a free-text answer, put your interpretation in the settlement reason. If the answer is ambiguous, ask in its thread instead of settling it.
 
-Complete planned questions using their existing ids. Never resend an unchanged question, including one still awaiting an answer. The call is ready when its settlements justify the new frontier and it contains only changes.
+Complete planned questions using their existing ids. The call is ready when its settlements justify the new frontier and it contains only changes.
 
 ## 7. Confirmation
 

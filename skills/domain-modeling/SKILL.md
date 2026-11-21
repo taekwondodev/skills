@@ -9,11 +9,11 @@ Actively build and sharpen the project's domain model as you design. This is the
 
 Read `writing-for-agents` before writing `GLOSSARY.md` entries or ADRs. Its general writing rules govern those documents; the context and ADR formats below add only domain-specific structure.
 
-`AGENTS.md` holds concise rules needed across repository work and conditional pointers; `GLOSSARY.md` holds the glossary. Separate decision records must earn their place through the ADR gate below.
+`GLOSSARY.md` holds the glossary. Where other content belongs, and whether a decision earns a separate record, follows [ADR-FORMAT.md](ADR-FORMAT.md).
 
 ## File structure
 
-`dev-cycle-setup` decided the layout for this repo once already: single-context (`GLOSSARY.md` + `docs/adr/` at the root) or multi-context (`GLOSSARY-MAP.md` fanning out to one `GLOSSARY.md`/`docs/adr/` pair per bounded context). See `docs/agents/domain.md` for the diagram; this skill just writes into whichever layout is already there, never re-decides it.
+`dev-cycle-setup` decided the layout for this repo once already: single-context (`GLOSSARY.md` + `docs/adr/` at the root) or multi-context (`GLOSSARY-MAP.md` fanning out to one `GLOSSARY.md`/`docs/adr/` pair per bounded context). Read `docs/agents/domain.md` for the selected layout; this skill just writes into whichever layout is already there, never re-decides it.
 
 Create files lazily, only when you have something to write. If no `GLOSSARY.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
 
@@ -37,7 +37,7 @@ When the user states how something works, check whether the code agrees. If you 
 
 ### Update GLOSSARY.md inline
 
-When a term is resolved, update `GLOSSARY.md` right there. Don't batch these up. Capture them as they happen. Use the format in [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md).
+When a term is resolved, update `GLOSSARY.md` right there. Use the format in [GLOSSARY-FORMAT.md](./GLOSSARY-FORMAT.md).
 
 `GLOSSARY.md` should be totally devoid of implementation details. Do not treat `GLOSSARY.md` as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
 

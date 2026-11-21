@@ -32,7 +32,7 @@ Link the exact retrievable source when acceptance or rationale depends on it. Up
 
 ## Placement
 
-Follow the repository's existing convention. Otherwise use `docs/adr/` and sequential names such as `0001-slug.md`; create the directory only when the first record passes the gate. Scan existing numbers before choosing the next one.
+Follow the repository's existing convention. Otherwise use `docs/adr/` and sequential names such as `0001-slug.md`. Scan existing numbers before choosing the next one.
 
 Add a conditional pointer from the relevant project context naming the change that requires reading this decision.
 

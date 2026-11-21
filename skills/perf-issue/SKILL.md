@@ -9,14 +9,14 @@ Handle one measured performance problem with a realistic workload and a before-a
 
 ## Procedure
 
-1. Use `how` to ground the affected path and workload dimensions. Consume its evidence result directly and retain the sources needed for measurement.
+1. Use `how` to ground the affected path. Consume its evidence result directly, retain the sources needed for measurement, and derive the representative workload dimensions from that path.
 2. Establish a reproducible baseline and a regression gate.
 3. Profile or measure the matching surface. Load [benchmark-checklist](../benchmark-checklist/SKILL.md) to vet the baseline before forming a hypothesis.
 4. Form one mechanism-based hypothesis from the measurement using the [performance mantras](#performance-mantras).
 5. If the fix crosses a function boundary or changes a data shape, use `architect` before implementation and consume its design sketch.
 6. Apply the smallest change that tests the hypothesis.
 7. Measure before and after with the same harness. Reapply the checklist to candidate measurements and any changed conditions before deciding what to keep.
-8. Keep the change only when the measurement is conclusive, the improvement clears measurement noise, and the regression gate stays green. Verify each attempt before trying the next mantra; stop when an earlier mantra meets the target and passes this gate.
+8. Keep the change only when it meets the `keep` gate in the [measurement result contract](references/result-contract.md). Verify each attempt before trying the next mantra; stop when an earlier mantra meets the target and passes this gate.
 
 ## Performance mantras
 

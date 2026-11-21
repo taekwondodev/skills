@@ -24,7 +24,7 @@ Completion: the claim, timed region, workload, and relevant execution conditions
 3. **Did it break limits?** Compare throughput with resource capacity and time saved with the cost of the changed component. With other work unchanged, removing a component that takes 10% of elapsed time saves at most 10% of that time, about an 11% speedup. A result beyond the bound may measure a cache, no-op, or bug instead of the claimed work.
 4. **Did it error?** Count failures and non-success responses. Check output correctness, not just presence. Rejections can be fast; retries and timeouts can be slow. Add error counts when the measurement script omits them.
 5. **Does it reproduce?** Run each alternative at least five times, alternating them so warmup, initialization, caches, and drift favor neither. Report the median and range. A gap not distinguishable from run-to-run variation is no measurable difference. For a close comparison, use the harness's statistical analysis or an appropriate rank-sum test.
-6. **Does it matter?** Alongside a microbenchmark, measure the end-to-end path with realistic data and concurrency. Report the component's share of the total. Removing work that takes 1% of elapsed time saves at most 1% of that time when other work is unchanged.
+6. **Does it matter?** Alongside a microbenchmark, measure the end-to-end path with realistic data and concurrency. Report the component's share of the total.
 7. **Did it happen?** Verify that the intended work ran inside the timed region and its result was consumed: requests reached the server, rows were written, or bytes were read. Unconsumed generators, unawaited promises, discarded results, and timeouts can produce numbers for work that never happened.
 
 Completion: every applicable check has run evidence or an explicit gap. Required correctness and work-execution checks cannot be replaced by a timing result.
@@ -32,7 +32,7 @@ Completion: every applicable check has run evidence or an explicit gap. Required
 ## Record the verdict
 
 - For a comparison, lead with faster, slower, no measurable difference, or inconclusive. For a standalone measurement, state what it establishes and its limits.
-- Retain the value and unit, workload, run count, spread, measured limiter, and evidence locator. A requested ballpark retains its single-run label and unchecked conditions instead of implying this full coverage.
+- Retain the value and unit, workload, run count, spread, measured limiter, and evidence locator.
 - A comparison is inconclusive if the limiter is unknown, an alternative is untuned, or a required check fails or is incomplete. State what observation would resolve it.
 - Keep bulky run evidence in a linked artifact or notes file. The active delivery procedure owns how that evidence appears in a PR or other publication.
 

@@ -13,7 +13,7 @@ Diagnose a live symptom through real runtime instrumentation. Use for leaks, idl
 2. Reduce the artifact to the smoking gun: hot path, retainer chain, or unexpected loop.
 3. Confirm the mechanism with focused instrumentation where possible.
 4. Map the finding to source file, symbol, and line.
-5. Return the diagnosis to `grilling`, then route to `perf-issue` or bug-fix if a fix is requested.
+5. Return the diagnosis to the caller. A fix needs a separate request, routed by `dev-cycle`.
 
 ## Agent result
 

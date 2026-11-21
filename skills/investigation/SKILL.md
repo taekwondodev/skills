@@ -5,7 +5,7 @@ description: Investigate an observable question with evidence before proposing c
 
 # Investigation
 
-Answer a read-only question or reduce an unknown cause using inspected evidence. Do not modify project state or silently turn an investigation into an implementation.
+Answer a read-only question or reduce an unknown cause using inspected evidence. Do not modify code, project, or external state, or silently turn an investigation into an implementation.
 
 ## Procedure
 
@@ -23,4 +23,4 @@ For an agent-facing return, load [evidence/1](references/result-contract.md). Re
 
 ## Verification
 
-Every material claim has an inspected source or reproducible observation. Facts, inferences, and hypotheses are clearly separated. No code or external state changed.
+Every material claim has an inspected source or reproducible observation. Facts, inferences, and hypotheses are clearly separated.

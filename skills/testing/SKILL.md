@@ -42,13 +42,12 @@ Scripts, harnesses, and evidence collectors that do not ship with the product re
 
 ## Coverage
 
-* Test behavior + domain invariants, not implementation details.
 * Security tests from the **OWASP Testing Guide** when the change touches an exposed surface: network input, untrusted data, persisted data, or a permission boundary. A local utility with none of these has no OWASP surface.
 
 ## Test quality and anti-patterns
 
 * **Implementation-coupled**: mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). Tell: the test breaks on refactor with no behavior change.
-* **Tautological**: the assertion recomputes the expected value the way the code does, or takes it from the helper, renderer, or formatter under test, so it passes by construction. Expected values come from an independent source of truth, such as a known-good literal, a worked example, or the spec's acceptance criteria. Never derive them using the same reasoning that produced the implementation.
+* **Tautological**: the assertion recomputes the expected value the way the code does, or takes it from the helper, renderer, or formatter under test, so it passes by construction. Take expected values from a source listed under [Where expected values come from](#where-expected-values-come-from), such as a known-good literal or a worked example.
 * **Self-graded**: the same agent invocation that wrote the implementation also invented the test's expected values from scratch. It shares the implementation's blind spots by construction. The primary remedy is the artifact above, written before the code. An independent `code-review` pass is the second remedy, for medium and large changes.
 * **Owner**: each contract has one test owner at the strongest boundary where the contract is observable. A second test of the same contract earns its place only with a risk the owner cannot reach, such as a transport or lifecycle failure. Before adding a test, name the regression that makes it fail and why the owner does not already catch it; extend the owner's table or fixture before writing a near-duplicate.
 * **Test-only seam**: the test needs an export, option, flag, or hook no production caller needs. Move the test to the real boundary and delete the seam; production code whose only callers are tests is dead code.

@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Capture Issue
 
-Create a new issue from the user's current request when they want to record an idea without grilling or repository exploration. This is a parked capture, not a specification or an implementation ticket.
+Create a new issue from the user's current request. This is a parked capture, not a specification or an implementation ticket.
 
 Read `writing-for-agents` before writing the issue title or body. Keep the result minimal: synthesize a concise title and minimally clean the user's text without adding requirements, acceptance criteria, architecture, testing decisions, or scope claims.
 

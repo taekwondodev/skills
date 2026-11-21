@@ -14,12 +14,10 @@ Use a small disposable experiment when observation can resolve a technical or be
 3. Build structurally distinct alternatives when the choice is architectural.
 4. Run the same comparison against every candidate.
 5. Record behavior, complexity, failure modes, and measurements.
-6. Return the evidence to `grilling` or `architect` without silently retaining prototype code.
+6. Return the evidence to the invoking skill without silently retaining prototype code.
+
+Completion: the result states what was learned, what remains undecided, and any retained prototype scope.
 
 ## Agent result
 
 For an agent-facing return, load [evidence/1](../investigation/references/result-contract.md). Include each candidate's outcome against the shared check, evidence locators, retained artifact scope, and the unresolved decision.
-
-## Verification
-
-The prototype is disposable or its retained scope is explicit. Every candidate ran against the same check. The result states what was learned and what remains undecided.

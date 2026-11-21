@@ -19,13 +19,13 @@ Use the canonical owner only for the question being decided:
 - Style versus runtime cost, abstractions, and idioms: [Style Serves Outcomes](../principle-style-serves-outcomes/SKILL.md).
 - Replacing an internal API: [Migrate Callers Then Delete Legacy APIs](../principle-migrate-callers-then-delete-legacy-apis/SKILL.md).
 
-For a mechanically decidable rule, use [Build the Lever](../principle-build-the-lever/SKILL.md) to select existing enforcement before proposing new tooling. Record the rule in its authoritative configuration or policy, not a second checklist. Tooling changes require approved scope; an uncovered rule does not authorize installation.
+For a mechanically decidable rule, use [Build the Lever](../principle-build-the-lever/SKILL.md) to select existing enforcement before proposing new tooling. Record the rule in its authoritative configuration or policy, not a second checklist.
 
 ## Dependencies and APIs
 
 Prefer the standard library or an existing dependency. An addition needs a substantial capability, performance, or complexity benefit that the existing stack cannot provide reasonably.
 
-For version, API, maintenance, security, or license facts, use [investigation](../investigation/SKILL.md) and consume its verified sources and limits. Reuse current evidence; never select versions or assert API behavior from memory. Choose widely used, actively maintained dependencies that fit the project. Check security advisories, prefer a disclosure policy, and run applicable audits. Verify license compatibility with the distribution model; flag copyleft implications and unavailable evidence.
+For version, API, maintenance, security, or license facts, use [investigation](../investigation/SKILL.md) and consume its verified sources and limits. Reuse current evidence. Choose widely used, actively maintained dependencies that fit the project. Check security advisories, prefer a disclosure policy, and run applicable audits. Verify license compatibility with the distribution model; flag copyleft implications and unavailable evidence.
 
 Compare viable options against the approved constraints, including migration and runtime costs. Recommend one option with its rationale and unresolved risks. Return scope, public compatibility, and security-policy changes to the caller for the user's decision before adopting them.
 

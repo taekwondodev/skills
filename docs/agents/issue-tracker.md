@@ -37,7 +37,7 @@ Used by `/wayfinder`. Read its "Ticket Types" section when choosing child-ticket
 - **Blocking**: use GitHub native issue dependencies as the canonical, UI-visible representation. Add an edge with `gh-axi api POST /repos/<owner>/<repo>/issues/<child>/dependencies/blocked_by --field issue_id=<blocker-db-id>`, where `<blocker-db-id>` is the blocker's numeric database ID. Retrieve it with `gh-axi api /repos/<owner>/<repo>/issues/<n> --jq .id`, not the issue number or node ID. Read the child's live open-blocker count with `gh-axi api /repos/<owner>/<repo>/issues/<child> --jq .issue_dependencies_summary.blocked_by`. If dependencies aren't available, use a `Blocked by: #<n>, #<n>` line at the top of the child body. A ticket is unblocked when every blocker is closed.
 - **Frontier query**: list map children with `gh-axi issue subissue list <map>`, or read the task list when using the fallback. Keep open children, then exclude those with an open blocker (`issue_dependencies_summary.blocked_by > 0`, or an open issue in the `Blocked by` line) or an assignee. The first remaining ticket in map order wins.
 - **Claim**: use `gh-axi issue edit <n> --add-assignee @me`. This is the session's first write. In the same update, apply the work-start activity transition from `docs/agents/triage-labels.md`; read back the assignee and labels.
-- **Resolve**: comment with `gh-axi issue comment <n> --body "<answer>"`, close with `gh-axi issue close <n>`, then append a context pointer (gist and link) to the map's Decisions-so-far.
+- **Resolve**: comment with `gh-axi issue comment <n> --body "<answer>"`, close with `gh-axi issue close <n>`, then append a context pointer (gist and link) to the map's Decisions so far.
 
 ## Native development links
 
@@ -55,6 +55,7 @@ Linked branches auto-link future PRs.
 Used by `/to-tickets`, `/implement`, `/commit`, and `/pr`.
 
 - **Ticket**: one GitHub issue per tracer-bullet slice. Its body states the affected components or layers from the approved architecture and the behaviour to build.
+- **Parent**: link each ticket to its parent spec issue or map with the same sub-issue operation as a wayfinding child ticket, including its fallback.
 - **Blocking**: use the same native issue dependencies as wayfinding above.
 - **Grabbing work**: any ticket whose blockers are all closed and which is unassigned is takeable. Claim it before `/implement` starts.
 - **Delivery**: read `docs/agents/delivery.md` for the repository default. Follow `/commit` for local commits and direct-delivery issue updates, or `/pr` for PR publication and issue links.

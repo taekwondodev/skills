@@ -4,14 +4,14 @@ Reference for the `Size before routing` step in `dev-cycle`. Each example names 
 
 ## Small
 
-- **Changing how one error is handled** (retry becomes suspend, a failure becomes a logged pass-through). Signal: one behavior, reversible, nothing persisted. Route: reproduce, expected line established by the explicit user request or clarified with the user, regression test, change, existing suite and build, the user tries it once, inline review.
+- **Changing how one error is handled** (retry becomes suspend, a failure becomes a logged pass-through). Signal: one behavior, reversible, nothing persisted. Route: reproduce, expected line per `testing`, regression test, change, existing suite and build, the user tries it once, inline review.
 - **Moving work between threads, actors, or queues inside one application.** Signal: internal ownership only, no consumer outside the process. Route: same as above. Keep the verdict in the task record; apply the [ADR necessity gate](../../domain-modeling/ADR-FORMAT.md) before creating a separate decision record.
 - **Adjusting a threshold, timeout, or label.** Signal: one value, one file.
 
 ## Medium
 
-- **Comparing two implementations of the same behavior** (synchronous versus asynchronous handling, main run loop versus dedicated thread). Signal: an architectural fork with no persisted or external contract. Route: `prototype` both, drive them with the same check, let the user try both, record the verdict in the issue. Two builds and one log line are the proof; a measurement campaign is not.
-- **One feature touching a few modules** (a new panel control wired through handler and service). Signal: several layers, one bounded context. Route: `grilling` on the open decisions, `to-spec` in the existing issue, implement, `code-review` once.
+- **Comparing two implementations of the same behavior** (synchronous versus asynchronous handling, main run loop versus dedicated thread). Signal: an architectural fork with no persisted or external contract. Route: `prototype` both, prove the comparison per [Proportional proof](../../principle-prove-it-works/SKILL.md#proportional-proof), record the verdict in the issue.
+- **One feature touching a few modules** (a new panel control wired through handler and service). Signal: several layers, one bounded context. Route: the medium route, with `to-spec` in the existing issue.
 - **Changing a contract other code in the same repository depends on.** Signal: callers to migrate, all visible. Route: medium plus `blast-radius`.
 
 ## Large

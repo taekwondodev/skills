@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 # Eval
 
-Own the experiment design: plan, blind, run, synthesize. The variant under test is a skill edit in the working tree or a skill adopted from elsewhere. The baseline is the committed version, or no skill at all for an adoption. An agent that knows it is being observed behaves differently, so each candidate receives an organic task and the rubric stays with the judge.
+Own the experiment design: plan, blind, run, synthesize. The variant under test is a skill edit in the working tree or a skill adopted from elsewhere. The baseline is the committed version, or no skill at all for an adoption.
 
 When the request bundles a skill edit with its test, make the edit first, then run this procedure with the working tree as the variant and the last committed version as the baseline.
 
@@ -15,8 +15,7 @@ When the request bundles a skill edit with its test, make the edit first, then r
 Hold these for every candidate:
 
 - Keep `eval`, `test`, `judge`, `experiment`, `rubric`, `score`, `compare`, `benchmark`, `candidate`, and `arena` out of every directory, file, and prompt the candidate sees. This skill is hidden from model invocation, so a candidate's skill list does not advertise it.
-- Write the candidate prompt as an organic user request: state the goal, not the meta.
-- Ask for design notes in general terms. A request to list the skills, principles, or files applied elicits a self-report; grade chain-following from the transcript and the shape of the code instead.
+- Ask for design notes in general terms. A request to list the skills, principles, or files applied elicits a self-report.
 - Name directories and slugs the way a user would name a project.
 - Give each candidate no sign that other candidates exist.
 - The judge may know it is judging. It sees outputs under sanitized labels, never a model name.

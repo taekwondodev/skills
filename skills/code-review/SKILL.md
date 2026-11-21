@@ -15,7 +15,7 @@ Tools supply mechanical evidence; reviewers evaluate what that evidence cannot e
 
 ## Result contract
 
-Before dispatching or returning results, load [result-contract.md](references/result-contract.md). Reviewers return `review/1` JSON for their assigned axes; the coordinator verifies and merges it. Human-facing requests receive a concise rendering unless structured output was requested.
+Before dispatching or returning results, load [result-contract.md](references/result-contract.md). Reviewers return `review/1` JSON for their assigned axes; the coordinator verifies and merges it.
 
 ## Scope
 
@@ -55,7 +55,7 @@ The semantic reviewer reads the [risk gate](references/risk-gate.md) and returns
 
 ### Reusable verification
 
-When a finding calls for a reusable check, name the property and the missing evidence in its action. If the method is unsettled, use [verification selection](../formal-verification/references/selection.md) to choose the cheapest adequate check. Review proposes the check; implementation adds it within the approved scope.
+When a finding calls for a reusable check, name the property and the missing evidence in its action. If the method is unsettled, use [verification selection](../formal-verification/references/selection.md) to choose the cheapest adequate check. Approval to build it follows [formal-verification](../formal-verification/SKILL.md).
 
 ## 3. Resolve and report
 

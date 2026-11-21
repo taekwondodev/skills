@@ -10,8 +10,6 @@ The parent [`SKILL.md`](../SKILL.md) is the source of truth for shared prose rul
 
 ## Explicit context
 
-Every claim that depends on information outside the document names a retrievable source or includes the context needed to understand it. A reader must not need an unavailable conversation, decision, or policy to interpret the document.
-
 Earlier decisions and historical rationale may be cited when the artifact needs them. Name the issue, ADR, transcript, handoff, commit, or other durable source and state the fact consumed from it. If the source cannot be retrieved, include the necessary context instead of assuming it.
 
 Completion criterion: every external dependency is retrievable and purposeful, and removing unavailable conversational context does not change the document's meaning.
@@ -33,7 +31,7 @@ Every document and pointer you add spends one of two budgets:
 - **Context load**: the cost of always-loaded material on the agent's window: a project context file line, a skill description, anything sitting in context every turn, spending tokens and attention whether or not it fires.
 - **Cognitive load**: the cost on the human: which documents exist and when to reach for each. The human is the index. Not a cost to minimise; it is the price of human agency; spend it where human judgement matters, remove it where it does not.
 
-Material reached only through a pointer escapes context load at the price of the pointer's own line; material with no pointer at all rides entirely on cognitive load. Content every task needs belongs in always-loaded project context because a pointer that must fire on every turn adds indirection without reducing load. See "Information hierarchy" below.
+Material reached only through a pointer escapes context load at the price of the pointer's own line; material with no pointer at all rides entirely on cognitive load. Where content that every task needs belongs is settled under "Information hierarchy" below.
 
 ## Information hierarchy
 

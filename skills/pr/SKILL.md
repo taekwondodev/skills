@@ -32,7 +32,7 @@ Completion: the head revision and complete PR diff are reviewed and verified, or
 
 ## 3. Prepare the description
 
-Load [description guidance](references/description.md). Capture the primary visual from the real artifact first, then fill its skeleton from the verified complete diff, issue, and actual checks. Preserve repository-required sections and human-authored content. Save the proposed body in the task's artifact directory or an available local workspace, outside the commit scope unless the user requests otherwise. Record the destination path for readback and retry.
+Load [description guidance](references/description.md). Capture the visual as it directs, then fill its skeleton from the verified complete diff, issue, and actual checks. Preserve repository-required sections and human-authored content. Save the proposed body in the task's artifact directory or an available local workspace, outside the commit scope unless the user requests otherwise. Record the destination path for readback and retry.
 
 Use a concise title describing the whole PR. Preserve an existing title and draft state unless changing them is requested. For a new PR, use the requested draft state; otherwise publish ready for review only when the preceding gate is satisfied. Ask when unresolved work makes the intended state unclear.
 

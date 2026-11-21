@@ -15,7 +15,7 @@ When invoked with an issue reference, first read `docs/agents/issue-tracker.md` 
 
 When an upstream skill supplies a structured result, load its declared result contract, resolve its artifact references, and read the decision evidence.
 
-When invoked with a `wayfinder` map whose frontier is empty, read the map's Decisions-so-far and the full body of each closed ticket. That is the source material, not the conversation.
+When invoked with a `wayfinder` map whose frontier is empty, read the map's Decisions so far and the full body of each closed ticket. That is the source material, not the conversation.
 
 ## Agent result
 
@@ -103,7 +103,7 @@ A list of testing decisions that were made, scoped by `/testing`'s rules. Includ
 - Prior art for the tests (i.e. similar types of tests in the codebase)
 - Any OWASP-relevant security test called for by `/testing`'s coverage rule
 
-Guideline: at most 6 bullets. Name the behaviors to prove and the seam; list neither test case names nor an apparatus. A verification apparatus larger than the change is a separate decision the user makes, not a Testing Decision.
+Guideline: at most 6 bullets. Name the behaviors to prove and the seam; list neither test case names nor an apparatus. Leave verification apparatus out of Testing Decisions; `principle-prove-it-works` governs it.
 
 ## Out of Scope
 
