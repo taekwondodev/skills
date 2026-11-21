@@ -62,6 +62,6 @@ Scripts, harnesses, and evidence collectors that do not ship with the product re
 
 When a test's outcome changes between runs of unchanged code, load [flaky.md](references/flaky.md) before rerunning it: what to keep from the failure, how to name the mechanism, whether the test or the product owns it, and the proof that closes it.
 
-## Auditing existing tests
+## Auditing tests
 
-For a sweep of existing tests with no change driving it, load [audit.md](references/audit.md): read-only discovery, candidate evidence, the retention bar, the edit shape, and the proof that a deletion left its owner in place.
+For a sweep of existing tests with no change driving it, or an audit of the tests a change adds or modifies, load [audit.md](references/audit.md): read-only discovery, candidate evidence, the retention bar, the edit shape, and the proof that a deletion left its owner in place.

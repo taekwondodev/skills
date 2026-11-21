@@ -1,6 +1,10 @@
 # Test audit
 
-Procedure for a sweep of existing tests with no change driving it. The anti-patterns and the expected-value rules in [SKILL.md](../SKILL.md) decide what is junk; this reference decides how a candidate becomes a deletion. Optimize for confidence, not deletion count.
+Procedure for a sweep of existing tests with no change driving it, and for a [change audit](#change-audit) of the tests a diff adds or modifies. The anti-patterns and the expected-value rules in [SKILL.md](../SKILL.md) decide what is junk; this reference decides how a candidate becomes a deletion. Optimize for confidence, not deletion count.
+
+## Change audit
+
+When a diff sets the scope, every test it adds or modifies is a candidate and gets a verdict: keep, repair, or delete. Discovery covers those tests, their production owners, and the tests they overlap, without lanes. In the candidate evidence, the behavior of the change's approved contract that the test proves replaces the introducing commit. Judge each candidate against that contract under [Proportion](../SKILL.md#proportion), and repair a keeper that an anti-pattern weakens. The retention bar, edit shape, and proof apply unchanged.
 
 ## Discovery
 

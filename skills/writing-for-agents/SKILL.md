@@ -1,6 +1,6 @@
 ---
 name: writing-for-agents
-description: Writing agent-facing documents. Use when creating or editing skills, project context, ADRs, specs, tickets, comments, or agent briefs.
+description: Writing agent-facing documents. Use when creating, editing, or auditing skills, project context, ADRs, specs, tickets, comments, or agent briefs.
 ---
 
 Use this contract for agent-facing writing, from titles and comments through specs, ADRs, and handoffs. Artifact-specific writers may add format or domain constraints, but must not contradict these shared rules.
@@ -19,6 +19,8 @@ Use this contract for agent-facing writing, from titles and comments through spe
 When defining or changing a skill-to-skill or subagent response, load [agent-results.md](references/agent-results.md) for the shared result contract. The producing skill owns its domain-specific shape.
 
 Load [authoring.md](references/authoring.md) when designing or restructuring an agent-facing document or skill, including decisions about information hierarchy, pointers, splitting, and pruning. Routine title or comment work needs only this contract.
+
+When auditing the documents a change adds or modifies, load [audit.md](references/audit.md) for the scope, the hunt for contamination and duplication, the fix shape, and the proof.
 
 When creating or revising an ADR, load [ADR-FORMAT.md](../domain-modeling/ADR-FORMAT.md) for the record's necessity, scope, and completion checks.
 
