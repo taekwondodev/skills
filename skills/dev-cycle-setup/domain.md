@@ -38,8 +38,6 @@ Multi-context repo (presence of `GLOSSARY-MAP.md` at the root):
         └── docs/adr/
 ```
 
-Each context here is the same boundary as `/architect`'s "one domain package per bounded context". The map is that boundary, seen from the domain-language side.
-
 ## Use the glossary's vocabulary
 
 When your output names a domain concept (in an issue title, a ticket, a spec, a test name), use the term as defined in `GLOSSARY.md`. Don't drift to synonyms the glossary explicitly avoids.

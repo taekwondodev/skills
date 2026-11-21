@@ -51,8 +51,6 @@ _Avoid_: Client, buyer, account
 - **Ordering ↔ Billing**: Shared types for `CustomerId` and `Money`
 ```
 
-Each context here corresponds to one bounded-context package under `/architect`'s "one domain package per bounded context" rule. The map is the same boundary, seen from the domain-language side.
-
 The skill infers which structure applies:
 
 - If `GLOSSARY-MAP.md` exists, read it to find contexts
