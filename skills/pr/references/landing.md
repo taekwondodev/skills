@@ -4,7 +4,7 @@ Load this reference when the user chooses to land a published PR: audit its docu
 
 ## 1. Read the PR state
 
-Re-read the PR with `gh-axi pr view <number> --repo <owner>/<repo> --fields state,isDraft,mergeable,baseRefName,headRefOid,mergeCommit,title` and its checks with `gh-axi pr checks <number> --repo <owner>/<repo>`. A non-zero exit from `pr checks` reports check state (1: a check failed or none are reported; 8: a check is pending), not a command failure.
+Re-read the PR with `gh-axi pr view <number> --repo <owner>/<repo> --fields state,isDraft,mergeable,baseRefName,headRefOid,mergeCommit,title,statusCheckRollup`. The rollup in that same read holds the checks for `headRefOid`; read them as [publication](../SKILL.md#4-publish-or-update) describes. A failed command is unavailable verification, not check state.
 
 - Already merged (`state: MERGED`): record `mergeCommit.oid` and continue from step 4 with the steps still missing.
 - Open, not a draft, `mergeable: MERGEABLE`, `headRefOid` equal to the locally verified revision, required checks passing or none configured: continue with step 2.

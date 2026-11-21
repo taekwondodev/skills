@@ -15,7 +15,7 @@ When invoked with an issue reference, first read `docs/agents/issue-tracker.md` 
 
 When an upstream skill supplies a structured result, load its declared result contract, resolve its artifact references, and read the decision evidence.
 
-When invoked with a `wayfinder` map whose frontier is empty, read the map's Decisions so far and the full body of each closed ticket. That is the source material, not the conversation.
+When invoked with a `wayfinder` map whose child tickets are all closed, read the map's Decisions so far and the full body and resolution comment of each closed ticket. That is the source material, not the conversation.
 
 ## Agent result
 

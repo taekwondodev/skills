@@ -7,7 +7,7 @@ A loose idea has arrived, too big for one agent session and wrapped in fog: the 
 
 Read `writing-for-agents` before drafting map bodies, ticket bodies, resolution comments, or Decisions so far entries. Its general writing rules govern those artifacts; wayfinding adds only map-specific structure.
 
-**Only invoke this for work that is genuinely too big for one session.** If the task fits in one session, don't chart a map; just do it.
+**Only chart a map for work that is genuinely too big for one session.** Step 2 of [Chart the map](#chart-the-map) decides this from observed state, not from an estimate.
 
 The destination varies per effort, and naming it is the first act of charting because it shapes every ticket. It might be a spec to hand off, a decision to lock before work starts, or a change made in place. The map is domain-agnostic across coding projects, app projects, exams, cloud-security work, or whatever else fits the shape.
 
@@ -127,7 +127,7 @@ Two modes. Either way, **never resolve more than one ticket per session**; resea
 User invokes with a loose idea.
 
 1. **Name the destination.** Read the `grilling` and `domain-modeling` skills to pin down the language the destination is stated in, informed by `architect` for an unsettled shape and `coding-standards` for unresolved policy or dependency choices, to pin down what this map is finding its way to.
-2. **Map the frontier.** Grill again, breadth-first: fan out across the whole space rather than deep on any one thread, surfacing the open decisions and the first steps takeable now. **If this surfaces no fog**, meaning the whole journey fits in one session, stop; you don't need a map. Ask how to proceed instead.
+2. **Map the frontier.** Grill again, breadth-first: fan out across the whole space rather than deep on any one thread, surfacing the open decisions and the first steps takeable now. **If this surfaces no fog**, stop: no map yet. Settle the decisions with `grilling` instead. Chart the map only if that grilling session ends with its frontier still open, building it from the saved design tree with one ticket per unsettled decision.
 3. **Create the map** (label `wayfinder:map`) on the configured tracker. Destination and Notes filled in, Decisions so far empty, the fog sketched into Not yet specified.
 4. **Create the tickets you can specify now** as child issues, then wire blocking edges in a second pass. Everything you can't yet specify stays in the fog.
 5. **Fire the research subagents** in parallel, one sub-agent per research ticket just created, using `investigation` and its evidence result contract, capturing findings on a throwaway `research/<name>` branch with a context pointer from the ticket. Each runs isolated.
@@ -142,6 +142,6 @@ User invokes with a map (URL or number). A ticket is optional. Without one, pick
 3. Resolve it, zooming as needed: fetch related or closed ticket bodies only when their evidence is needed. Use the Notes pointers and the active ticket type to select skills; reuse current grounding and decisions instead of loading every skill named by the map.
 4. Record the resolution: post the answer as a resolution comment, close the issue, append a context pointer to the map's Decisions so far.
 5. Add newly-surfaced tickets (create-then-wire); graduate any fog the answer made specifiable, clearing it from Not yet specified. If the answer reveals a ticket sits beyond the destination, rule it out of scope rather than resolving it. If the decision invalidates other parts of the map, update or delete those tickets.
-6. **When the frontier empties and Not yet specified holds nothing further, the map is done. Hand off instead of building.** Tell the user to run `/to-spec` against this map. Publishing a spec needs the user's authorization, so do not start it on your own; it reads every closed ticket's full body and the map's Decisions so far, then collapses them into one buildable spec. Looping straight into `/implement` from the map skips that collapse and throws the linked detail away. Skip the handoff only when the resolved map turned out small enough that a spec would just restate one ticket.
+6. **When every child ticket is closed and Not yet specified holds nothing further, the map is done. Hand off instead of building.** Tell the user to run `/to-spec` against this map. Publishing a spec needs the user's authorization, so do not start it on your own; it reads every closed ticket's full body and resolution comment and the map's Decisions so far, then collapses them into one buildable spec. Looping straight into `/implement` from the map skips that collapse and throws the linked detail away. Skip the handoff only when the resolved map turned out small enough that a spec would just restate one ticket.
 
 The user may run unblocked tickets in parallel, so expect other sessions to be editing the tracker concurrently.
