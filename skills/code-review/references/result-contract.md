@@ -31,7 +31,7 @@ The implementer resolves each smell without the user: apply its action within th
 
 A finding takes a blocking class only when it meets its axis threshold.
 
-- **Adversarial:** `act_on` states the trigger, an input or sequence starting from a real entry point, and a consequence the [risk gate](risk-gate.md#decide) sorts as significant. Record a concrete failure below that threshold as `noted`, with each field one sentence and no action.
+- **Adversarial:** `act_on` states the trigger, an input or sequence starting from a real entry point, and a consequence the [risk gate](risk-gate.md#decide) sorts as significant, and shows the failure through a run (a failing test, repro script, or command output) or a cited source location that contains the defect. A significant failure supported only by reasoning is at most `consider`. Record a concrete failure below that threshold as `noted`, with each field one sentence and no action.
 - **Spec:** cite a written requirement or scope limit in the approved contract and show how the change violates it. Use a case the contract names or that normal use reaches. Send constructed cases outside the contract to the risk gate as candidate failures. Apply general quality rules under Standards.
 
 ## Coverage and gates
