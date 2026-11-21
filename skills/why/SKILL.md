@@ -5,39 +5,10 @@ description: Recover the rationale behind code, architecture, and past decisions
 
 # Why
 
-Recover the reason a system works the way it does. Treat rationale as evidence to reconstruct, not a story to invent. Use this skill when an existing choice may constrain a new design.
+Recover why a system works the way it does from the record. Read the commits and PR or issue discussions that introduced the target and each later change, plus ADRs, `GLOSSARY.md`, and README documents. Cite what the authors wrote, mark your own inferences as inferences, check whether later changes invalidated the original reason, and say what the record does not answer. Write rationale back to an ADR or spec only when the user's workflow asks for it.
 
-## When to Use
-
-Use for:
-
-- why a subsystem or dependency exists;
-- why an architecture or boundary was chosen;
-- regressions and historical behavior;
-- ADR and issue rationale;
-- non-obvious constraints.
-
-Use `how` first when the current behavior is not understood. Use `architect` when the result becomes a new structural choice.
-
-## Procedure
-
-1. State the exact decision or behavior whose rationale is needed.
-2. Inspect current code, `GLOSSARY.md`, ADRs, README documents, issue bodies and comments, and relevant git history.
-3. Separate explicit rationale from inference. Cite the source for each claim.
-4. Check whether later changes invalidated the original rationale.
-5. Report the strongest supported explanation, competing explanations, and remaining uncertainty.
-6. Return durable rationale to the owning artifact, such as an ADR or spec, only when that write is part of the user's requested workflow.
+Completion: every rationale claim cites an inspected source or is labelled as inference, and competing explanations and open questions are explicit.
 
 ## Agent result
 
 For an agent-facing return, load [evidence/1](../investigation/references/result-contract.md). Distinguish recorded rationale from inferred explanations and retain evidence for competing or rejected explanations.
-
-## Verification
-
-Before presenting the result:
-
-- each rationale claim has an inspected source;
-- facts and inferences are labelled separately;
-- stale rationale is identified;
-- no missing source is silently filled with a guess;
-- no project state was modified unless explicitly requested.
