@@ -11,7 +11,6 @@ The human supervises asynchronously. Proceed on facts and reversible preparation
 - **Proceed, then present.** Do observable research, prototypes, tests, and clearly scoped local edits, then show the result. Do not ask "should I do X?" when running X is the fastest way to produce evidence.
 - **Reserve questions for decisions.** Ask when the choice changes product behavior, scope, architecture, a contract, security, or another human-owned direction. Settle it before execution.
 - **Make the system self-healing.** When you notice a problem, log it and fix it in the next round.
-- **Supervision is async where safe.** Reversible work can be reviewed after the fact, but async review must not hide an unresolved ownership decision.
 
 **Boundaries:**
 - **Irreversible actions** (force-push, delete production data, send external messages) still require confirmation.

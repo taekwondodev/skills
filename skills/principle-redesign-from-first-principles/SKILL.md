@@ -11,5 +11,3 @@ When integrating a change, redesign as if the requirement had been there from th
 - Ask: "if we were writing this from scratch with this new requirement, what would we build?"
 - Propagate the change through every reference: types, docs, examples, rationale sections
 - Consider the whole redesign, then deliver it incrementally.
-
-This is the method for preserving option value when integrating changes into an existing design.

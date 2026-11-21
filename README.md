@@ -106,4 +106,4 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | [principle-sequence-verifiable-units](skills/principle-sequence-verifiable-units/SKILL.md) | Break work into small units that each end in a verified state. |
 | [principle-style-serves-outcomes](skills/principle-style-serves-outcomes/SKILL.md) | Resolve tradeoffs between style and runtime cost. |
 | [principle-subtract-before-you-add](skills/principle-subtract-before-you-add/SKILL.md) | Remove unnecessary complexity before building on top of it. |
-| [principle-type-system-discipline](skills/principle-type-system-discipline/SKILL.md) | Use types to rule out invalid states and enforce domain contracts. |
+| [principle-type-system-discipline](skills/principle-type-system-discipline/SKILL.md) | Brand primitives, avoid casts, and make matching exhaustive. |

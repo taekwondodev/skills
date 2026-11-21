@@ -17,9 +17,9 @@ Consult this index when choosing the principle that governs a current decision. 
 
 ### Architecture
 
-- **Model the Domain**. Encode the domain in a structure instead of scattered conditionals.
+- **Model the Domain**. Encode the domain in a structure instead of scattered conditionals, so invalid states are unrepresentable.
 - **Boundary Discipline**. Concentrate guards at system boundaries; trust internal types and keep business logic pure.
-- **Type System Discipline**. Make illegal states unrepresentable, brand semantic primitives, and parse external data at boundaries.
+- **Type System Discipline**. Brand semantic primitives, avoid casts, make matching exhaustive, and strengthen types only where partiality appears.
 - **Make Operations Idempotent**. Converge to the same end state regardless of partial prior runs.
 - **Migrate Callers Then Delete Legacy APIs**. Migrate callers and delete the old API in the same wave.
 - **Separate Before Serializing Shared State**. Eliminate sharing first; serialize only when one shared writer is a real invariant.
@@ -27,7 +27,7 @@ Consult this index when choosing the principle that governs a current decision. 
 ### Verification
 
 - **Prove It Works**. Verify against the real artifact, not a proxy, self-report, or “it compiles.”
-- **Explain the Number**. Before measuring, write the result that would change a decision. Before trusting or reporting a measured result, identify what bounds it and rule out misleading measurements.
+- **Explain the Number**. Before measuring, write the result that would change a decision. Before trusting or reporting a measured result, rule out alternative explanations; performance results go through benchmark-checklist.
 - **Fix Root Causes**. Trace each symptom to its root cause and fix it there; reproduce first.
 - **Sequence Verifiable Units**. Break multi-step work into small units that each end in a checkable state.
 
@@ -39,5 +39,3 @@ Consult this index when choosing the principle that governs a current decision. 
 ### Meta
 
 - **Encode Lessons in Structure**. Encode recurring corrections as lint, metadata, runtime checks, scripts, or skills instead of repeating prose.
-
-When a principle influences a choice, record the principle and the changed choice. A principle name without a decision is not evidence of application.

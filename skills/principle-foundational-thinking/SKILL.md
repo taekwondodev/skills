@@ -7,6 +7,6 @@ description: "Apply before writing logic: choosing core types and data structure
 
 Get the data shape right before writing logic. Define core types early, trace every access pattern, and choose structures that match the dominant paths. DRY the structure, not every line.
 
-Before sharing state between actors, ask what happens if another actor modifies it concurrently. If the answer is not "nothing", isolate.
+State shared between concurrent actors follows the **separate-before-serializing-shared-state** principle skill.
 
 Scaffold first. Whatever helps every later phase (CI, tests, shared types) goes first, after removing dead weight. Keep commits small and single-purpose.
