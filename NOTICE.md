@@ -66,6 +66,7 @@ The following skills are copies or adaptations of Matt Pocock skills:
 - handoff
 - implement
 - prototype
+- retro
 - to-spec
 - to-tickets
 - wayfinder

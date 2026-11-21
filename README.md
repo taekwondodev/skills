@@ -78,6 +78,7 @@ This repository is licensed under the [MIT License](LICENSE). It includes origin
 | Skill | Description |
 | --- | --- |
 | [writing-for-agents](skills/writing-for-agents/SKILL.md) | Write clear skills, project instructions, specifications, and agent briefs. |
+| [retro](skills/retro/SKILL.md) | Review a coding session and propose improvements to the agent's environment. |
 
 ## Engineering principles
 
